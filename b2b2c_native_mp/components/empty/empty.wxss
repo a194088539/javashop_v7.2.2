@@ -1,0 +1,19 @@
+.empty {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	line-height: 440rpx;
+  clear: both;
+}
+
+.icon-empty {
+	display: block;
+	width: 100rpx;
+	height: 100rpx;
+	background-size: 100%;
+}
+.text-empty {
+	font-size: 32rpx;
+	color: #333;
+	margin: 10rpx 0 0 30rpx;
+}

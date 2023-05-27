@@ -1,0 +1,46 @@
+<view class="container">
+  <!-- 清空 编辑 -->
+  <view class="btn-top f28" wx:if="{{footPrintList && footPrintList.length}}">
+    <view class="right">
+      <text wx:if="{{!isEdit}}" bindtap="clearFootprints">清空</text>
+      <text wx:if="{{!isEdit}}" bindtap="editFootprints">编辑</text>
+      <text wx:if="{{isEdit}}" bindtap="finishedFootprints">完成</text>
+    </view>
+  </view>
+  <scroll-view class="footprint-container {{isEdit ? 'footprint-container-bottom' : ''}}" scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+    <en-empty wx:if="{{!footPrintList.length && finished}}">还没有足迹？快去逛逛吧</en-empty>
+    <!-- 浏览记录 -->
+    <view  class="foot-print" wx:for="{{footPrintList}}" wx:for-index="goodsindex" wx:key="index">
+      <view class="foot-print-time">{{item.time}}</view>
+      <view wx:for="{{item.history}}" wx:for-item="goods" wx:for-index="goodindex" wx:key="index" class="goods-list">
+      <view bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-goodsindex="{{goodsindex}}" data-goodindex="{{goodindex}}" style="{{goods.txtStyle}}" class="inner txt">
+        <view class="goods-info">
+          <view wx:if="{{isEdit}}" class="sku-check" bindtap="handleChangeCheck" data-goods="{{goods}}">
+            <icon class="iconfont {{goods.checked ? 'icon-xuanze1' : 'icon-xuanze'}}"></icon>
+          </view>
+          <view class="goods-info-exit">
+            <navigator hover-class="none" url="/pages/goods/goods?goods_id={{goods.goods_id}}"><image class="goods-img" src="{{goods.goods_img}}"></image></navigator>
+            <view class="goods-text">
+              <navigator hover-class="none" url="/pages/goods/goods?goods_id={{goods.goods_id}}">
+                <view class="goods-name">{{goods.goods_name}}</view>
+              </navigator>
+              <view class="goods-price">￥{{goods.goods_price}}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view data-goods="{{goods}}" bindtap= "deleteFootPrintsId" class="inner del">删除</view>
+      </view>
+    </view>
+  </scroll-view>
+  <!-- 底部编辑按钮 -->
+  <view class="footprint-bottom" wx:if="{{isEdit}}">
+    <view class="all-check" bindtap="handleChangeCheckAll">
+      <icon class="iconfont {{checkedAll ? 'icon-xuanze1' : 'icon-xuanze'}}"></icon>
+      全选
+    </view>
+    <view class="text"></view>
+    <view class="btn" bindtap="deleteAll">删除</view>
+  </view>
+  <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+</view>

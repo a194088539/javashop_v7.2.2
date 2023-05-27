@@ -1,0 +1,59 @@
+<view class="ask-detail">
+  <scroll-view scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+    <!-- 商品信息 -->
+    <view class="faq_goods">
+      <navigator url="/pages/goods/goods?goods_id={{askDetail.goods_id}}" class="faq_goods_navigator" hover-class="none">
+        <view class="faq_goods_cover">
+          <image src="{{askDetail.goods_img}}"></image>
+        </view>
+        <view class="faq_goods_info">
+          <view class="faq_goods_info_name">{{askDetail.goods_name}}</view>
+        </view>
+        <view class="faq_goods_right">
+          <image src="/static/images/address_right.png" background-size="cover"></image>
+        </view>
+      </navigator>
+    </view>
+    <!-- 提问信息 -->
+    <view class="faq_question">
+      <view class="faq_question_wrap">
+        <view class="faq_question_head">
+          <text wx:if="{{askDetail.anonymous === 'NO'}}">用户{{askDetail.member_name}}的提问：</text>
+          <text wx:else>匿名用户的提问：</text>
+          <text class="faq_question_head_time">{{askDetail.create_time}}</text>
+        </view>
+        <view class="faq_question_desc">{{askDetail.content}}</view>
+      </view>
+    </view>
+    <!-- 回答信息 -->
+    <view class="faq_answers">
+      <view class="faq_answers_num">共{{askDetail.reply_num}}个回答</view>
+      <view class="faq_answers_list">
+      <view class="merchant_reply list" wx:if="{{askDetail.reply_status === 'YES'}}">
+        <view class="faq_answers_list_head seller-reply">
+          <text class="faq_answers_list_status">{{askDetail.reply_time}}</text>
+          <text>商家回复</text>
+        </view>
+        <view class="faq_answers_list_desc">{{askDetail.reply}}</view>
+      </view>
+      <view class="user_reply">
+        <view class="no-data" wx:if="{{finished && !replyList.length}}">暂无用户回复</view>
+        <view wx:else>
+          <view class="list" wx:for="{{replyList}}" wx:for-item="reply" wx:key="index">
+            <view class="faq_answers_list_head">
+              <text class="faq_answers_list_status">{{reply.reply_time}}</text>
+              <text wx:if="{{reply.anonymous === 'NO'}}">用户{{reply.member_name}}说：</text>
+              <text wx:else>匿名用户说：</text>
+            </view>
+            <view class="faq_answers_list_desc">{{reply.content}}</view>
+          </view>
+        </view>
+      </view>
+      </view>
+    </view>
+  </scroll-view>
+  <!-- 返回顶部 -->
+  <view class='gotop' bindtap='goTop' wx:if="{{showGoTop}}">
+    <text class='icon iconfont icon-up'></text>
+  </view>
+</view>

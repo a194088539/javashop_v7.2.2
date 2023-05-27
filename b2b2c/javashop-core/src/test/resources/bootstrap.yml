@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: core
+  cloud:
+    config:
+      uri: http://192.168.2.111:8888
+      profile: dev
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+server:
+  port: 7080

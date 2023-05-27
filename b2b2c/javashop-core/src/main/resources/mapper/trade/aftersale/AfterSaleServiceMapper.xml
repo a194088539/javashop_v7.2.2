@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.trade.aftersale.AfterSaleServiceMapper">
+    <!-- 查询需要导出的售后服务信息 -->
+    <select id="selectExportVoList" resultType="com.enation.app.javashop.model.aftersale.vo.AfterSaleExportVO" useCache="false">
+        select ao.sn as service_sn,ao.order_sn,ao.create_time,ao.member_name,ao.seller_name,ao.mobile,ao.service_type,ao.service_status,ao.reason,ao.problem_desc,ao.apply_vouchers,ao.audit_remark,ao.stock_remark,ao.refund_remark,ar.refund_price,ar.agree_price,ar.actual_price,ar.refund_time,ar.refund_way,ar.account_type,ar.return_account,ar.bank_name,ar.bank_account_number,ar.bank_account_name,ar.bank_deposit_name
+        from es_as_order ao
+        left join es_as_refund ar
+        on ao.sn = ar.service_sn
+        <where>
+            <!-- 按售后服务状态查询 -->
+            ao.disabled = #{disabled}
+
+            <!-- 如果商家ID不为空并且不等于0，按商家ID查询 -->
+            <if test="params.sellerId != null and params.sellerId != 0">
+                and ao.seller_id = #{params.sellerId}
+            </if>
+
+            <!-- 如果售后服务单号不为空，按售后服务单号模糊查询 -->
+            <if test="params.serviceSn != null and params.serviceSn != ''">
+                and ao.sn like concat('%',#{params.serviceSn},'%')
+            </if>
+
+            <!-- 如果订单编号不为空，按订单编号模糊查询 -->
+            <if test="params.orderSn != null and params.orderSn != ''">
+                and ao.order_sn like concat('%',#{params.orderSn},'%')
+            </if>
+
+            <!-- 如果商品名称不为空，按商品名称模糊查询 -->
+            <if test="params.goodsName != null and params.goodsName != ''">
+                and ao.goods_json like concat('%',#{params.goodsName},'%')
+            </if>
+
+            <!-- 如果售后服务类型不为空，按售后服务类型查询 -->
+            <if test="params.serviceType != null and params.serviceType != ''">
+                and ao.service_type = #{params.serviceType}
+            </if>
+
+            <!-- 如果售后服务状态不为空，按售后服务状态查询 -->
+            <if test="params.serviceStatus != null and params.serviceStatus != ''">
+                and ao.service_status = #{params.serviceStatus}
+            </if>
+
+            <!-- 如果申请时间-起始时间不为空并且不等于0，按申请时间大于等于当前这个起始时间查询 -->
+            <if test="params.startTime != null and params.startTime != 0">
+                and ao.create_time &gt;= #{params.startTime}
+            </if>
+
+            <!-- 如果申请时间-结束时间不为空并且不等于0，按申请时间小于等于当前这个结束时间查询 -->
+            <if test="params.endTime != null and params.endTime != 0">
+                and ao.create_time &lt;= #{params.endTime}
+            </if>
+
+            <!-- 按售后服务申请时间倒序排序 -->
+            order by ao.create_time desc
+        </where>
+    </select>
+
+</mapper>

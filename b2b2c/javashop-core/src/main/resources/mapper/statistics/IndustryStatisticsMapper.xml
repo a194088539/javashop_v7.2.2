@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.statistics.IndustryStatisticsMapper">
+
+    <!-- 根据订单时间，商家id，查询每个行业的订单总数 -->
+    <select id="selectOrderQuantityList" resultType="java.util.Map" useCache="false">
+        SELECT
+            COUNT(oi.`order_sn`) AS order_num,
+            oi.`industry_id`
+        FROM ${tableName_es_sss_order_goods_data} oi
+        LEFT JOIN ${tableName_es_sss_order_data} o ON oi.`order_sn` = o.`sn`
+        WHERE oi.create_time &gt;= #{startTime}
+        AND oi.create_time &lt;= #{endTime}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        GROUP BY industry_id
+    </select>
+
+    <!-- 根据订单时间，商家id，查询每个行业的下单商品总数 -->
+    <select id="selectGoodsNumList" resultType="java.util.Map" useCache="false">
+        SELECT
+            SUM(oi.goods_num) AS goods_num,
+            oi.`industry_id`
+        FROM ${tableName_es_sss_order_goods_data} oi
+        LEFT JOIN ${tableName_es_sss_order_data} o ON oi.`order_sn` = o.`sn`
+        WHERE oi.create_time &gt;= #{startTime}
+        AND oi.create_time &lt;= #{endTime}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        GROUP BY oi.`industry_id`
+    </select>
+
+    <!-- 根据订单时间，商家id，查询每个行业的下单商品总金额 -->
+    <select id="selectOrderMoneyList" resultType="java.util.Map" useCache="false">
+        SELECT
+            SUM(oi.`price`) AS order_money,
+            oi.`industry_id`
+        FROM ${tableName_es_sss_order_goods_data} oi
+        LEFT JOIN ${tableName_es_sss_order_data} o ON oi.`order_sn` = o.`sn`
+        WHERE oi.create_time &gt;= #{startTime}
+        AND oi.create_time &lt;= #{endTime}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        GROUP BY oi.`industry_id`
+    </select>
+
+    <!-- 根据分类路径，商家id，订单状态查询查询有销量商品数 -->
+    <select id="selectSoldGoodsNum" resultType="java.lang.Integer" useCache="false">
+        SELECT
+            COUNT(1)
+        FROM (
+            SELECT
+                oi.goods_id
+            FROM ${tableName_es_sss_order_goods_data} oi
+            LEFT JOIN ${tableName_es_sss_order_data} od ON oi.order_sn = od.sn
+            WHERE oi.category_path LIKE CONCAT('%|',#{categoryId},'|%')
+            <if test="sellerId != null and sellerId != 0">
+                AND od.seller_id = #{sellerId}
+            </if>
+            AND (
+                od.order_status = #{orderStatus} OR od.pay_status = #{payStatus}
+            )
+            GROUP BY oi.goods_id
+        ) ta
+    </select>
+
+    <!-- 根据分类路径，商家id查询有商品数和总价格 -->
+    <select id="selectSoldNum" resultType="java.util.Map" useCache="false">
+        SELECT
+            COUNT(oi.goods_num) AS num,
+            SUM(oi.goods_num*oi.price) AS price
+        FROM ${tableName_es_sss_order_goods_data} oi
+        LEFT JOIN ${tableName_es_sss_order_data} od ON oi.`order_sn` = od.`sn`
+        WHERE oi.category_path LIKE CONCAT('%|',#{categoryId},'|%')
+        <if test="sellerId != null and sellerId != 0">
+            AND od.seller_id = #{sellerId}
+        </if>
+    </select>
+
+    <!-- 根据分类路径，商家id查询平均价格 -->
+    <select id="selectAvgPrice" resultType="java.lang.String" useCache="false">
+        SELECT
+            AVG(gd.price) AS avg
+        FROM es_sss_goods_data gd
+        WHERE category_path LIKE CONCAT('%|',#{categoryId},'|%')
+        <if test="sellerId != null and sellerId != 0">
+            AND seller_id = #{sellerId}
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,201 @@
+<wxs src="../../../../utils/wxs.wxs" module="Filter"/>
+<view class="after-sale-detail">
+  <view class="seller-info">
+    <text>本次售后服务将由 <text>{{serviceDetail.seller_name}}</text> 提供</text>
+  </view>
+  <view class="log-info">
+    <view class="status-info">
+      <view class="status-info-box">
+        <text class="status-val">{{serviceDetail.service_status_text}}</text>
+        <text class="status-tip" wx:if="{{allowable.allow_ship}}">请您尽快将申请售后的商品退还给卖家</text>
+        <text class="status-tip" wx:else>{{Filter.statusFilter(serviceDetail.service_status)}}</text>
+      </view>
+      <view class="log-box-bottom"></view>
+      <navigator hover-class="none" url="/pages/ucenter/after-sale/service-logs/service-logs?service_sn={{serviceDetail.sn}}">
+        <view class="log-box-top">
+          <view class="top01">
+            <text>操作日志</text>
+            <view class="log-first-show">
+              <text>{{log.log_detail}}</text>
+            </view>
+          </view>
+          <icon class="iconfont icon-xuanze2" style="font-size:26rpx;"></icon>
+        </view>
+      </navigator>
+    </view>
+  </view>
+  <view class="goods-info">
+    <view class="info-box">
+      <text class="title">商品信息</text>
+      <view class="goods-item" wx:for="{{goodsList}}" wx:for-item="goods" wx:key="index">
+        <navigator hover-class="none" url="/pages/goods/goods?goods_id={{goods.goods_id}}">
+          <view class="item-info">
+            <view style="width:30%;"><image src="{{goods.goods_image}}"></image></view>
+            <view class="goods-name-info">
+              <text>{{goods.goods_name}}</text>
+              <text>单价：￥{{goods.price}}</text>
+            </view>
+          </view>
+        </navigator>
+      </view>
+    </view>
+  </view>
+  <view class="service-info" wx:if="{{allowable.allow_ship}}">
+    <view class="service-info-box">
+      <view class="box-items" style="padding-bottom: 60rpx;">
+        <text class="item-key" style="font-size: 30rpx;color: #2e2d2d;font-weight: bold;width: 100%;">填写物流信息</text>
+      </view>
+      <view class="box-items">
+        <text class="item-key">快递公司</text>
+        <view class="item-val" bindtap="handelExpressShow">
+          <view style="flex-direction: row; align-items: center;">
+            <text style="font-weight: bold;font-size: 30rpx;">{{courier_company}}</text>
+            <icon class="iconfont icon-xuanze2" style="font-size:26rpx;margin:-8rpx 15rpx 0;"></icon>
+          </view>
+        </view>
+      </view>
+      <view class="box-items">
+        <text class="item-key">快递单号</text>
+        <view class="item-val">
+          <view style="flex-direction: row; align-items: center;">
+            <input style="width: 100%;" placeholder="请输入快递单号" value="{{expressForm.courier_number}}" bindinput="handleCourierNumber"></input>
+          </view>
+        </view>
+      </view>
+      <picker mode="date" value="{{shipTimeText}}" bindchange='handleDateChange' start="1940-01-01" end="{{time}}">
+        <view class="box-items">
+          <text class="item-key">发货时间</text>
+          <view class="item-val" bindtap="shipTimeShow">
+            <view style="flex-direction: row; align-items: center;">
+              <text style="font-weight: bold;font-size: 30rpx;">{{shipTimeText}}</text>
+              <icon class="iconfont icon-xuanze2" style="font-size:26rpx;margin:-8rpx 15rpx 0;"></icon>
+            </view>
+          </view>
+        </view>
+      </picker>
+      <view class="box-items" style="padding-top:30rpx;">
+        <text class="item-key"></text>
+        <view class="item-val">
+          <button type="danger" size="small" round style="width: 200rpx;background-color:#f44;color:#fff" bindtap="submitShipInfo">提交</button>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="service-info">
+    <view class="service-info-box">
+      <view class="box-items">
+        <text class="item-key">服务单号</text>
+        <text class="item-val">{{serviceDetail.sn}}</text>
+      </view>
+      <view class="box-items">
+        <text class="item-key">订单编号</text>
+        <text class="item-val">{{serviceDetail.order_sn}}</text>
+      </view>
+      <view class="box-items" wx:if="{{serviceDetail.new_order_sn}}">
+        <text class="item-key">新订单编号</text>
+        <text class="item-val">{{serviceDetail.new_order_sn}}</text>
+      </view>
+      <view class="box-items">
+        <text class="item-key">服务类型</text>
+        <text class="item-val">{{serviceDetail.service_type_text}}</text>
+      </view>
+      <view class="box-items">
+        <text class="item-key">申请原因</text>
+        <text class="item-val">{{serviceDetail.reason}}</text>
+      </view>
+      <view class="box-items" wx:if="{{serviceDetail.apply_vouchers}}">
+        <text class="item-key">申请凭证</text>
+        <text class="item-val">{{serviceDetail.apply_vouchers}}</text>
+      </view>
+      <view class="box-items" wx:if="{{serviceDetail.problem_desc}}">
+        <text class="item-key">问题描述</text>
+        <text class="item-val">{{serviceDetail.problem_desc}}</text>
+      </view>
+      <view class="box-items" wx:if="{{serviceDetail.images && serviceDetail.images.length != 0}}">
+        <image wx:for="{{imagesList}}" wx:for-item="img" wx:key="index" src="{{img}}" bindtap="handleImagePreview" data-urls="{{imagesList}}" data-img="{{img}}"></image>
+      </view>
+      <view class="box-items">
+        <text class="item-key">收货地址</text>
+        <text class="item-val">{{change_info.province}} {{change_info.city}} {{change_info.county}} {{change_info.ship_addr}}</text>
+      </view>
+      <view class="box-items">
+        <text class="item-key">联系人</text>
+        <text class="item-val">{{change_info.ship_name}}</text>
+      </view>
+      <view class="box-items">
+        <text class="item-key">联系方式</text>
+        <text class="item-val">{{change_info.ship_mobile}}</text>
+      </view>
+      <view class="box-items" wx:if="{{allowable.allow_show_return_addr}}">
+        <text class="item-key">退货地址信息</text>
+        <text class="item-val" style="color:#ff0000;" bindtap="handlereTurnAddrShow">点击查看</text>
+      </view>
+      <view class="box-items"wx:if="{{allowable.allow_show_ship_info}}">
+        <text class="item-key">发货单信息</text>
+        <text class="item-val" style="color:#ff0000;" bindtap="handleShipInfoShow">点击查看</text>
+      </view>
+      <view class="react-view" wx:if="{{refundShow}}"></view>
+      <view wx:if="{{refundShow}}">
+        <view class="box-items">
+          <text class="item-key">申请退款金额</text>
+          <text class="item-val">￥{{refund_info.refund_price || '0.00'}}</text>
+        </view>
+        <view class="box-items" wx:if="{{refund_info.agree_price}}">
+          <text class="item-key">同意退款金额</text>
+          <text class="item-val">￥{{refund_info.agree_price}}</text>
+        </view>
+        <view class="box-items" wx:if="{{refund_info.actual_price}}">
+          <text class="item-key">实际退款金额</text>
+          <text class="item-val" style="color:#f42424;">￥{{refund_info.actual_price}}</text>
+        </view>
+        <view class="box-items" wx:if="{{refund_info.refund_time}}">
+          <text class="item-key">退款时间</text>
+          <text class="item-val">{{refund_info.refund_time}}</text>
+        </view>
+        <view class="box-items">
+          <text class="item-key">退款方式</text>
+          <text class="item-val">{{Filter.refundWayType(refund_info.refund_way)}}</text>
+        </view>
+        <view class="box-items" wx:if="{{accountShow}}">
+          <text class="item-key">账户类型</text>
+          <text class="item-val">{{Filter.accountType(refund_info.account_type) }}</text>
+        </view>
+        <view class="box-items" wx:if="{{accountShow && !bankShow}}">
+          <text class="item-key">退款账号</text>
+          <text class="item-val">{{refund_info.return_account }}</text>
+        </view>
+        <view class="box-items" wx:if="{{bankShow}}">
+          <text class="item-key">银行名称</text>
+          <text class="item-val">{{refund_info.bank_name}}</text>
+        </view>
+        <view class="box-items" wx:if="{{bankShow}}">
+          <text class="item-key">银行账号</text>
+          <text class="item-val">{{refund_info.bank_account_number}}</text>
+        </view>
+        <view class="box-items" wx:if="{{bankShow}}">
+          <text class="item-key">银行开户名</text>
+          <text class="item-val">{{refund_info.bank_account_name}}</text>
+        </view>
+        <view class="box-items" wx:if="{{bankShow}}">
+          <text class="item-key">银行开户行</text>
+          <text class="item-val">{{refund_info.bank_deposit_name}}</text>
+        </view>
+        <view class="box-items" wx:if="{{serviceDetail.audit_remark}}">
+          <text class="item-key">商家审核备注</text>
+          <text class="item-val">{{serviceDetail.audit_remark}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<modal myVisible="{{expressShow}}" bindmyOnCancel="handleExpressHide">
+  <view class="express-select" wx:for="{{expressSelectActions}}" wx:key="index" bindtap="handleExpressSelectActions" data-name="{{item.name}}" data-value="{{item.value}}">{{item.name}}</view>
+</modal>
+<modal myVisible="{{returnAddrShow}}" bindmyOnCancel="handleReturnAddrHide">
+  <view class="addr-title">退货地址信息</view>
+  <view class="addr-info">{{serviceDetail.return_addr}}</view>
+</modal>
+<modal myVisible="{{shipInfoShow}}" bindmyOnCancel="handleShipInfoHide">
+  <view class="addr-title">发货单信息</view>
+  <view class="addr-info">快递公司：{{ express_info.courier_company }}，运单号:{{ express_info.courier_number }}，发货时间：{{ express_info.ship_time }}</view>
+</modal>

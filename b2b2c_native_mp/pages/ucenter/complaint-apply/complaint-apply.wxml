@@ -1,0 +1,50 @@
+<view class="omplaint-apply-container">
+  <view class="complaint-apply">
+    <view class="left">投诉主题：</view>
+    <view class="right" bindtap="handleTitleActionsheet" style="display:flex">
+      <view class="complaint-topic">
+        <view class="topic_name">{{defaultComplaintTheme.topic_name}}</view>
+        <view class="topic_remark">{{defaultComplaintTheme.topic_remark}}</view>
+      </view>
+      <icon class="complaint-icon iconfont icon-xuanze2"></icon>
+    </view>
+  </view>
+  <view class="complaint-apply">
+    <view class="left"><text style="color:#f42424;">*</text>投诉内容：</view>
+    <view class="right">
+      <textarea placeholder="请填写投诉内容，字数限制200字" maxlength="200" bindinput="handleComplaintCont"></textarea>
+    </view>
+  </view>
+  <view class="complaint-apply">
+    <view class="left">投诉凭证：</view>
+    <view class="right">
+      <view class="complaint-photos">
+        <view wx:for="{{complaintForm.images}}" wx:for-item="img" wx:key="index" class="img-item">
+          <icon class="iconfont icon-shanchu" bindtap="clearImage" data-index="{{index}}"></icon>
+          <image src="{{img}}" mode="aspectFill" bindtap="handleImagePreview" data-urls="{{complaintForm.images}}" data-img="{{img}}"></image>
+        </view>
+        <view wx:if="{{!complaintForm.images || complaintForm.images.length <3 }}" class="uploader" bindtap="uploader">
+          <icon class="icon iconfont icon-increase"></icon>
+        </view>
+      </view>
+      <view style="padding:20rpx 0;">凭证限定3张图片</view>
+    </view>
+  </view>
+  <view class="btn">
+    <text class="txt" bindtap="handleCancel">取消</text>
+    <text class="txt" bindtap="handleSubmit">提交</text>
+  </view>
+</view>
+<view class='modal' wx:if="{{showTitleActionsheet}}" bindtap='cloneDialog'>
+    <view class='actionsheet'>
+      <view class='bottom'>
+        <view class='actionsheet_item' wx:for="{{radioTypes}}" wx:key="index" bindtap='bindradioTypes' data-item="{{item}}">
+          <view class="left"><icon class="iconfont {{item.checked ? 'icon-xuanze1' : 'icon-xuanze'}}"></icon></view>
+          <view class="right">
+            <text class="txt">{{item.topic_name}}</text>
+            <text class="txt">{{item.topic_remark}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>

@@ -1,0 +1,60 @@
+
+<view class="container">
+  <!-- 搜索 -->
+  <view class='search'>
+    <input placeholder='想找什么商品?' value='{{params.keywrod}}' confirm-type="search" bindinput="inputChange" bindconfirm="onKeywordConfirm"></input>
+    <text class='instore' bindtap='inStoreSearch'>店内搜</text>
+    <text class='all' bindtap='allSearch'>全站搜</text>
+    <icon class="iconfont icon-gengduo" bindtap="showShopCate"></icon>
+  </view>
+  <view class="cate_side" wx:if="{{show_cate}}">
+    <icon class="iconfont icon-guanbi" bindtap="hideShopCate"></icon>
+    <view class="cate_list">
+      <view class="cate_item {{cate.lv === 2 ? 'lv-2' : ''}}" wx:for="{{categories}}" wx:for-item="cate" wx:key="index">
+        <view class="cat_name {{cate.checked ? 'active' : ''}}" bindtap="handleShopCare" data-cate="{{cate}}">{{cate.shop_cat_name}}</view>
+      </view>
+    </view>
+  </view>
+  <!-- 分类 -->
+  <view class="sort">
+    <view class="sort-box">
+      <view class="item by-sort {{params.sort == 'def_desc' || params.sort == 'def_asc' ? 'active' : ''}}" bindtap="openSortFilter" id="defSort">
+        <text class="txt">默认</text>
+        <icon class="iconfont {{ params.sort == 'def_desc' ? 'icon-xiajiantoushixinxiao' : 'icon-shangjiantoushixinxiao'}}"></icon>
+      </view>
+      <view class="item by-sort {{params.sort == 'buynum_desc' || params.sort == 'buynum_asc' ? 'active' : ''}}" bindtap="openSortFilter" id="salesSort">
+        <text class="txt">销量</text>
+        <icon class="iconfont {{ params.sort == 'buynum_desc' ? 'icon-xiajiantoushixinxiao' : 'icon-shangjiantoushixinxiao'}}"></icon>
+      </view>
+      <view class="item by-sort {{params.sort == 'price_desc'|| params.sort == 'price_asc' ? 'active' : ''}} " bindtap="openSortFilter" id="priceSort">
+        <text class="txt">价格</text>
+        <icon class="iconfont {{ params.sort == 'price_desc' ? 'icon-xiajiantoushixinxiao' : 'icon-shangjiantoushixinxiao'}}"></icon>
+      </view>
+      <view class="item by-sort grade {{params.sort == 'grade_desc' || params.sort == 'grade_asc' ? 'active' : ''}}" bindtap="openSortFilter" id="gradeSort">
+        <text class="txt">好评率</text>
+        <icon class="iconfont {{ params.sort == 'grade_desc' ? 'icon-xiajiantoushixinxiao' : 'icon-shangjiantoushixinxiao'}}"></icon>
+      </view>
+    </view>
+  </view>
+  <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style="height:{{scrollHeight}};" bindscrolltolower='loadMore' bindscroll="scroll">
+    <!-- 商品 -->
+    <view class='goods_list' wx:if="{{goodsList.length}}">
+      <navigator hover-class="none" class='item-goods' wx:for="{{goodsList}}" wx:key="index" url="/pages/goods/goods?goods_id={{item.goods_id}}">
+        <view class='item_img'>
+          <image src='{{item.thumbnail}}'></image>
+        </view>
+        <view class='item_info'>
+          <view class='title'><text>{{item.name}}</text></view>
+          <view class='price'>￥{{item.price}}</view>
+        </view>
+        <view class='item_other'>
+          <view><text>销量：</text><text class='price'>{{item.buy_count}}件</text></view>
+          <view><text>好评率：</text><text class='price'>{{item.grade}}%</text></view>
+        </view>
+      </navigator>
+    </view>
+    <view wx:if="{{goodsList.length}}" class="msg">{{msg}}</view>
+    <en-empty wx:if="{{!goodsList.length && finished}}">暂无商品</en-empty>
+  </scroll-view>
+</view>
+<en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>

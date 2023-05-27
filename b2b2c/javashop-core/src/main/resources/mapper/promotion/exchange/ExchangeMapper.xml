@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.promotion.exchange.ExchangeMapper">
+
+    <!-- 获取积分兑换分页列表数据 -->
+    <select id="selectExchangePage" resultType="com.enation.app.javashop.model.promotion.exchange.dos.ExchangeDO" useCache="false">
+      select e.*,pg.start_time,pg.end_time,pg.title
+      from  es_exchange e
+      left join es_promotion_goods pg
+      on e.exchange_id = pg.activity_id
+      <where>
+          pg.promotion_type = #{promotion_type} and exchange_id is not null
+
+          <!-- 如果积分商品分类ID不为空，以积分商品分类ID为条件查询 -->
+          <if test="param.catId != null">
+              and e.category_id = #{param.catId}
+          </if>
+
+          <!-- 如果促销活动有效时间不为空，则以促销活动有效时间范围进行查询 -->
+          <if test="param.startTime != null and param.endTime != null">
+              and #{param.startTime} &gt; pg.start_time and #{param.endTime} &lt; pg.end_time
+          </if>
+      </where>
+    </select>
+
+</mapper>

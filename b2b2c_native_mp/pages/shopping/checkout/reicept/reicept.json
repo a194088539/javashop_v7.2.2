@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "发票信息",
+  "usingComponents": {
+    "bottomFrame": "../../../../components/bottomFrame/bottomFrame",
+    "RegionPicker": "../../../../components/regionpicke/regionpicke"
+  }
+}

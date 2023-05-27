@@ -1,0 +1,231 @@
+@import '../choose-type/choose-type.wxss';
+.after-sale-container{
+  width: 100%;
+  overflow-x: hidden;
+}
+/* 申请数量 */
+.apply-num {
+  height: 116rpx;
+  line-height: 116rpx;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-style: solid;
+  border-width: 2rpx 0 0;
+  border-color: rgb(238, 238, 238) black black;
+  padding: 2rpx;
+  margin-top: 40rpx;
+}
+.apply-num .apply-num-text {
+  display: inline-block;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.change-num {
+  display: flex;
+  flex-direction: row;
+  height: 54rpx;
+  align-items: center;
+}
+.change-num button{
+  border-radius: 0;
+  height: 54rpx;
+  line-height: 54rpx;
+  border: 2rpx solid #e5e5e5;
+  background-color: #fff;
+}
+.change-num input{
+  width: 82rpx;
+  text-align: center;
+  border-top: 2rpx solid #e5e5e5;
+  border-bottom: 2rpx solid #e5e5e5;
+}
+
+/* 申请原因 */
+.apply-info-box {
+    flex: 1 1 0%;
+    padding: 32rpx 22rpx;
+}
+.apply-info-box .apply-reason {
+  padding: 24rpx 32rpx;
+  margin-bottom: 32rpx;
+  background-color: rgb(255, 255, 255);
+  border-radius: 26rpx;
+}
+.apply-info-box .reason-show {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.apply-info-box text {
+  display: inline-block;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 33rpx;
+}
+.black-line {
+  width: 828rpx;
+  margin-left: -56rpx;
+  margin-top: 30rpx;
+  margin-bottom: 38rpx;
+  border-style: solid;
+  border-width: 0 0 4rpx;
+  border-color: black black rgb(246, 246, 246);
+}
+.desc-show {
+  padding: 22rpx 26rpx;
+  background-color: rgb(246, 246, 246);
+  border-style: solid;
+  border-width: 2rpx;
+  border-radius: 8rpx;
+  border-color: rgb(246, 246, 246);
+}
+.desc-text {
+  background-color: rgb(246, 246, 246);
+  border-color: black;
+  border-width: 0rpx;
+  box-sizing: border-box;
+  color: inherit;
+  font-style: inherit;
+  font-variant: inherit;
+  font-weight: inherit;
+  font-stretch: inherit;
+  font-size: 26rpx;
+  line-height: inherit;
+  font-family: inherit;
+  height: 176rpx;
+}
+.upload-img {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 26rpx;
+  margin-top: 26rpx;
+  width: 750rpx;
+}
+.file {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  text-decoration: none;
+  text-indent: 0;
+  line-height: 40rpx;
+}
+.file-box {
+  justify-content: center;
+  align-items: center;
+  width: 116rpx;
+  height: 116rpx;
+  line-height: 116rpx;
+  border-style: solid;
+  border-width: 2rpx;
+  border-color: rgb(191, 191, 191);
+  border-radius: 8rpx;
+}
+.file-box icon{
+  font-size: 64rpx;
+  padding: 0 20rpx;
+}
+.img-list {
+  width: 116rpx;
+  justify-content: flex-end;
+  align-items: flex-start;
+  margin-right: 14rpx;
+  margin-bottom: 12rpx;
+  position: relative;
+}
+.img-list image {
+  width: 116rpx;
+  height: 116rpx;
+}
+.img-list icon {
+  position: absolute;
+  top: -40rpx;
+  right: -12rpx;
+  color: #f42424;
+}
+/* 退款方式 */
+.refund-info-box {
+  flex: 1 1 0%;
+  padding-left: 22rpx;
+  padding-right: 22rpx;
+  padding-bottom: 32rpx;
+}
+.refund-item {
+  padding-left: 32rpx;
+  padding-right: 32rpx;
+  background-color: rgb(255, 255, 255);
+  border-radius: 26rpx;
+  margin-bottom: 32rpx;
+}
+.item-key {
+  height: 90rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.item-key text {
+  display: inline-block;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 33rpx;
+}
+.item-key image {
+  width: 24rpx;
+  height: 24rpx;
+}
+.item-val {
+  flex-direction: row;
+  align-items: center;
+  flex: 1 1 0%;
+  padding:20rpx;
+  text-align: right;
+}
+
+
+.voucher-title {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+.tips-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 32rpx;
+}
+.tips-box text {
+  display: inline-block;
+  padding: 0 20rpx;
+  color: #908e8e;
+  font-size: 22rpx;
+  line-height: 26rpx;
+}
+.btn{
+  color: #fff;
+  background-color: #f44;
+  line-height:88rpx;
+}
+
+.reason-name,.account-name,.voucher-name{
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 32rpx;
+  text-align: center;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+.voucher-cont{
+  padding: 0 20rpx;
+}
+.voucher-cont text{
+  float: left;
+}
+.voucher-cont icon{
+  float: right;
+}
+.icon-xuanze1{
+  color: #06bf04;
+}

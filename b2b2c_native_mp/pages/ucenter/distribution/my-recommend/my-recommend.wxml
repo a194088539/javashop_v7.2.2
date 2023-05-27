@@ -1,0 +1,7 @@
+<view class="recommend-container">
+  <view class="my-refereer">我的推荐人： <text>{{myRefereer || '没有推荐人'}}</text></view>
+  <view class="tree-wrap">
+    <tree-list wx:if="{{referee.length}}" list="{{referee}}"></tree-list>
+    <en-empty wx:else>暂无数据</en-empty>
+  </view>
+</view>

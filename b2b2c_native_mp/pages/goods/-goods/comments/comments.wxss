@@ -1,0 +1,134 @@
+
+.van-cell-group{
+	background-color: #fff;
+}
+.van-cell {
+	width: 100%;
+	height: 94rpx;
+	display: flex;
+	padding: 20rpx 0 20rpx 30rpx;
+	box-sizing: border-box;
+	line-height: 48rpx;
+	position: relative;
+	background-color: #fff;
+	color: #333;
+	font-size: 28rpx;
+	overflow: hidden;
+	border-bottom: 2rpx solid #f3f3f3;
+}
+.cell_title, .cell_value {
+	flex: 1;
+}
+.cell_value{
+	overflow: hidden;
+	text-align: right;
+	position: relative;
+	vertical-align: middle;
+}
+.van-cell .i{
+	float:right;
+	width:45rpx;
+	height:45rpx;
+	margin-right:16rpx;
+}
+.no-comments{
+	line-height: 100rpx;
+	font-size: 24rpx;
+	text-align: center;
+}
+.rate{
+  margin-left: 10rpx;
+  color: #f42424;
+}
+.com-more{
+	text-align: center;
+	background-color: #fff;
+}
+.com-more .com-more-link{
+	height: 50rpx;
+	line-height: 50rpx;
+	font-size: 24rpx;
+	text-align: center;
+	color: #333;
+	padding: 0 20rpx;
+	margin: 20rpx 0;
+	position: relative;
+	display: inline-block;
+	border: 2rpx solid #ccc;
+	border-radius: 80rpx;
+}
+.some-comments{
+	padding: 0 30rpx;
+}
+.com-reply{
+	font-size: 24rpx;
+}
+.com-reply text{
+	color: #f42424;
+	font-size: 24rpx;
+}
+
+.com-item{
+	position: relative;
+	padding: 20rpx 0;
+	border-bottom: 2rpx solid #e8e8e8;
+}
+.com-item .com-gallery{
+    margin-right: -20rpx;
+    padding-bottom: 8rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    overflow-x: auto;
+}
+.com-item .com-gallery .img {
+    width: 136rpx;
+    height: 136rpx;
+    display: inline-block;
+    margin-right:6rpx;
+    overflow: hidden;
+    text-align: center;
+    background: #f3f3f3;
+    margin-bottom: 2rpx;
+}
+.com-item .com-gallery image{
+    width: auto;
+    display: inline-block;
+    height: auto;
+    min-width: 136rpx;
+    max-height: 136rpx;
+}
+.com-item .user {
+	display: inline-block;
+	color: #999;
+	margin-right: 10rpx;
+	vertical-align: middle;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 24rpx;
+}
+.com-item .credit {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 6rpx;
+	font-size: 24rpx;
+}
+.com-item .date{
+	float: right;
+	color: #999;
+	margin-left: -120rpx;
+	font-size: 24rpx;
+}
+.com-item .com-content{
+	position: relative;
+	line-height: 1.5;
+	margin: 10rpx 0;
+	word-break: break-all;
+	overflow: hidden;
+	font-size: 24rpx;
+}
+.append{
+  border-top: 2rpx dashed #ccc;
+  margin-top: 10rpx;
+  padding-top: 10rpx;
+}

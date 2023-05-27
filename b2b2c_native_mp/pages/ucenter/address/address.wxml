@@ -1,0 +1,29 @@
+<view class="address-container">
+  <view class='address-list'>
+    <en-empty wx:if="{{!addressList.length && finished}}">暂无收货地址</en-empty>
+    <block wx:else>
+      <view class='address-item' wx:for="{{addressList}}" wx:key="index">
+        <view bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.txtStyle}}" class="inner txt">
+          <view class="address-content" bindtap="handleSelectAddress" data-addr_id="{{item.addr_id}}">
+            <view class='info-address'>
+              <view class='add-name'>{{item.name}}</view>
+              <view class='add-mobile'>{{item.mobile}}</view>
+            </view>
+            <view class='address-detail'>
+              <text wx:if="{{item.def_addr === 1}}" class='add-def-icon'>默认</text>
+              {{item.province}} {{item.city}} {{item.county}} {{item.town}} {{item.addr}}
+              <text wx:if="{{item.ship_address_name}}" class='add-alias'>{{item.ship_address_name}}</text>
+            </view>
+          </view>
+          <view class='addr' bindtap='selectAddress' data-addr_id="{{item.addr_id}}">
+            <image class='icon' src="../../../static/images/edit-address.png"></image>
+          </view>
+        </view>
+        <view data-addr_id="{{item.addr_id}}" bindtap= "deteleAddress" class="inner del">删除</view>
+      </view>
+    </block>
+  </view>
+  <view class="add-address" bindtap="addAddress">
+    <view class="text">添加</view>
+  </view>
+</view>

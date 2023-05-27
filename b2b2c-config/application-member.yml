@@ -1,0 +1,55 @@
+spring:
+  #分库分表配置
+  shardingsphere:
+    sharding:
+      tables:
+        #商品表(用member_id分库，用member_id分表)
+        es_member:
+          actual-data-nodes: ds$->{0..1}.es_member$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: member_id
+              algorithm-expression: ds$->{member_id% 2}
+          table-strategy:
+            inline:
+              sharding-column: member_id
+              #因为都是使用同一个字段进行分库分表的所以要右移两位之后取模以保证每个表中的数据平均
+              algorithm-expression: es_member$->{(member_id>>2)% 2}
+      #商品表(用member_id分库，用member_id分表)
+        es_clerk:
+          actual-data-nodes: ds$->{0..1}.es_clerk$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: member_id
+              algorithm-expression: ds$->{member_id% 2}
+          table-strategy:
+            inline:
+              sharding-column: member_id
+              #因为都是使用同一个字段进行分库分表的所以要右移两位之后取模以保证每个表中的数据平均
+              algorithm-expression: es_clerk$->{(member_id>>2)% 2}
+        #es_shop_notice_log
+        es_shop_notice_log:
+          actual-data-nodes: ds$->{0..1}.es_shop_notice_log$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: ds$->{id % 2}
+          table-strategy:
+            inline:
+              sharding-column: shop_id
+              algorithm-expression: es_shop_notice_log$->{shop_id % 2}  
+
+        #es_member_notice_log
+        es_member_notice_log:
+          actual-data-nodes: ds$->{0..1}.es_member_notice_log$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: ds$->{id % 2}
+          table-strategy:
+            inline:
+              sharding-column: member_id
+              algorithm-expression: es_member_notice_log$->{member_id % 2}
+
+      #binding-tables: es_order,es_order_items
+

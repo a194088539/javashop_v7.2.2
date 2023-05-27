@@ -1,0 +1,117 @@
+.complaint-flow, .conplaint-revoke {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 0 30rpx 0 25rpx;
+}
+.complaint-flow {
+  height: 100rpx;
+}
+.conplaint-revoke {
+  padding-bottom: 20rpx;
+}
+.conplaint-revoke .left{
+  color: #8f8f8f;
+}
+.conplaint-revoke .right{
+  border: 2rpx solid #8f8f8f;
+  border-radius: 12rpx;
+  padding: 4rpx 20rpx;
+}
+.complaint-detail {
+  background-color: #f4f4f4;
+}
+.complaint-detail .complaint-info {
+  margin: 20rpx 0;
+  padding: 0 20rpx;
+  background-color: #fff;
+}
+.complaint-detail .complaint-info .title {
+  padding: 10rpx 0;
+  border-bottom: 2rpx solid #f4f4f4;
+}
+.complaint-detail .complaint-info .title .icon {
+  font-size: 24rpx;
+  margin-right: 10rpx;
+}
+.complaint-info .info-content {
+  padding: 10rpx 20rpx 50rpx 20rpx;
+}
+.complaint-info .info-content .cont{
+  display: flex;
+  margin: 20rpx 0;
+}
+.complaint-info .info-content .cont .right{
+  flex: 1;
+  display: flex;
+}
+.complaint-img-item {
+  width: 100rpx;
+  height: 100rpx;
+  margin-right: 10rpx;
+  border: 2rpx solid #f4f4f4;
+}
+.complaint-img-item .img {
+  width: 100%;
+  height: 100%;
+}
+.info-content .communication {
+  margin: 20rpx 0;
+  padding: 10rpx 20rpx;
+  /* background-color: #CCCCCC; */
+  border: 2rpx dashed #CDCDCD;
+  overflow-y: scroll;
+  max-height: 400rpx;
+  
+}
+.info-content .dialogueFrom {
+  display: flex;
+}
+.info-content .dialogueFrom textarea{
+  border: 2rpx solid #CDCDCD;
+  border-radius: 10rpx;
+  padding: 0 10rpx;
+  height: 100rpx;
+  margin-right: 20rpx;
+}
+.info-content .dialogueFrom .submit {
+  background-color: #f42424;
+  color: #fff;
+  width: 140rpx;
+  line-height: 104rpx;
+  text-align: center;
+  border-radius: 10rpx;
+}
+
+.pot:last-child {
+  flex: 0 !important;
+}
+.pot{
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.flow-title {
+  position: absolute;
+  top: -50rpx;
+  left: -15rpx;
+  white-space: nowrap;
+}
+.circle{
+  border-radius: 100%;
+  margin: 0 20rpx;
+}
+.circle .icon {
+  position: absolute;
+  top: -34rpx;
+  left: 0;
+  margin: 0 10rpx;
+  font-size: 25rpx;
+}
+.line{
+  height: 2rpx;
+  width: 100%;
+}

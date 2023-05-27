@@ -1,0 +1,7 @@
+<view class="banner-container">
+  <swiper indicator-dots="true" indicator-active-color="#fff" autoplay="true" interval="2000" duration="1000" circular="true" style="min-height:340rpx;">
+    <swiper-item wx:for="{{banner}}" wx:key="index" bindtap="handleToPage" data-focus="{{item}}">
+      <image lazy-load src="{{item.pic_url}}" mode="widthFix"></image>
+    </swiper-item>
+  </swiper>
+</view>

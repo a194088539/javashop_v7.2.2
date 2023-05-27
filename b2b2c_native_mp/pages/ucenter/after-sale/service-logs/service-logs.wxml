@@ -1,0 +1,24 @@
+<view class="after-sale-container">
+  <view class="log-item" wx:for="{{logList}}" wx:for-item="log" wx:key="index">
+    <view class="item-line" wx:if="{{index === 0}}">
+      <view class="line-top"></view>
+      <view class="mark"></view>
+      <view class="line-down"></view>
+    </view>
+    <view class="item-line" wx:else>
+      <view class="line-top-more"></view>
+      <view class="mark-more"></view>
+      <view class="line-down"></view>
+    </view>
+    <view class="log-detail">
+      <view style="height:32rpx"></view>
+      <view class="detail-box">
+        <text class="box-title">处理信息</text>
+        <text class="box-content">{{ log.log_detail }}</text>
+        <text class="box-time">{{ log.operator }}（{{ log.log_time }}）</text>
+        <view style="height: 16px;"></view>
+        <view class="bottom-line"></view>
+      </view>
+    </view>
+  </view>
+</view>

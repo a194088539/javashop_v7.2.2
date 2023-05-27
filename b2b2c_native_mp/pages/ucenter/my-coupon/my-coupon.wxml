@@ -1,0 +1,43 @@
+<view class="my-coupons">
+  <view class="switch">
+    <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab" data-index='0'>可用优惠券</view>
+    <view class="item {{ showType == 1 ? 'active' : ''}}" bindtap="switchTab" data-index='1'>已用优惠券</view>
+    <view class="item {{ showType == 2 ? 'active' : ''}}" bindtap="switchTab" data-index='2'>已过期优惠券</view>
+  </view>
+  <scroll-view class='coupons-container' scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+    <en-empty wx:if="{{!couponsList.length && finished}}">暂无优惠券</en-empty>
+    <block wx:else>
+      <view class="coupon-item {{item.used_status == 1 ? 'used' : ''}} {{item.used_status == 2 ? 'overdue' : ''  }}" wx:for="{{couponsList}}" wx:key="index">
+        <view class="inner-coupon {{showType == 1 ? 'unavailable' : ''}}">
+          <view class='par'>
+            <view class="order_sn" wx:if="{{item.order_sn}}">订单号：{{item.order_sn}}</view>
+            <view class='info'>{{item.title}}</view>
+            <text class='sign'>￥</text>
+            <text>{{item.coupon_price}}</text>
+            <view class='info'>订单满{{item.coupon_threshold_price}}元</view>
+            <view class="shop-name" wx:if="{{item.use_scope}}">
+               仅限 
+               <text wx:if="{{item.use_scope === 'ALL'}}">全平台</text>
+               <text wx:if="{{item.use_scope === 'CATEGORY'}}">品类</text>
+               <text wx:if="{{item.use_scope === 'SOME_GOODS'}}">部分商品</text>
+               使用
+            </view>
+            <view class="shop-name" wx:else>
+               仅限 <navigator hover-class="none" url="/pages/shop/shop_id/shop_id?id={{item.seller_id}}">{{ item.seller_name }}</navigator> 店铺使用
+            </view>
+          </view>
+          <view class='copy'>
+            副券
+            <view class='time'>{{item.start_time}}</view>
+            <view class='time'>至</view>
+            <view class='time'>{{item.end_time}}</view>
+          </view>
+          <text class='i'></text>
+          <text class='is-used'></text>
+          <text class='is-overdue'></text>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+  <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+</view>

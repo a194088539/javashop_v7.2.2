@@ -1,0 +1,44 @@
+<view wx:if="{{goods.goods_off === 0}}" class="goods-auth">
+  <image src="../../static/images/background-goods-off.jpg" mode="widthFix"></image>
+  <text class="btn" bindtap="goHome">去首页</text>
+  <text class="btn" bindtap="goReturn">返回上页</text>
+</view>
+<block wx:else>
+  <view class="container">
+    <!-- 商品轮播图 -->
+    <goods-gallery gallery_list="{{goods.gallery_list}}"></goods-gallery>
+    <!-- 商品信息 -->
+    <view class="goods-info">
+      <view class="price_wrap">
+        <view class="left">
+          <text class="goods_price">￥{{goods.price}}</text>
+        </view>
+      </view>
+      <view class="name">{{goods.name}}</view>
+    </view>
+    <text class="separated"></text>
+    <!-- 店铺  -->
+    <shop-card shopId="{{goods.seller_id}}"></shop-card>
+    <text class="separated"></text>
+    <!-- 商品详情 商品参数 -->
+    <view class='tabs'>
+      <view class='tabs_nav'>
+        <view class="tab {{tabIndex == 0 ? 'tab-active':''}}" bindtap='handleTabs' data-index="0">商品详情</view>
+        <view class="tab {{tabIndex == 1 ? 'tab-active':''}}" bindtap='handleTabs' data-index="1">商品参数</view>
+      </view>
+      <view class='tab_content'>
+        <view class='goods_params'>
+          <view class='params_detail' wx-if="{{tabIndex == 0}}">
+            <view wx:for="{{mobile_intro}}" wx:key="index" class="{{item.type === 'text' ? 'm-text' : 'm-image'}}">
+              <text wx:if="{{item.type === 'text'}}">{{item.content}}</text>
+              <image wx:else src="{{item.content}}" mode="widthFix"></image>
+            </view>
+          </view>
+          <view class="param_list" wx-if="{{tabIndex == 1}}" >
+            <goods-params param_list="{{goods.param_list}}"></goods-params>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</block>

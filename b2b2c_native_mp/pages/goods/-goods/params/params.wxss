@@ -1,0 +1,25 @@
+.params_table{
+	width: 100%;
+	text-align: left;
+	border-collapse: collapse;
+}
+.params_table .params_tr{
+	display: flex;
+}
+.params_table .params_th{
+	width: 100%;
+	font-weight:600;
+	background-color: rgb(240, 240, 240);
+	border: 2rpx solid #ddd;
+	padding: 16rpx;
+	margin: 0;
+	outline: 0;
+}
+.params_table .params_td{
+	width: 50%;
+	border: 2rpx solid #ddd;
+	padding: 16rpx;
+	margin: 0;
+	outline: 0;
+	vertical-align: inherit;
+}

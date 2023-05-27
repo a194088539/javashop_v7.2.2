@@ -1,0 +1,76 @@
+<view class="complaint-detail">
+  <view class="complaint-flow" wx:if="{{flow}}">
+    <view class="pot" wx:for="{{flow}}" wx:key="index">
+        <view class="flow-title">{{item.text}}</view>
+        <view class="circle" wx:if="{{item.show_status === 1}}"><icon class="icon iconfont icon-xuanze1"></icon></view>
+        <view class="circle" wx:else><icon class="icon iconfont icon-xuanze3"></icon></view>
+        <view class='{{index == flow.length - 1?"blank":"line"}}' style="background:{{index < flow_active?'#f42424':'#969799'}}"></view>
+    </view>
+  </view>
+  <view class="conplaint-revoke" wx:if="{{complaintDetail.status === 'NEW'}}">
+    <view class="left">您还可以</view>
+    <view class="right" bindtap="handleCancel" data-id="{{complaintDetail.complain_id}}">撤销投诉</view>
+  </view>
+  <view class="complaint-info">
+    <view class="title">
+      <icon class="icon iconfont icon-daipinglun"></icon>
+      <text>投诉信息</text>
+    </view>
+    <view class="info-content">
+      <view class="cont"><view class="left">投诉商品：</view><view class="right">{{ complaintDetail.goods_name }}</view></view>
+      <view class="cont"><view class="left">投诉主题：</view><view class="right">{{ complaintDetail.complain_topic || '' }}</view></view>
+      <view class="cont"><view class="left">投诉时间：</view><view class="right">{{ complaintDetail.create_time }}</view></view>
+      <view class="cont"><view class="left">投诉内容：</view><view class="right">{{ complaintDetail.content }}</view></view>
+      <view class="cont"><view class="left">投诉凭证：</view>
+        <view class="right">
+          <view class="complaint-img-item" wx:if="{{images}}" wx:for="{{images}}" wx:for-item="img" wx:key="index">
+            <image class="img" src="{{img}}" bindtap="handleImagePreview" data-urls="{{images}}" data-img="{{img}}"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="complaint-info" wx:if="{{complaintDetail.appeal_content}}">
+    <view class="title">
+      <icon class="icon iconfont icon-daipinglun"></icon>
+      <text>商家申诉信息</text>
+    </view>
+    <view class="info-content">
+      <view class="cont"><view class="left">申诉时间：</view><view class="right">{{ complaintDetail.appeal_time }}</view></view>
+      <view class="cont"><view class="left">申诉内容：</view><view class="right">{{ complaintDetail.appeal_content }}</view></view>
+      <view class="cont"><view class="left">申诉凭证：</view>
+        <view class="right">
+          <view class="complaint-img-item" wx:if="{{appeal_images}}" wx:for="{{appeal_images}}" wx:for-item="img" wx:key="index">
+            <image class="img" src="{{img}}" bindtap="handleImagePreview" data-urls="{{appeal_images}}" data-img="{{img}}"></image>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="complaint-info" wx:if="{{complaintDetail.status === 'COMMUNICATION'|| complaintDetail.status === 'WAIT_ARBITRATION' || complaintDetail.status === 'COMPLETE'}}">
+    <view class="title">
+      <icon class="icon iconfont icon-xiaoxi"></icon>
+      <text>对话详情</text>
+    </view>
+    <view class="info-content">
+      <view class="">对话记录:</view>
+      <view class="communication" wx:if="{{communication_list && communication_list.length}}">
+        <view wx:for="{{communication_list}}" wx:key="index" style="margin:20rpx 0;">{{item.owner}}[{{item.create_time}}]：{{item.content}}</view>
+      </view>
+      <view class="communication" wx:else>暂无对话</view>
+      <view class="dialogueFrom" wx:if="{{complaintDetail.status === 'COMMUNICATION' || complaintDetail.status === 'WAIT_ARBITRATION'}}">
+        <textarea placeholder="编辑内容，字数限制200字" maxlength="200" bindinput="handleDialogueForm" value="{{dialogueForm.content}}"></textarea>
+        <text class="submit" bindtap="submitDialogueForm">发送</text>
+      </view>
+    </view>
+  </view>
+  <view class="complaint-info" wx:if="{{complaintDetail.arbitration_result}}">
+    <view class="title">
+      <icon class="icon iconfont icon-daipinglun"></icon>
+      <text>平台仲裁</text>
+    </view>
+    <view class="info-content">
+      <view>仲裁意见：{{complaintDetail.arbitration_result}}</view>
+    </view>
+  </view>
+</view>

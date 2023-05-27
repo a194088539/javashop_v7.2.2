@@ -1,0 +1,34 @@
+<bottomFrame id="bottomFrame" frameTitle="支付配送" >
+  <view class="payment-container">
+		<view class="pay-way">
+			<view class="pay-way-title">
+				<view class="pay-way-pic">
+					<image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAABkklEQVRoQ+2Z603EQAyEv6sAqADoADqgA6ACoDOoAKiAEqAEqACoADSnTZQLyS6S95Ho7H/RZm3PzF7im2xYeWxW3j8OoLWCroArYGQgdoQugTNj/lzb34DnqWRTANT0I3CSq3qmPO/ANSAwfYwBqOlX4DBT0dxpvoBzQGC2MQZwD9yEtW9A19rUMkTmLXAQmngI15MAPgfsC+mOXA1RXAAvob4IPZpT4CdyvBr2vy092dv4CDmAgjLttwJ6vHZPp4Ik76TW06Z/XFp/A0p0XKvzUEc1Twc1TUeoBYCP0TRgAqAjpJdJzdBLNNsRqtn4XC2TAg4gAwOuQAYSTSlcARN9GTa7AhlINKVwBUz0ZdhsUmBunNasorG3RpgAxKbRu+BelAax3wDmxmkpo7G3RpgUqNFgqsa/AMg06hywpRpbcgx76zNmLQrMkqzFrumotaizLjuxUyEla+11sS/3fNbcVUO64amBC5EiQ3/yr1L2+jCJbl7SBw6R+if8I19K99LrrkBphlP5XYEUQ6XXV6/ALxC1YjFI+/KwAAAAAElFTkSuQmCC"></image>
+				</view>
+				<text>支付方式</text>
+			</view>
+			<view class="pay-way-goods">
+				<view class="pay-way-checkbox">
+					<text bindtap="handleChoosePayment" data-payment="ONLINE" class="eui-checkbox-btn {{ payment_type === 'ONLINE' ? 'checked' : '' }}">在线支付</text>
+					<text wx:if="{{isAssemble !== true}}" bindtap="handleChoosePayment" data-payment="COD" class="eui-checkbox-btn {{ payment_type === 'COD' ? 'checked' : '' }}">货到付款</text>
+				</view>
+			</view>
+		</view>
+		<view class="time-way">
+			<view class="pay-way-title">
+				<view class="pay-way-pic">
+					<image src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAADeElEQVRoQ+2Zj5HNQQzHcxWgAypABagAFaACVIAKUAEqOCpABehAB6iA+ZjNm/zydn+b3c3dzM1cZt7Mu3v7J9/km2w2eyIXXE4uuP5yCcB48I6I3C2fqyJyy3n3u4j8FpEv5fM1w/urHkDJpyLyQERQekQA81FE3ooI4KZkFgCKvy7WntrYTcIrz2eAzABA8WcVrf8Ui2JVrMtHLQtgPHS9gMZjVyprvClAwkYZAcDmpxVuw2U2RvERAQSGIHasAPqhiPyMLBYFgAU/O56j+MsSkJG9WmMIfNaxQPDevQilIgBqysNXrJ4peAN6qoRA9ABAm2/G8vD88QRdokCh1XsTH4C4vUenHgCU13yO8rh7OuUFUbAfWUmDnP0AUZU9AFCEHK9CYEUDFU6/EJFXhd9B3Q/D8AQJQ4Wzopb5mqUEVsD6KqOc/2vm9rzcAudjAi8ceb+1OBkHuiBkG/0etWQGAPaCSpqd+E5m2kgNgLc+k5g8IlkAMBzGVLnhA7oGgCzwaMH6TM0C4L3woWTBA6IagF8mbY4ErvVQJgAb0KTVa3YjD8C6jLQ5WmHq2pkAWBPFNa1uKO0BaPpj0pG7BoIgG4Cl9SY1ewA26mfpkx0DrMfp/64Y8FO5f/z/0wOwJ+9M9jkrCllqb05mD8C6vnpwBGmUTSGfTg967wGYPUHPgkLNNc8DQM9p0Xqp6tXzoFAPQC0W/ZwwhQiQm2X2ShDbdNwDEPGABfDDXmv30uiTcrnoKXAev4fTaNZBlg0qfJBZVx3VHdlaDaxn67PdUsLXHSun8YB+u0NtMXdUn/XK6eolIkuz4Dr2chUqpzMuNEHdusOmLjSs2r3KdbfOGdC92rbKhdVLfYb6S5d6FFhpq6wC8G2V5mHXK9jsyRxq9a1qXk5Z24fdnLx+/R4AWouA0OscIDihow2uUTxYnouLXmVJm9C52anuAUAB3+rjf/CTblmm0AW0DeNQKzMCoAWCTAU3R3tGtUqTNqRtnoWUZ6EoAMZCJ6ij1aoqAgAsx111RO4XT/quH5yHSqkPHFYxn530N320A5Buri+R2h60T0y1lk2ktN4YacQDdiJxARD/PDTiATsWoMTVcOt+FoBujkUpwVuPdnuA9FGQ+SG61BZbBWDX1EduvAMwHytwG0Wxsj52z3rsMC8TwLIyMwtcApixWuacfy0ryzHCT+kiAAAAAElFTkSuQmCC"></image>
+				</view>
+				<text>送货时间</text>
+			</view>
+			<view class="pay-way-time">
+				<text bindtap="handleChooseTime" data-receivetime="任意时间" class="eui-checkbox-btn {{ receive_time === '任意时间' && 'checked' }}">任意时间</text>
+				<text bindtap="handleChooseTime" data-receivetime="仅工作日" class="eui-checkbox-btn {{ receive_time === '仅工作日' && 'checked' }}">仅工作日</text>
+				<text bindtap="handleChooseTime" data-receivetime="仅休息日" class="eui-checkbox-btn {{ receive_time === '仅休息日' && 'checked' }}">仅休息日</text>
+			</view>
+		</view>
+		<view class="big-btn">
+			<button bindtap="handleSavePayment">确认</button>
+		</view>
+	</view>
+</bottomFrame>

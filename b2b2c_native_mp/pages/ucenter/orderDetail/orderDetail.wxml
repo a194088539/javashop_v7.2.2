@@ -1,0 +1,184 @@
+<view class="order-container" wx:if="{{order}}">
+  <view class="notice-bar" wx:if="{{order.order_operate_allowable_vo.allow_check_cancel && order.order_status != 'CANCELLED'}}">
+    当前订单已经申请取消，您可以进入售后管理中查看取消进度
+  </view>
+  <!-- 交易状态 -->
+  <view class="trade-status" wx:if="{{order.ping_tuan_status}}">
+    <text class="trade-status-title"> <text class="iconfont icon-yunshu"></text> 交易状态</text>
+    <text class="price">{{order.ping_tuan_status}}</text>
+  </view>
+  <!-- 订单详情 -->
+  <view class='order-items'>
+    <view class='order-item'>
+      <text>订单编号：</text>
+      <text>{{order.sn || order_sn}}</text>
+    </view>
+    <view class='order-item'>
+      <text>下单时间：</text>
+      <text>{{order.create_time}}</text>
+    </view>
+    <view class='order-item'>
+      <text>配送时间：</text>
+      <text>{{ order.receive_time || '无' }}</text>
+    </view>
+    <view class='order-item'>
+      <text>订单备注：</text>
+      <text>{{ order.remark || '无' }}</text>
+    </view>
+    <view class='order-item'>
+      <text>订单状态：</text>
+      <text>{{ order.order_status_text || '无' }}</text>
+    </view>
+    <view class="order-item" wx:if="{{order.order_status_text === '已取消'}}">
+    <text>取消原因：</text>
+    <text wx:if="{{order.cancel_reason}}">{{ order.cancel_reason }}</text>
+    </view>
+    <text class='hr'></text>
+    <view class='order-item'>
+      <text>应付：</text>
+      <text class='price'>￥{{ order.order_price }}</text>
+    </view>
+  </view>
+  <!-- 订单商品信息 -->
+  <view class='sku-box'>
+    <view class='shop-info'>
+      <navigator hover-class="none" url="/pages/shop/shop_id/shop_id?id={{order.seller_id}}"  class='shop shop-name'>
+        <text class="iconfont icon-dianpu icon text"></text>
+        <text class="text">{{ order.seller_name }}</text>
+        <text class="iconfont icon-xuanze2 icon text"></text>
+      </navigator>
+      <view class='shop sku-num'>共计{{ num }}件商品</view>
+    </view>
+    <view class='sku-list'>
+      <view class='sku-item' wx:for="{{skuList}}" wx:key="index">
+        <navigator hover-class="none" url="/pages/goods/goods?goods_id={{item.goods_id}}" class='goods-img' >
+           <image src="{{item.goods_image}}"></image>
+        </navigator>
+        <navigator hover-class="none" class="goods-title" url="/pages/goods/goods?goods_id={{item.goods_id}}">
+          <text class='goods-name f28'>{{item.name}}</text>
+          <view wx:if="{{item.spec_list}}" class='sku-spec f28'>{{item.skuName}}</view>
+          <view wx:if="{{item.promotion_tags}}">
+            <text class="sku-act-tag" wx:for="{{item.promotion_tags}}" wx:key="index">{{item}}</text>
+          </view>
+        </navigator>
+        <view class='goods-info'>
+          <view class='price'>￥{{ item.purchase_price}}</view>
+          <view class='goods-num'>x{{ item.num}}</view>
+          <navigator hover-class="none" class="after-btn" wx:if="{{item.goods_operate_allowable_vo.allow_apply_service}}" url="/pages/ucenter/after-sale/choose-type/choose-type?orderSn={{order.sn}}&skuId={{item.sku_id}}" >申请售后</navigator>
+        </view>
+      </view>
+    </view>
+    <view class='order-btns'>
+      <navigator hover-class="none" wx:if="{{order.order_status_text !== '待付款' && skuList[0].goods_operate_allowable_vo.allow_order_complain && skuList[0].complain_status === 'NO_APPLY' || skuList[0].complain_status === 'COMPLETE'}}" class="a" url="/pages/ucenter/complaint-apply/complaint-apply?order_sn={{order.sn}}&sku_id={{skuList[0].sku_id}}"><text>交易投诉</text></navigator>
+      <navigator hover-class="none" wx:if="{{order.order_operate_allowable_vo.allow_service_cancel}}" class="a" url="/pages/ucenter/after-sale/apply-cancel/apply-cancel?order_sn={{order.sn}}"><text>取消订单</text></navigator>
+      <navigator hover-class="none" wx:if="{{order.logi_id && order.ship_no}}" class="a" url="/pages/ucenter/express/express?logi_id={{order.logi_id}}&&ship_no={{order.ship_no}}"><text>查看物流</text></navigator>
+      <navigator hover-class="none" wx:if="{{order.order_operate_allowable_vo.allow_comment}}" class="a" url="/pages/ucenter/comments/comments?order_sn={{order.sn}}"><text>去评论</text></navigator>
+    </view>
+  </view>
+  <!-- 赠品列表 -->
+  <view class="sku-box" wx:if="{{order.gift_list && order.gift_list.length}}">
+    <view class='shop-info'>
+      <view class="shop-name">
+      <text class="iconfont icon-dianpu "></text>
+        赠品列表
+      </view>
+    </view>
+    <view class="sku-list">
+      <view class="sku-item gift" wx:for="{{order.gift_list}}" wx:key="index">
+        <view class="goods-img"><image src="{{item.gift_img}}"></image></view>
+        <text class="goods-name">{{item.gift_name}}</text>
+        <view class="goods-info"><text class="price">￥{{item.gift_price}}</text></view>
+      </view>
+      <view class="sku-item gift" wx:if="{{order.gift_coupon}}" wx:key="gift_coupon">
+        <view class="goods-img"><image src="../../../static/images/icon-color-coupon.png"></image></view>
+        <view class="goods-name">价值<text class="price">￥{{order.gift_coupon.amount }}</text>的优惠券</view>
+      </view>
+    </view>
+  </view>
+  <!-- 发票信息 -->
+  <view class='receipt-cell'>
+    <view class='van-cell' wx:if="{{!order.receipt_history || !order.receipt_history.receipt_title}}">
+      <view class='van-cell_title'>
+        <text>发票信息</text>
+      </view>
+      <view class='van-cell_value'>
+        <text>无</text>
+      </view>
+    </view>
+    <view class='van-cell' wx:else>
+      <view class='van-cell_title'>
+        <text>发票信息</text>
+      </view>
+      <view class='van-cell_value' bindtap="popup">
+        <text>{{order.receipt_history.receipt_type +'-'+ order.receipt_history.receipt_title}}</text>
+      </view>
+      <text class="receipt-right iconfont icon-xuanze2"></text>
+    </view>
+  </view>
+  <!-- 订单价格 -->
+  <view class='information'>
+    <view class='address'>
+      <text class='name'>{{ order.ship_name }}</text>
+      <text>{{ order.ship_mobile }}</text>
+      <view class='region'>{{ order.ship_province }} {{ order.ship_city }} {{ order.ship_county }} {{ order.ship_town }} {{ order.ship_addr }}</view>
+    </view>
+    <view class='order-items'>
+      <view class='order-item'>
+        <text>商品总价：</text>
+        <text>￥{{ order.goods_price }}</text>
+      </view>
+      <view class='order-item' wx:if="{{order.coupon_price}}">
+        <text>优惠券抵扣：</text>
+        <text>-￥{{ order.coupon_price}}</text>
+      </view>
+      <view class='order-item' wx:if="{{order.cash_back}}">
+        <text>返现金额：</text>
+        <text>-￥{{ order.cash_back}}</text>
+      </view>
+      <view class='order-item' wx:if="{{order.use_point}}">
+        <text>积分抵扣：</text>
+        <text>-{{ order.use_point}}积分</text>
+      </view>
+      <view class='order-item'>
+        <text>运费：</text>
+        <text>￥{{ order.shipping_price }}</text>
+      </view>
+      <text class='hr'></text>
+      <view class='order-item'>
+        <text>在线支付金额：</text>
+        <text class='price'>￥{{ order.need_pay_money }}</text>
+      </view>
+      <view class='order-item'>
+        <text>预存款支付金额：</text>
+        <text class='price'>￥{{ order.balance }}</text>
+      </view>
+    </view>
+  </view>
+  <!-- 拼团详情 -->
+  <view class="assembly" wx:if="{{order.order_status !== 'CANCELLED' && order.order_status !== 'COMPLETED' && order.ping_tuan_status}}">
+    <navigator url="/pages/ucenter/assemble/assemble?order_sn={{order_sn}}&pay_status={{order.pay_status}}">
+      <text>查看拼团详情</text>
+    </navigator>
+  </view>
+  <!-- 发票详情 -->
+  <bottomFrame id="bottomFrame" frameTitle="开票详情">
+    <view class='valid' wx:if="{{order && order.receipt_history}}">
+      <view class='cell'>
+        <view class='title'>发票类型</view>
+        <view class='value'>{{order.receipt_history.receipt_type}}</view>
+      </view>
+      <view class='cell'>
+        <view class='title'>发票抬头</view>
+        <view class='value'>{{order.receipt_history.receipt_title}}</view>
+      </view>
+      <view class='cell'>
+        <view class='title'>发票内容</view>
+        <view class='value'>{{order.receipt_history.receipt_content}}</view>
+      </view>
+      <view class='cell' wx:if="{{order.receipt_history.receipt_title !== '个人'}}">
+        <view class='title'>发票税号</view>
+        <view class='value'>{{order.receipt_history.tax_no || ''}}</view>
+      </view>
+    </view>
+  </bottomFrame>
+</view>

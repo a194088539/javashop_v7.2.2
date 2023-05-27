@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.statistics.GoodsFrontStatisticsMapper">
+
+    <!-- 根据订单时间，分类路径，商品名称查询每个商品的商品下单总数，商品价格和下单总价格 -->
+    <select id="selectGoodsStatisticsPage" resultType="java.util.Map" useCache="false">
+        SELECT
+            goods_id,
+            goods_name ,
+            SUM(goods_num) AS numbers,
+            ROUND(price,2) AS price,
+            ROUND(price * SUM(goods_num),2) AS total_price
+        FROM ${tableName_es_sss_order_goods_data} oi
+        WHERE oi.order_sn IN (
+            SELECT sn FROM ${tableName_es_sss_order_data} o
+            WHERE seller_id = #{sellerId} AND o.create_time &gt;= #{startTime} AND o.create_time &lt;= #{endTime}
+        )
+        AND oi.category_path like concat('%',#{catPath},'%')
+        <if test="goodsName != null and goodsName != ''">
+            AND oi.goods_name LIKE concat('%',#{goodsName},'%')
+        </if>
+        GROUP BY goods_id,price
+    </select>
+
+    <!-- 根据订单时间，订单状态，商家id查询某个商品的信息和下单总价格 -->
+    <select id="selectGoodsOrderPriceTopPage" resultType="java.util.Map" useCache="false">
+        SELECT
+            goods_name,
+            goods_id,
+            price,
+            SUM(goods_num) * price AS sum
+        FROM ${tableName_es_sss_order_goods_data}
+        WHERE order_sn IN (
+            SELECT sn FROM ${tableName_es_sss_order_data} o
+            WHERE seller_id = #{sellerId}
+            AND order_status = #{orderStatus}
+            AND o.create_time &gt;= #{startTime}
+            AND o.create_time &lt;= #{endTime}
+        )
+        GROUP BY goods_id
+        ORDER BY SUM(goods_num) * price DESC
+    </select>
+
+    <!-- 根据订单时间，订单状态，商家id查询某个商品的信息和下单总数量 -->
+    <select id="selectGoodsNumTopPage" resultType="java.util.Map" useCache="false">
+        SELECT
+            goods_name,
+            goods_id,
+            SUM(goods_num) AS all_num
+        FROM ${tableName_es_sss_order_goods_data}
+        WHERE order_sn IN (
+            SELECT sn FROM ${tableName_es_sss_order_data} o
+            WHERE seller_id = #{sellerId}
+            AND order_status = #{orderStatus}
+            AND o.create_time &gt;= #{startTime}
+            AND o.create_time &lt;= #{endTime}
+        )
+        GROUP BY goods_id,goods_name
+        ORDER BY SUM(goods_num) DESC
+    </select>
+
+    <!-- 根据订单时间，订单状态，商家id查询某个商品的信息和总下单金额 -->
+    <select id="selectGoodsOrderPriceTopList" resultType="java.util.Map" useCache="false">
+        SELECT
+            goods_name,
+            goods_id,
+            price,
+            SUM(goods_num) * price AS sum
+        FROM ${tableName_es_sss_order_goods_data}
+        WHERE order_sn IN (
+            SELECT sn FROM ${tableName_es_sss_order_data} o
+            WHERE seller_id = #{sellerId}
+            AND order_status = #{orderStatus}
+            AND o.create_time &gt;= #{startTime}
+            AND o.create_time &lt;= #{endTime}
+        )
+        GROUP BY goods_id
+        ORDER BY SUM(goods_num) * price DESC
+        LIMIT #{topNum}
+    </select>
+
+    <!-- 根据订单时间，订单状态，商家id查询某个商品的信息和购买总数 -->
+    <select id="selectGoodsNumTopList" resultType="java.util.Map" useCache="false">
+        SELECT
+            goods_name,
+            goods_id,
+            SUM(goods_num) AS all_num
+        FROM ${tableName_es_sss_order_goods_data}
+        WHERE order_sn IN (
+            SELECT sn FROM ${tableName_es_sss_order_data} o
+            WHERE seller_id = #{sellerId}
+            AND order_status = #{orderStatus}
+            AND o.create_time &gt;= #{startTime}
+            AND o.create_time &lt;= #{endTime}
+        )
+        GROUP BY goods_id,goods_name
+        ORDER BY SUM(goods_num) DESC
+        LIMIT #{topNum}
+    </select>
+
+    <!-- 根据商家id，分类路径，订单时间查询商品数量和价格 -->
+    <select id="selectBySellerIdAndCatPath" resultType="java.util.Map" useCache="false">
+        SELECT
+            oi.goods_num AS goods_num,
+            oi.price AS elt_data
+        FROM es_sss_order_goods_data oi
+        LEFT JOIN es_sss_order_data o ON oi.order_sn=o.sn
+        WHERE seller_id = #{sellerId}
+        AND oi.category_path LIKE  concat('%',#{catPath},'%')
+        AND o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+    </select>
+</mapper>

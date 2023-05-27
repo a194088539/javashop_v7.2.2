@@ -1,0 +1,91 @@
+
+<view class="container">
+  <view class="switch">
+      <view class="item {{activeTab === 0 ? 'active' :''}}" bindtap="switchTab" data-index='0'>
+          我的提问
+      </view>
+      <view class="item {{activeTab === 1 ? 'active' :''}}" bindtap="switchTab" data-index='1'>
+          我的回答
+      </view>
+      <view class="item {{activeTab === 2 ? 'active' :''}}" bindtap="switchTab" data-index='2'>
+          邀请我答
+      </view>
+  </view>
+  <block wx:if="{{activeTab === 0}}">
+    <scroll-view class='ask-container' scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+      <en-empty wx:if="{{!askList.length && finished}}">暂无提问</en-empty>
+      <block wx:else>
+        <view class='faq_answers_list'>
+          <view class="list" wx:for="{{askList}}" wx:for-item="ask" wx:key="index">
+          <view bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{ask.txtStyle}}" class="inner txt">
+            <view class="faq_goods" bindtap="handleAskDetail" data-ask_id="{{ask.ask_id}}">
+              <view class="faq_goods_cover"><image src="{{ask.goods_img}}"></image></view>
+              <view class="faq_goods_info"><view class="faq_goods_info_name">{{ask.goods_name}}</view></view>
+            </view>
+            <view class="faq_question">
+              <view class="faq_question_wrap" bindtap="handleAskDetail" data-ask_id="{{ask.ask_id}}">
+                <view class="faq_question_head">{{ask.content}}</view>
+                <view class="faq_question_desc">
+                  {{ask.create_time}}
+                  <text class="faq_question_head_time">{{ask.reply_num}} 回答</text>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view data-ask_id="{{ask.ask_id}}" bindtap= "handleDeleteAsk" class="inner del">删除</view>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+  </block>
+  <block wx:if="{{activeTab === 1}}">
+    <scroll-view class='ask-container' scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+      <en-empty wx:if="{{!answerList.length && finished}}">暂无回答</en-empty>
+      <block wx:else>
+        <view class='faq_answers_list'>
+          <view class="list" wx:for="{{answerList}}" wx:for-item="answer" wx:key="index">
+            <view bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{answer.txtStyle}}" class="inner txt">
+              <view class="faq_goods">
+                <view class="faq_goods_cover"><image src="{{answer.goods_img}}"></image></view>
+                <view class="faq_goods_info"><view class="faq_goods_info_name">{{answer.goods_name}}</view></view>
+              </view>
+              <view class="faq_question">
+                <view class="faq_question_wrap">
+                  <view class="faq_question_head">{{answer.ask_content}}</view>
+                  <view class="faq_question_desc">
+                    <text>我的回答：</text>{{answer.content}}
+                  </view>
+                </view>
+              </view>
+            </view>
+            <view data-id="{{answer.id}}" bindtap= "handleDeleteAnswer" class="inner del">删除</view>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+  </block>
+  <block wx:if="{{activeTab === 2}}">
+    <scroll-view class='ask-container' scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+      <en-empty wx:if="{{!invitationList.length && finished}}">暂无邀请</en-empty>
+      <block wx:else>
+        <view class='faq_answers_list'>
+        <view class="list" wx:for="{{invitationList}}" wx:for-item="invitation" wx:key="index">
+          <view class="faq_goods">
+            <view class="faq_goods_cover"><image src="{{invitation.goods_img}}"></image></view>
+            <view class="faq_goods_info"><view class="faq_goods_info_name">{{invitation.goods_name}}</view></view>
+          </view>
+          <view class="faq_question">
+            <view class="faq_question_wrap">
+              <view class="faq_question_head">{{invitation.ask_content}}</view>
+              <view class="faq_question_desc faq_question_desc_answer">
+                <view class="oh_btn bg_white" bindtap="handleReplyAsk" data-ask_id="{{invitation.ask_id}}">去回答</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        </view>
+      </block>
+    </scroll-view>
+  </block>
+  <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+</view>

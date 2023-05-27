@@ -1,0 +1,24 @@
+<view class='faq_answers_list'>
+  <view class="faq_goods">
+    <view class="faq_goods_cover"><image src="{{ask.goods_img}}"></image></view>
+    <view class="faq_goods_info"><view class="faq_goods_info_name">{{ask.goods_name}}</view></view>
+  </view>
+  <view class="faq_question">
+    <view class="faq_question_wrap">
+      <view class="faq_question_head">{{ask.content}}</view>
+    </view>
+  </view>
+  <view class="faq_publish">
+    <view class="faq_publish_text">
+      <textarea placeholder="请输入您的回答，字数请控制在3-120个。" maxlength="120" value="{{ask_content}}" bindinput="handleAskContent"></textarea>
+    </view>
+    <view class="checked" bindtap="handleCheck">
+      <icon class="iconfont {{checked ? 'icon-xuanze1' : 'icon-xuanze'}}"></icon>
+      <text>匿名提问</text>
+    </view>
+    <view class="btns">
+      <view class="faq_publish_btn" bindtap="handleCancelSubmitAsk">取消</view>
+      <view class="faq_publish_btn {{disabled ? '' : 'disabled'}}" bindtap="handleSubmitQuestion">发布</view>
+    </view>
+  </view>
+</view>

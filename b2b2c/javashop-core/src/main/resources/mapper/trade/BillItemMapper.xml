@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.enation.app.javashop.mapper.trade.BillItemMapper">
+
+    <update id="updateBillItem">
+        UPDATE es_bill_item SET bill_id = #{sellerId} WHERE seller_id = #{billId} AND bill_id IS NULL AND (add_time &lt; #{startTime} and add_time >= #{lastTime}
+    </update>
+
+</mapper>
+

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.trade.snapshot.GoodsSnapshotMapper">
+
+    <!-- 根据id修改point值 -->
+    <update id="updatePointById">
+        UPDATE es_goods_snapshot SET `point` = #{point} WHERE snapshot_id = #{snapshotId}
+    </update>
+</mapper>

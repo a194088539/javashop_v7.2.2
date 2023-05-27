@@ -1,0 +1,151 @@
+<scroll-view class="container" scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll">
+  <view class="profile-info"  bindtap="goUserInfo">
+    <image class="avatar" src="{{userInfo.face || defaultFace}}"></image>
+    <view class="info">
+       <text class='name' wx:if="{{!showWxAuth}}">登录/注册</text>
+       <text class='name' wx:else>{{ userInfo.nickname}}</text>
+    </view>
+  </view>
+  <view class="member-nav">
+    <view class="member-nav-head" bindtap="goOrder">
+      <view class="left">我的订单</view>
+      <view class="right">
+        查看全部订单
+        <icon class="iconfont icon-xuanze2"></icon>
+      </view>
+    </view>
+    <view class="nember-nav-items">
+      <view class="item" bindtap="payment">
+        <icon class="icon iconfont icon-daifukuan"></icon>
+        <text>待付款</text>
+      </view>
+      <view class="item" bindtap="shipped">
+        <icon class="icon iconfont icon-daifahuo"></icon>
+        <text>待发货</text>
+      </view>
+      <view class="item" bindtap="received">
+        <icon class="icon iconfont icon-icon3"></icon>
+        <text>待收货</text>
+      </view>
+      <view class="item" bindtap="commented">
+        <icon class="icon iconfont icon-daipinglun"></icon>
+        <text>待评论</text>
+      </view>
+      <view class="item" bindtap="goAftersale">
+        <icon class="icon iconfont icon-tuikuan"></icon>
+        <text>退款/售后</text>
+      </view>
+    </view>
+  </view>
+  <view class="member-menu">
+    <view class="item" bindtap="goAccountBalance">
+      <view class="left">
+        <icon class="iconfont icon-zhanghuyue"></icon>
+        <text>账户余额</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+    <view class="item" bindtap="goReceipt">
+      <view class="left">
+        <icon class="iconfont icon-fapiao"></icon>
+        <text>我的发票</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+    <view class="item" bindtap="goCollect">
+      <view class="left">
+        <icon class="iconfont icon-shoucang2"></icon>
+        <text>我的收藏</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+    <view class="item" bindtap="goFootprint">
+      <view class="left">
+        <icon class="iconfont icon-wodezuji"></icon>
+        <text>我的足迹</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+    <view class="item" bindtap="goCoupon">
+      <view class="left">
+        <icon class="iconfont icon-youhuiquan"></icon>
+        <text>我的优惠券</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+    <view class="item" bindtap="goPoints">
+      <view class="left">
+        <icon class="iconfont icon-jifen"></icon>
+        <text>我的积分</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+    <view class="item" bindtap="goComments">
+      <view class="left">
+        <icon class="iconfont icon-pinglun3"></icon>
+        <text>评论管理</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+    <view class="item" bindtap="goAsk">
+      <view class="left">
+        <icon class="iconfont icon-zixun"></icon>
+        <text>咨询管理</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+    <view class="item" bindtap="goMessage">
+      <view class="left">
+        <icon class="iconfont icon-xiaoxi"></icon>
+        <text>站内消息</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+    <view class="item" bindtap="goDistribution">
+      <view class="left">
+        <icon class="iconfont icon-fenxiao"></icon>
+        <text>分销管理</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+    <view class="item" bindtap="goComplaint">
+      <view class="left">
+        <icon class="iconfont icon-tousu1"></icon>
+        <text>交易投诉</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+  </view>
+  <view class="member-menu">
+    <view class="item" bindtap="goIncreaseTicket">
+      <view class="left">
+        <icon class="iconfont icon-zengpiaozizhi"></icon>
+        <text>增票资质</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+    <view class="item" bindtap="goProfile">
+      <view class="left">
+        <icon class="iconfont icon-geren"></icon>
+        <text>个人信息</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+    <view class="item" bindtap="goAddress">
+      <view class="left">
+        <icon class="iconfont icon-dizhi"></icon>
+        <text>收货地址</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+    <view class="item" bindtap="goAccountSafe">
+      <view class="left">
+        <icon class="iconfont icon-zhanghuanquan"></icon>
+        <text>账户安全</text>
+      </view>
+      <view class="right"><icon class="iconfont icon-xuanze2"></icon></view>
+    </view>
+  </view>
+  <view wx:if="{{showWxAuth}}" class="logout" bindtap="exitLogin">退出登录</view>
+</scroll-view>
+<en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>

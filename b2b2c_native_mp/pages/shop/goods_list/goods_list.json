@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "en-empty": "../../../components/empty/empty",
+    "en-top": "../../../components/top/top"
+  }
+}

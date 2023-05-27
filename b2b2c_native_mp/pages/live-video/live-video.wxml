@@ -1,0 +1,37 @@
+<wxs src="../../utils/wxs.wxs" module="liveStatus"/>
+<view class="live-container">
+  <view class="live-tips">下面是为您精选的优质主播</view>
+  <en-empty wx:if="{{ finished && !liveVideoList.length }}" style="line-height:420px">暂无直播</en-empty>
+  <view class="live-list" wx:else>
+    <block wx:for="{{ liveVideoList }}" wx:key="index" wx:for-item="live">
+      <view class="live-item" bindtap="handleLiveVideo" data-roomid="{{ live.we_chat_room_id }}">
+        <view class="live-item-left">
+          <view class="live-cover-img">
+            <image class="cover-img" src="{{ live.background_image_url }}"></image>
+          </view>
+          <view class="live-status-box">
+            <text class="live-status">{{ liveStatus.liveStatusFilter(live.status) }}</text>
+            <!-- <text class="live-num">{{ live.live_num }}观看</text> -->
+          </view>
+          <view class="live-btn">
+            <text class="icon iconfont icon-zhibo"></text>
+          </view>
+        </view>
+        <view class="live-item-right">
+          <view class="live-title">{{ live.room_name }}</view>
+          <view class="live-seller">
+            <!-- <view class="seller-logo"><image class="seller-img" src="{{ live.seller_logo }}"></image></view> -->
+            <text class="seller-name">{{ live.seller_name }}</text>
+          </view>
+          <view class="live-goods" wx:if="{{ live.goods_info }}">
+            <view class="goods-info {{ index > 1 ? 'more-item' : ''}}" wx:for="{{ live.goods_info }}" wx:for-item="goods" wx:key="index">
+              <image class="goods-img" src="{{ goods.img_show_url }}"></image>
+              <view class="goods-more" wx:if="{{ index === 1 }}"></view>
+              <view class="goods-num" wx:if="{{ index === 1 }}">+{{ live.goods_info.length }}</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

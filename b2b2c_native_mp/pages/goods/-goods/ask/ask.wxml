@@ -1,0 +1,19 @@
+<view class="goods-ask">
+  <view class="detail-faqbox" bindtap="handleAskList">
+    <view class="detail_faqbox_head">
+      <view class="detail_faqbox_head_tit">问答专区</view>
+      <view class="detail_faqbox_head_empty" wx:if="{{finished && !asks.length}}">暂无提问信息，<text>去提问</text></view>
+      <view class="detail_faqbox_head_num" wx:else>查看全部问答
+        <image src="/static/images/address_right.png" background-size="cover"></image>
+      </view>
+    </view>
+    <view class="detail_faqbox_list">
+      <block wx:for="{{asks}}" wx:for-item="ask" wx:key="index">
+        <view class="list" wx:if="{{index < 4}}">
+          <view class="detail_faqbox_list_desc">{{ask.content}}</view>
+          <text class="detail_faqbox_list_num">共{{ask.reply_num}}个回答</text>
+        </view>
+      </block>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.enation.app.javashop.mapper.system.SiteNavigationMapper">
+
+    <!--查询sort最大值-->
+    <select id="queryMaxSort" resultType="Integer" useCache="false">
+        select MAX(sort) from es_site_navigation
+    </select>
+
+</mapper>

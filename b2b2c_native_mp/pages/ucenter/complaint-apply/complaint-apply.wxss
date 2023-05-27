@@ -1,0 +1,111 @@
+.complaint-apply {
+  display: flex;
+  padding: 20rpx 30rpx;
+}
+.complaint-apply .right {
+  flex: 1;
+}
+.complaint-apply .complaint-topic {
+  flex: 1;
+}
+.topic_remark {
+  color: #8f8f8f;
+  font-size: 22rpx;
+}
+.complaint-apply .complaint-icon {
+  font-size: 26rpx;
+  margin-top: -20rpx;
+}
+.complaint-apply .right textarea {
+  width: 500rpx;
+  height: 250rpx;
+  padding: 10rpx;
+  border: 2rpx solid #e3e3e3;
+}
+.btn {
+  display: flex;
+  padding: 50rpx 0;
+  justify-content: center;
+}
+.btn .txt{
+  padding: 15rpx 80rpx;
+  border-radius: 8rpx;
+  color: #fff;
+  background-color: #f42424;
+}
+.btn .txt:first-child{
+  color: #333;
+  border: 2rpx solid #8f8f8f;
+  background-color: #fff;
+  margin-right:80rpx;
+}
+.uploader {
+  width: 150rpx;
+  height: 150rpx;
+  line-height: 150rpx;
+  text-align: center;
+  border: 2rpx dashed #e3e3e3;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+}
+.uploader .icon {
+  color: #e3e3e3;
+}
+.complaint-photos {
+  display: flex;
+  align-items: center;
+}
+.complaint-photos .img-item {
+  position: relative;
+  width: 150rpx;
+  height: 150rpx;
+  margin-right: 20rpx;
+  box-sizing: border-box;
+  border: 2rpx solid #e3e3e3;
+}
+.complaint-photos .img-item icon{
+  position: absolute;
+  top: -40rpx;
+  right: -16rpx;
+  height:48rpx;
+  font-size: 32rpx;
+  color: #969799;
+  border-radius: 100%;
+}
+.complaint-photos image {
+  width: 100%;
+  height: 100%;
+}
+
+
+.actionsheet {
+  position: fixed;
+  z-index: 2018;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  color: #333;
+  max-height: 70%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background-color: #f8f8f8;
+}
+.actionsheet_cancel, .actionsheet_item {
+  font-size: 32rpx;
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0;
+  background-color: #fff;
+}
+.actionsheet_item .left {
+  margin: 0 20rpx;
+}
+.actionsheet_item .txt {
+  display: block;
+}
+.actionsheet_item{
+  border-bottom: 2rpx solid #e5e5e5;
+}
+/* .icon-xuanze1 {
+  color: #00ccff !important;
+} */

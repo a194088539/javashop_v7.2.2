@@ -1,0 +1,107 @@
+spring:
+  profiles:
+    active: dev #指定为开发环境
+  #  include: goods,order,member
+  #分库分表配置
+  shardingsphere:
+    props:
+      sql:
+        show: true
+    sharding:
+      default-data-source-name: ds0
+    #定义分库的数据源        
+    datasource:
+      names: ds0
+      ds0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/javashop01?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+        username: root
+        password: 123456
+        #  ds1:
+        #   type: com.alibaba.druid.pool.DruidDataSource
+        #  driver-class-name: com.mysql.jdbc.Driver
+        # url: jdbc:mysql://192.168.2.110:3306/javashop02?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+        # username: root
+        # password: 123456
+
+  #rabbitmq
+  rabbitmq:
+    host: 192.168.2.110
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+
+  #elasticsearch配置
+  data:
+    elasticsearch:
+      cluster-name: docker-cluster
+      cluster-nodes: 192.168.2.110:9300
+      index-name: shard
+
+#redis 配置
+redis:
+  type: standalone
+  config:
+    type: manual
+  host: 192.168.2.110
+  port: 6379
+  password:
+  maxIdle: 500
+  maxTotal: 500
+  maxWaitMillis: -1
+
+
+# 开发环境日志为debug
+logging:
+  config: classpath:logback-custom.xml #日志文件自定义名
+  # 可独立的日志ES
+  es:
+    action:
+      auto_create_index: true
+    cluster-name: docker-cluster
+    cluster-nodes: 192.168.2.110:9300
+    xpack:
+      security:
+        user:
+  level:
+    org.springframework: ERROR
+    com.enation.app: DEBUG
+
+#java 系统配置
+javashop:
+  product: stand #定义系统标准产品，微服务指定为： microservice
+  license[0]: 2eedaee47fa2757007a46355f885319a78d711a18aaaf41d4cbf5027d835bd530923a971658462ba76aa8ae237ba1c63c7b526d3d307598d4c1d47925ce0a7ec8880dbd52a20c121c257616e851d3b7c7561d62a762b866a79e5eed508f38d843dd797e1d336ae9e000733b5d0a324614b8290e7ac950a4cd2e9f54a7393f5b1,4a0a2e796ef27271c887b4e52d1670f6f30ab90108ef1cabdd5afe9b3eadb2195be1b3b2c6601035af594eb06c934cb3426dea5f0afd4d5eeaf63c50e5d673b357ee715dc898c48555252124de14e9e18667dfffa4d5f683 #license请向售后人员索要
+  #token加密秘钥，请务必更换此词串，且注意保密
+  token-secret: 85d6ce9da4e943ff4dcd367ab3d94164
+  timeout:
+    accessTokenTimeout:  1200 #访问token失效时间 单位秒
+    refreshTokenTimeout: 1800 #刷新token失效时间 单位秒
+    captchaTimout:  120       #验证码失效时间 单位秒
+    smscodeTimout: 120        #短信验证码失效时间 单位秒
+  isDemoSite: no
+  ssl: off #是否开启ssl
+  domain:
+    buyer: buyer.javamall.com.cn #配置为您买家端PC的域名
+    mobileBuyer: m.buyer.javamall.com.cn  #配置为您买家端WAP的域名
+    callback: api.buyerjavamall.com.cn #请配置为您站点的买家端的api域名，如果不配置此项默认读取站点买家端api的域名，用来做支付新人登录回调
+  referer:
+    - 'servicewechat.com'  #小程序referer
+    - 'unitradeprod.alipay.com' #支付宝同步回调 referer
+    - '*.weixin.qq.com'  #PC微信信任登录
+    - '192.168.2.109'
+    - '127.0.0.1'
+    - '192.168.2.144'
+
+xxl:
+  job:
+    admin:
+      addresses:  http://192.168.2.110:8080/xxl-job-admin
+    executor:
+      appname: job-executer
+      ip:
+      port: 6999
+      logpath:  /opt/xxl-serverlogs
+      logretentiondays: -1
+    accessToken:

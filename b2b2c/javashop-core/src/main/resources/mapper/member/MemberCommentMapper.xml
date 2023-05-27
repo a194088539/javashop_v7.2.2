@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.member.MemberCommentMapper">
+    <!-- 查询会员评论分页信息 -->
+    <select id="selectCommentVo" resultType="com.enation.app.javashop.model.member.vo.CommentVO" useCache="false">
+        select * from es_member_comment ${ew.customSqlSegment}
+    </select>
+
+    <!-- 查询商品的好评比例 -->
+    <select id="selectGoodsGrade" resultType="com.enation.app.javashop.model.member.vo.GoodsGrade" useCache="false">
+        select goods_id, sum( CASE grade WHEN 'goods' THEN 1 ELSE 0  END ) /count(*) good_rate from es_member_comment ${ew.customSqlSegment}
+    </select>
+
+    <!-- 查询某个商品的相关评论数量 -->
+    <select id="selectGoodsGradeCount" resultType="java.util.Map" useCache="false">
+        select count(1) count,grade,have_image from es_member_comment ${ew.customSqlSegment}
+    </select>
+
+    <!-- 查询会员评论集合 -->
+    <select id="selectCommentVoList" resultType="com.enation.app.javashop.model.member.vo.CommentVO" useCache="false">
+        select * from es_member_comment ${ew.customSqlSegment}
+    </select>
+</mapper>

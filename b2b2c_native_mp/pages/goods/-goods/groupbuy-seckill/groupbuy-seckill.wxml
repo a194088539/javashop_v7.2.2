@@ -1,0 +1,22 @@
+<view class="groupbuy-container" wx:if="{{promotion && showPromotion}}">
+  <prom-bar
+    wx:if="{{promotion.promotion_type === 'GROUPBUY'}}"
+    title="团购活动"
+    type="groupbuy"
+    price="{{promotion.groupbuy_goods_vo.price}}"
+    oldprice="{{promotion.groupbuy_goods_vo.original_price}}"
+    endtime="{{promotion.end_time}}"
+    bind:count-end="handleCountEnd"
+  >
+  </prom-bar>
+  <prom-bar
+    wx:if="{{promotion.promotion_type === 'SECKILL'}}"
+    title="限时抢购"
+    type="seckill"
+    price="{{promotion.seckill_goods_vo.seckill_price}}"
+    oldprice="{{promotion.seckill_goods_vo.original_price}}"
+    endtime="{{promotion.seckill_goods_vo.distance_end_time}}"
+    bind:count-end="handleCountEnd"
+  >
+  </prom-bar>
+</view>

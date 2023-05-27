@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.promotion.seckill.SeckillMapper">
+
+    <!-- 根据参数分页查询限时抢购入库 -->
+    <select id="selectCustomPage" resultType="com.enation.app.javashop.model.promotion.seckill.dos.SeckillDO" useCache="false">
+        SELECT * FROM es_seckill
+        WHERE delete_status = 'NORMAL'
+        <if test="param.seckillName != null and param.seckillName != ''">
+            AND seckill_name like concat('%',#{param.seckillName},'%')
+
+
+        </if>
+        <if test="param.status != null">
+            <if test="param.status = 'EDITING'">
+                AND seckill_status = #{param.status}
+            </if>
+            <if test="param.status = 'RELEASE'">
+                AND seckill_status = #{param.status}
+                AND start_day > #{toDayEndTime}
+            </if>
+            <if test="param.status = 'OPEN'">
+                AND seckill_status = 'RELEASE'
+                AND start_day &gt;= #{toDayStartTime}
+                AND start_day &lt;= #{toDayEndTime}
+            </if>
+            <if test="param.status = 'CLOSED'">
+                AND seckill_status = 'RELEASE'
+                AND start_day &lt; #{toDayStartTime}
+            </if>
+        </if>
+
+        <if test="param.startTime != null and param.startTime != 0">
+            AND start_day &gt;= #{param.startTime}
+        </if>
+        <if test="param.endTime != null and param.endTime != 0">
+            AND start_day &lt;= #{param.endTime}
+        </if>
+        ORDER BY start_day DESC
+    </select>
+</mapper>

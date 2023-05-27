@@ -1,0 +1,94 @@
+<wxs src="../../../utils/wxs.wxs" module="serviceStatus"/>
+<view class='after-sale'>
+  <view class="switch">
+    <view class="item {{ tabActive == 0 ? 'active' : ''}}" bindtap="switchTab" data-index='0'>申请售后</view>
+    <view class="item {{ tabActive == 1 ? 'active' : ''}}" bindtap="switchTab" data-index='1'>申请记录</view>
+  </view>
+  <view class="after-sale-container">
+    <scroll-view scroll-y="true" wx:if="{{tabActive === 0}}" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+      <en-empty wx:if="{{!orderList.length && finished}}">暂无可申请售后的订单</en-empty>
+      <view class="order-item">
+        <view class="react-view main-page" wx:for="{{orderList}}" wx:for-item="order" wx:key="index">
+          <view class="react-view seller-box">
+            <view class="seller-box-content">
+              <icon class="iconfont icon-dianpu"></icon>
+              <text>{{order.seller_name}}</text>
+            </view>
+          </view>
+          <view class="react-view goods-box" wx:for="{{order.sku_list}}" wx:for-item="goods" wx:key="index">
+            <view class="react-view goods-box-content">
+              <view class="react-view goods-box-img">
+                <image src="{{goods.goods_image}}"></image>
+              </view>
+              <view class="react-view goods-box-name">
+                <text class="goods-name">{{goods.name}}</text>
+                <view class="react-view">
+                  <text class="goods-num">数量:{{goods.num}}</text>
+                </view>
+              </view>
+            </view>
+            <view class="react-view btn-box">
+              <view class="react-view btn-box-left">
+                <view bindtap="handleTitleShow" wx:if="{{!goods.goods_operate_allowable_vo.allow_apply_service}}">
+                  <text>该商品无法申请售后</text>
+                  <image src="../../../static/images/icon-warn.png"></image>
+                </view>
+              </view>
+              <view class="react-view btn-box-right" bindtap="handleApplyService" data-sn="{{order.sn}}" data-sku_id="{{goods.sku_id}}" wx:if="{{goods.goods_operate_allowable_vo.allow_apply_service}}">
+                <text>申请售后</text>
+              </view>
+              <view class="react-view btn-box-right" wx:else style="border-color: rgb(250, 190, 183);">
+                <text style="color: rgb(250, 190, 183);">申请售后</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+    <scroll-view scroll-y="true" wx:if="{{tabActive === 1}}" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+      <en-empty wx:if="{{!afterSaleList.length && finished}}">暂无售后申请记录</en-empty>
+      <view class="order-item">
+        <view class="react-view main-page" wx:for="{{afterSaleList}}" wx:for-item="afterSale" wx:key="index">
+          <navigator hover-class="none" url="/pages/ucenter/after-sale/detail/detail?service_sn={{afterSale.service_sn}}">
+            <view class="react-view seller-box-content">
+              <view class="react-view service-num-box">
+                <text>服务单号：{{ afterSale.service_sn }}</text>
+                <view class="react-view" style="flex-direction: row; align-items: center;">
+                  <image src="../../../static/images/icon-huanhuo.png" wx:if="{{afterSale.service_type === 'CHANGE_GOODS'}}"></image>
+                  <image src="../../../static/images/icon-bufa.png" wx:if="{{afterSale.service_type === 'SUPPLY_AGAIN_GOODS'}}"></image>
+                  <image src="../../../static/images/icon-tuihuo.png" wx:if="{{afterSale.service_type === 'RETURN_GOODS' || afterSale.service_type === 'ORDER_CANCEL'}}"></image>
+                  <text>{{ afterSale.service_type_text }}</text>
+                </view>
+              </view>
+            </view>
+            <view class="react-view box-line"></view>
+            <view class="react-view goods-box">
+              <view class="react-view goods-box-content" style="padding:30rpx 0;"  wx:for="{{afterSale.goods_list}}" wx:for-item="goods" wx:key="index">
+                <view class="react-view goods-box-img">
+                  <image src="{{goods.goods_image}}"></image>
+                </view>
+                <view class="react-view goods-box-name">
+                  <text class="goods-name">{{goods.goods_name}}</text>
+                  <view class="react-view">
+                    <text class="goods-num">申请数量:{{goods.return_num}}</text>
+                  </view>
+                </view>
+              </view>
+              <view class="react-view" style="width:100%;">
+                <view class="react-view service-status-box">
+                  <text>{{afterSale.service_status_text}}</text>
+                  <view class="react-view" style="flex:1;">
+                    <text wx:if="{{afterSale.allowable.allow_ship}}">请您尽快将申请售后的商品退还给卖家</text>
+                    <text wx:else>{{serviceStatus.statusFilter(afterSale.service_status)}}</text>
+                  </view>
+                  <icon class="iconfont icon-xuanze2"></icon>
+                </view>
+              </view>
+            </view>
+          </navigator>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+<en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>

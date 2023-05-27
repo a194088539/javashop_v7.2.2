@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.enation.app.javashop.mapper.system.AdminUserMapper">
+
+    <!--查询平台管理员列表-->
+    <select id="selectPageDto" resultType="com.enation.app.javashop.model.system.dto.AdminUserDTO" useCache="false">
+        select u.*,r.role_name from es_admin_user u left join es_role r ON u.role_id=r.role_id where u.user_state=0
+        <where>
+        <if test="keyword != null and keyword != ''">
+            and (username like concat('%',#{keyword},'%') or department like concat('%' ,#{keyword} ,'%') or real_name like concat('%' ,#{keyword}), '%'))
+        </if>
+        </where>
+        order by date_line desc
+    </select>
+
+</mapper>

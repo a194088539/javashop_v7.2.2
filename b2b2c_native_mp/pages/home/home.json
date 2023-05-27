@@ -1,0 +1,10 @@
+{
+ "navigationBarTitleText": "商城首页-Javashop",
+ "usingComponents": {
+    "searchBar": "./-home/searchBar/searchBar",
+    "banner":"./-home/banner/banner",
+    "menu":"./-home/menu/menu",
+    "seckill":"./-home/seckill/seckill",
+    "en-top": "../../components/top/top"
+  }
+}

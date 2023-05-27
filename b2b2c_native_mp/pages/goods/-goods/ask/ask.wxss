@@ -1,0 +1,59 @@
+.goods-ask .detail-faqbox{
+  padding: 0 20rpx;
+}
+.goods-ask .detail_faqbox_head{
+  margin: 25rpx 0;
+}
+.goods-ask .detail_faqbox_head view{
+  display: inline-block;
+}
+.goods-ask .detail_faqbox_head .detail_faqbox_head_num{
+  float: right;
+}
+.goods-ask .detail_faqbox_head .detail_faqbox_head_num image{
+	width:45rpx;
+	height:45rpx;
+  vertical-align: middle;
+  margin-top: -8rpx;
+}
+.goods-ask .detail_faqbox_head .detail_faqbox_head_empty{
+  float: right;
+  color: #999;
+}
+.goods-ask .detail_faqbox_head .detail_faqbox_head_empty text{
+  color: #3985ff;
+}
+.goods-ask .list{
+  position: relative;
+  height: 68rpx;
+  line-height: 68rpx;
+}
+.goods-ask .list .detail_faqbox_list_desc{
+  padding-right: 160rpx;
+  color: #333;
+  font-size: 26rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.goods-ask .list .detail_faqbox_list_desc::before{
+  content: 'Q';
+  display: inline-block;
+  margin: -4rpx 10rpx 0 0;
+  width: 30rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  border-radius: 4rpx;
+  background-color: #ff9600;
+  color: #fff;
+  font-size: 24rpx;
+  vertical-align: middle;
+  text-align: center;
+}
+.goods-ask .list .detail_faqbox_list_num{
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #999;
+  font-size: 24rpx;
+}

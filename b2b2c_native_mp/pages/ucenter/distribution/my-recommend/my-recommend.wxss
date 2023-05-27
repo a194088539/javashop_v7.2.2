@@ -1,0 +1,5 @@
+.recommend-container .my-refereer{
+  padding-left: 50rpx;
+  font-size: 28rpx;
+  margin: 20rpx 0
+}

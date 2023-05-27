@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "咨询管理",
+  "usingComponents": {
+    "en-empty": "../../../components/empty/empty",
+    "en-top": "../../../components/top/top"
+  }
+}

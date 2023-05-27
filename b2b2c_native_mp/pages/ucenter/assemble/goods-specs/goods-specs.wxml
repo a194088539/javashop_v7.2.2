@@ -1,0 +1,61 @@
+<view class="spec-container">
+	<!-- 规格弹出框 -->
+  <bottomFrame id="bottomFrame" frameTitle=""  wx:if="{{showPopup}}">
+    <view class="header">
+      <view class="close" bindtap="hideFrame">
+        <image class="icon" src="/static/images/icon_close.png"></image>
+      </view>
+      <!--商品信息-->
+      <view class="img-info">
+        <view class="pic">
+          <image class="img" src="{{selectedSpecImg.thumbnail || selectedSku.thumbnail}}"></image>
+        </view>
+        <view class="info">
+          <view class="c">
+            <view wx:if="{{ promotions_price }}" class="p">{{ promotions_price }}</view>
+            <view wx:else class="p">￥{{ selectedSku.price || '0.00' }}</view>
+            <view class="sn"><text>商品编号：</text><text>{{selectedSku.sn}}</text></view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!--规格 & 数量-->
+    <scroll-view scroll-y="true" class="spec-con">
+      <view class="spec-sel">已选
+        <text>{{ selectedSku ? selected_spec_vals : '未选规格' }}</text>
+        <text> {{ buyNum }}件</text>
+      </view>
+      <!--规格列表-->
+      <view class="spec-item" wx:for="{{ specList }}" wx:for-item="spec" wx:key="index">
+        <view class="name">{{spec.spec_name}}</view>
+        <view class="values">
+          <view
+            bindtap="handleClickSpec"
+            wx:for="{{ spec.valueList }}"
+            wx:if="canSelected(specIndex, specList, spec_val)"
+            wx:for-item="spec_val"
+            wx:for-index="spec_val.spec_value_id"
+            wx:key="spec_index"
+            data-spec="{{ spec }}"
+            data-specIndex="{{ index }}"
+            data-spec_val="{{ spec_val }}"
+            class="value {{ spec_val.selected ? 'selected' : ''}} {{spec.spec_type === 1 ? 'spec-image' : ''}}">
+            {{ spec_val.spec_value }}
+          </view>
+        </view>
+      </view>
+      <!--数量增减-->
+      <view class="number-item">
+        <view class="name">数量</view>
+        <view class="selnum">
+          <view class="cut" bindtap="handleBuyNumChanged" data-symbol="-">-</view>
+          <input value="{{ buyNum }}" class="number" disabled="true" type="number"/>
+          <view class="add" bindtap="handleBuyNumChanged" data-symbol="+">+</view>
+        </view>
+      </view>
+    </scroll-view>
+    <view class="spec-footer">
+      <text class="buy-bth" bindtap="toAssembleBuyNow">确定</text>
+    </view>
+  </bottomFrame>
+</view>

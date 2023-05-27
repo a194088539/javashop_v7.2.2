@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.member.MemberWalletMapper">
+    <!-- 修改会员预存款余额 -->
+    <update id="updateDeposite">
+        update es_member_wallet set pre_deposite = pre_deposite - #{money} where member_id = #{member_id} and (pre_deposite - #{money}) >= 0
+    </update>
+
+</mapper>

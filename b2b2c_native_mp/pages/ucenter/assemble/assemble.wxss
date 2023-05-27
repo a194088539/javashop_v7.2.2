@@ -1,0 +1,181 @@
+.assemble-container{
+  padding-bottom: 20rpx;
+  background-color: #f1f1f1;
+  min-height: 100vh;
+}   
+.assemble-goods {
+  padding: 20rpx;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  background-color: #fff;
+}
+.assemble-goods image{
+  width: 200rpx;
+  height: 200rpx;
+  margin-right: 20rpx;
+}
+.assemble-goods .goods-info{
+  height: 170rpx;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.price{
+  color: #f42424 !important;
+  font-size: 30rpx !important;
+  margin-right: 20rpx;
+}
+.info,.info text{
+  color: #666;
+  font-size: 22rpx;
+}
+
+/* 邀請好友參團 */
+.pt_share {
+  position: relative;
+  width: 100%;
+  margin: 30rpx 0;
+  min-height: 800rpx;
+  background: #fff;
+}
+.pt_share .pt-bg {
+  width: 100%;
+}
+.assemble-invitations {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 480rpx;
+}
+.assemble-invitations .assemble-num {
+  text-align: center;
+  padding-top: 60rpx;
+}
+.assemble-invitations .assemble-num text {
+  display: inline-block;
+  background-color: #f7297c;
+  color: #fff;
+  min-width: 160rpx;
+  padding: 8rpx 0 ;
+  border-radius: 40rpx;
+}
+.assemble-invitations .assemble-num .num {
+  padding: 0;
+  height: 50rpx;
+  line-height: 18rpx;
+}
+.assemble-invitations .assemble-ul {
+  white-space: nowrap;
+  margin-top: 40rpx;
+}
+.assemble-invitations .assemble-ul .assemble-item{
+  text-align: center;
+}
+.assemble-invitations .assemble-ul .assemble-li{
+  position: relative;
+  padding: 0 35rpx;
+  display: inline-block;
+}
+.assemble-invitations .assemble-ul .assemble-li image{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  object-fit: contain;
+}
+.assemble-invitations .assemble-ul .assemble-li text{
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  display: inline-block;
+  padding: 6rpx 15rpx;
+  font-size: 18rpx;
+  border-radius: 34rpx;
+  border:4rpx solid #fff;
+  background-color: #fcc52d;
+}
+.assemble-invitations .assemble-invitations-countdown{
+  text-align: center;
+  margin-top: 30rpx;
+}
+.assemble-invitations .assemble-invitations-countdown .text{
+  text-align: center;
+  background-color: #333;
+  padding: 4rpx;
+  border-radius: 6rpx;
+  color: #fff;
+  font-size: 30rpx;
+}
+.assemble-invitations .invite-friends{
+  position: absolute;
+  bottom: 20rpx;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20rpx 40rpx;
+}
+.assemble-invitations .invite-friends .btn{
+  width: 100%;
+  line-height: 90rpx;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+  color: #fff;
+  text-align: center;
+  background-color: #f7297c;
+}
+.assemble-container .maybe-like-goods{
+  background-color: #fff;
+}
+.assemble-container .maybe-like-goods .title {
+  padding: 20rpx 30rpx;
+  font-size: 30rpx;
+}
+.assemble-container .maybe-like-goods .goods-list .list {
+  width: 30%;
+  padding: 0 12rpx;
+  display: inline-block;
+  cursor: pointer;
+}
+.assemble-container .maybe-like-goods .goods-list .list image{
+  width: 100%;
+  height: 200rpx;
+  border-radius: 2rpx;
+}
+.assemble-container .maybe-like-goods .goods-list .list .goods-name{
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  min-height: 72rpx;
+}
+.assemble-container .maybe-like-goods .goods-list .list text{
+  color: #333;
+  font-size: 32rpx;
+}
+.weixin-mask{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 50;
+  overflow: hidden;
+  background-color: hsla(0,0%,62%,.7);
+  background-size: 100% 100%;
+}
+.weixin-mask image{
+  position: absolute;
+  right: 100rpx;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+}

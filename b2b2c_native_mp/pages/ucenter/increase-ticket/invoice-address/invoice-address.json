@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "收票地址",
+  "usingComponents": {
+    "bottomFrame": "../../../../components/bottomFrame/bottomFrame",
+    "RegionPicker": "../../../../components/regionpicke/regionpicke"
+  }
+}

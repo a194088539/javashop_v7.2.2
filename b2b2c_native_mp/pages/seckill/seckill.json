@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "限时抢购",
+  "usingComponents": {
+    "en-empty": "../../components/empty/empty"
+  }
+}

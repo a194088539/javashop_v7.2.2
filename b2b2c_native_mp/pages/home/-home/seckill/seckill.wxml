@@ -1,0 +1,38 @@
+<view class="seckill-container" wx:if="{{time !== false && goodsList && goodsList.length}}">
+  <view class="title-seckill">
+    <navigator url="/pages/seckill/seckill" hover-class="none" class="seckill-left-link">
+      <view class="seckill-tit-txt">
+        <text class="txt">限时抢购</text>
+        <text class="txt iconfont icon-xianshiqianggou"></text>
+      </view>
+      <view class="seckill-times">
+        <text class="seckill-nth">{{timeLine.distance_time === 0 ? (onlyOne ? '距结束' : '距下轮开始') : '距开始'}}</text>
+        <view class="seckill-time">
+          <text class="txt">{{times.hours}}</text>:
+          <text class="txt">{{times.minutes}}</text>:
+          <text class="txt">{{times.seconds}}</text>
+        </view>
+        <!-- <view class="seckill-time">{{times.hours}}:{{times.minutes}}:{{times.seconds}}</view> -->
+      </view>
+    </navigator>
+    <navigator url="/pages/seckill/seckill" hover-class="none" class="seckill-more-link">
+      <text class="txt">更多商品</text>
+      <text class="icon iconfont icon-yuanyoujiantou"></text>
+    </navigator>
+  </view>
+  <view class="seckill-slider">
+    <scroll-view scroll-x="true" style="white-space:nowrap;">
+      <view class="seckill-item" wx:for="{{goodsList}}" wx:for-item="goods" wx:key="index">
+        <view class="seckill-item-img">
+          <navigator url="/pages/goods/goods?goods_id={{goods.goods_id}}&&sku_id={{goods.sku_id}}" class="seckill-new-link" hover-class="none">
+            <image lazy-load src="{{goods.goods_image}}"></image>
+          </navigator>
+        </view>
+        <view class="seckill-item-price">
+          <text class="new-price">￥{{goods.seckill_price}}</text>
+          <text class="original-price">￥{{goods.original_price}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

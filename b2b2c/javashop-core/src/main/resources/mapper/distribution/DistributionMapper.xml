@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.enation.app.javashop.mapper.distribution.DistributionMapper">
+
+    <!--整理解冻金额-->
+    <update id="updateCanRebate">
+        UPDATE es_distribution distribution SET can_rebate = can_rebate + IFNULL((
+        SELECT ( IFNULL( ( SELECT sum(disorder.grade1_rebate)
+        FROM es_distribution_order disorder WHERE member_id_lv1 = distribution.member_id
+        AND disorder.is_withdraw = 0 and disorder.settle_cycle &lt; #{currentData} ), 0 )+ IFNULL( (
+        SELECT sum(disorder.grade2_rebate) FROM es_distribution_order disorder
+        WHERE member_id_lv2 = distribution.member_id AND disorder.is_withdraw = 0
+        and disorder.settle_cycle &lt; #{currentData} ), 0 ) ) ), 0 )
+        ,commission_frozen = commission_frozen-IFNULL((
+        SELECT ( IFNULL( ( SELECT sum(disorder.grade1_rebate)
+        FROM es_distribution_order disorder WHERE member_id_lv1 = distribution.member_id
+        AND disorder.is_withdraw = 0 and disorder.settle_cycle &lt; #{currentData} ), 0 )+ IFNULL( (
+        SELECT sum(disorder.grade2_rebate) FROM es_distribution_order disorder
+        WHERE member_id_lv2 = distribution.member_id AND disorder.is_withdraw = 0
+        and disorder.settle_cycle &lt; #{currentData} ), 0 ) ) ), 0 )
+    </update>
+
+    <!--统计下线人数-->
+    <update id="updateDownline">
+        UPDATE es_distribution SET downline =(SELECT count from(
+        SELECT count(0) count FROM es_distribution a
+        WHERE a.member_id_lv2 = #{memberId} OR a.member_id_lv1 = #{memberId} ) counttable ) WHERE member_id = #{memberId}
+    </update>
+
+
+
+</mapper>

@@ -1,0 +1,74 @@
+<template name="theme3">
+  <view class='shop-coupons-list' wx:if="{{coupons && coupons.length}}">
+    <view class='coupon-item' wx:for="{{coupons}}" wx:key="index">
+      <view class='price'> <text>￥</text>{{item.coupon_price}}<text>元优惠券</text> </view>
+      <view class='threshold-price'>满{{item.coupon_threshold_price}}元使用</view>
+      <view class='coupon-btn' data-coupon="{{ item }}" bindtap='handleReceiveCoupon'>点击领取</view>
+    </view>
+  </view>
+  <view class='goods-anchor'>
+    <view class='hot-anchor' bindtap='hotanchor'>
+      <view class='title'>热卖</view>
+      <text>Hot-Goods</text>
+    </view>
+    <view class='rec-anchor' bindtap='recanchor'>
+      <view class='title'>推荐</view>
+      <text>Recommend</text>
+    </view>
+    <view class='new-anchor' bindtap='newanchor'>
+      <view class='title'>新品</view>
+      <text>New Arrival</text>
+    </view>
+  </view>
+  <view class='shop-tags theme3'>
+    <!-- 热门商品 -->
+    <view class='hot-goods'>
+      <view class='list-hot-goods'>
+        <navigator hover-class="none" class='item-hot-goods' wx:for="{{hotGoods}}" wx:key="goods_id" url="/pages/goods/goods?goods_id={{item.goods_id}}" >
+          <view class='img-hot-goods'>
+            <image class='img' src="{{item.big}}"></image>
+          </view>
+          <view class='intro-hot-goods'>
+            <view class='title'><text>{{item.goods_name}}</text></view>
+            <view class='price'>RMB:</view>
+            <view class='pic'>￥{{item.price}}</view>
+            <view class='num'>已销售:{{item.buy_count}}件</view>
+          </view> 
+        </navigator>
+      </view>
+    </view>
+    <!-- 推荐商品 -->
+    <view class='rec-goods'>
+      <view class='list-rec-goods'>
+        <navigator hover-class="none" class='item-rec-goods' wx:for="{{recGoods}}" wx:key="goods_id" url="/pages/goods/goods?goods_id={{item.goods_id}}">
+          <view class='img-rec-goods'>
+            <image class='img' src="{{item.big}}"></image>
+          </view>
+          <view class='intro-rec-goods'>
+            <view class='car'></view>
+            <view class='detail-rec-goods'>
+              <view class='title'>{{item.goods_name}}</view>
+              <view class='price'>￥{{item.price}}<text class='sales'> (销量: {{item.buy_count}})</text></view>
+            </view>
+          </view>
+        </navigator>
+      </view>
+    </view>
+    <!-- 新品上架 -->
+    <view class='new-goods'>
+      <view class='list-new-goods'>
+        <navigator hover-class="none" class='item-new-goods' wx:for="{{newGoods}}" wx:key="goods_id" url="/pages/goods/goods?goods_id={{item.goods_id}}">
+          <view class='img-new-goods'>
+            <image class='img' src="{{item.big}}"></image>
+          </view>
+          <view class='intro-new-goods'>
+            <view class='title'><text>{{item.goods_name}}</text></view>
+            <view class='price'>PMB: <text>￥{{item.price}}</text></view>
+          </view>
+        </navigator>
+      </view>
+    </view>
+    <navigator hover-class="none" url='../goods_list/goods_list?shop_id={{shop_id}}' class='more-goods'>更多本店商品 >></navigator>
+  </view>
+</template>
+

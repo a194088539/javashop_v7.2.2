@@ -1,0 +1,29 @@
+<view class="withdrawals-container valid">
+  <view class='cell-group'>
+    <view class='cell'>
+      <text class='title' decode="true">户&ensp;&ensp;&ensp;&ensp;名：</text>
+      <view class='value'>
+        <input type='text' placeholder='请输入户名' value="{{setWithdrawalsForm.member_name}}" bindinput='changeMemberName'></input>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>所属银行：</view>
+      <view class='value'>
+          <input type='text' placeholder='请输入所属银行' value="{{setWithdrawalsForm.bank_name}}" bindinput='changeBankName'></input>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>开户行号：</view>
+      <view class='value'>
+        <input placeholder='请输入开户行号'  value="{{setWithdrawalsForm.opening_num}}" bindinput='changeOpeningNum'></input>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>银行卡号：</view>
+      <view class='value'>
+        <input placeholder='请输入银行卡号'  value="{{setWithdrawalsForm.bank_card}}" bindinput='changeBankCard'></input>
+      </view>
+    </view>
+    <view class='big-btn' bindtap='handleReserveWithdrawalsParams'>保 存 设 置</view>
+  </view>
+</view>

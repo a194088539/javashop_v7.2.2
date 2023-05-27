@@ -1,0 +1,117 @@
+<wxs src="../../../utils/wxs.wxs" module="comments"/>
+<view class="comment-container" wx:if="{{commentsForm && commentsForm.comments}}">
+  <view class="cm-item" wx:for="{{commentsForm.comments}}" wx:for-item="cm" wx:key="index">
+    <block  wx:if="{{isFirstComment}}">
+      <view class="cm-nav">
+        <image class="cm-img" src="{{skulist[index].goods_image}}"></image>
+        <view class="cm-grade">
+          <text class="item-flower praise {{cm.grade === 'good'?'active':''}}" bindtap="getGood" data-cm="{{cm}}" data-index="{{index}}">
+            <text class="i"></text>
+            <text>好评</text>
+          </text>
+          <text class="item-flower average {{cm.grade === 'neutral'?'active':''}}" bindtap="getNeutral" data-cm="{{cm}}" data-index="{{index}}">
+            <text class="i"></text>
+            <text>中评</text>
+          </text>
+          <text class="item-flower bad-review {{cm.grade === 'bad'?'active':''}}" bindtap="getBad" data-cm="{{cm}}" data-index="{{index}}">
+            <text class="i"></text>
+            <text>差评</text>
+          </text>
+        </view>
+      </view>
+      <view class="cm-con">
+        <textarea value="{{cm.content}}" rows="4" placeholder="{{cm.grade === 'good' ?'宝贝满足您的期待吗？说说它的优点和美中不足的地方吧':'可以告诉我们您遇到了什么问题吗？'}}" bindinput="bankContent" data-index="{{index}}"></textarea>
+      </view>
+      <view class="cm-photo">
+        <view class="cm-photos">
+          <view wx:for="{{cm.images}}" wx:for-item="img" wx:for-index="imgindex" wx:key="index" class="img-item">
+            <icon class="iconfont icon-shanchu" bindtap="clearImage" data-cm="{{cm}}" data-index="{{index}}" data-imgindex="{{imgindex}}"></icon>
+            <image src="{{img}}" mode="aspectFill"></image>
+          </view>
+        </view>
+        <view class="cm-uploader" wx:if="{{cm.images.length<5}}">
+          <icon class="iconfont icon-xiangji" bindtap="uploader" data-cm="{{cm}}" data-index="{{index}}"></icon>
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="acm-nav" >
+        <view><image class="cm-img" src="{{skulist[index].goods_image}}"></image></view>
+        <view class="comments_score">
+          <block wx:if="{{cm.$$goods_comment.additional_comment}}">
+            <view>追评日期：{{cm.$$goods_comment.additional_comment.create_time}}</view>
+            <view>追评评分：{{cm.$$goods_comment.additional_comment.grade === 'good'?'好评':cm.$$goods_comment.additional_comment.grade === 'neutral' ? '中评' :cm.$$goods_comment.additional_comment.grade === 'bad'? '差评' : ''}}</view>
+            <view>追评内容：{{cm.$$goods_comment.additional_comment.content}}</view>
+            <view wx:if="{{cm.$$goods_comment.additional_comment.images && cm.$$goods_comment.additional_comment.images.length}}">
+              <text class="comments-images-label">追评图片：</text>
+              <image class="comments-images" wx:for="{{cm.$$goods_comment.additional_comment.images}}" wx:for-item="img" wx:key="index" src="{{img}}" mode="aspectFill"></image>
+            </view>
+            <view>追评审核状态：
+              <text wx:if="{{cm.$$goods_comment.additional_comment.audit_status === 'WAIT_AUDIT'}}">您的追评待审核</text>
+              <text wx:if="{{cm.$$goods_comment.additional_comment.audit_status === 'REFUSE_AUDIT'}}">您的追评审核未通过</text>
+              <text wx:if="{{cm.$$goods_comment.additional_comment.audit_status === 'PASS_AUDIT'}}">您的追评审核通过</text>
+            </view>
+          </block>
+          <block wx:else>
+            <view>初评日期：{{cm.$$goods_comment.create_time}}</view>
+            <view>初评评分：{{cm.$$goods_comment.grade === 'good'?'好评':cm.$$goods_comment.grade === 'neutral' ? '中评' :cm.$$goods_comment.grade === 'bad'? '差评' : ''}}</view>
+            <view>初评内容：{{cm.$$goods_comment.content}}</view>
+            <view wx:if="{{cm.$$goods_comment.images && cm.$$goods_comment.images.length}}">
+              <text class="comments-images-label">初评图片：</text>
+              <image class="comments-images" bindtap="handleImagePreview" data-urls="{{cm.$$goods_comment.images}}" data-img="{{img}}" wx:for="{{cm.$$goods_comment.images}}" wx:for-item="img" wx:key="index" src="{{img}}" mode="aspectFill"></image>
+            </view>
+            <view>初评审核状态：
+              <text wx:if="{{cm.$$goods_comment.audit_status === 'WAIT_AUDIT'}}">您的初评待审核，不能进行追评</text>
+              <text wx:if="{{cm.$$goods_comment.audit_status === 'REFUSE_AUDIT'}}">您的初评审核未通过，不能进行追评</text>
+              <text wx:if="{{cm.$$goods_comment.audit_status === 'PASS_AUDIT'}}">您的初评审核通过</text>
+            </view>
+          </block>
+        </view>
+        <view class="cm-con" wx:if="{{!cm.$$goods_comment.additional_comment && cm.audit_status === 'PASS_AUDIT'}}">
+          <textarea value="{{cm.content}}" rows="4" placeholder="{{cm.grade === 'good' ?'宝贝满足您的期待吗？说说它的优点和美中不足的地方吧':'可以告诉我们您遇到了什么问题吗？'}}" bindinput="bankContent" data-index="{{index}}"></textarea>
+        </view>
+        <view class="cm-photo" wx:if="{{!cm.$$goods_comment.additional_comment && cm.audit_status === 'PASS_AUDIT'}}">
+          <view class="cm-photos">
+            <view wx:for="{{cm.images}}" wx:for-item="img" wx:for-index="imgindex" wx:key="index" class="img-item">
+              <icon class="iconfont icon-shanchu" bindtap="clearImage" data-cm="{{cm}}" data-index="{{index}}" data-imgindex="{{imgindex}}"></icon>
+              <image src="{{img}}" mode="aspectFill"></image>
+            </view>
+          </view>
+          <view class="cm-uploader" wx:if="{{cm.images.length<5}}">
+            <icon class="iconfont icon-xiangji" bindtap="uploader" data-cm="{{cm}}" data-index="{{index}}"></icon>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="shop-grade" wx:if="{{isFirstComment}}">
+    <view class="shop-grade-nav"><icon class="iconfont icon-dianpu"></icon> 店铺评分</view>
+    <view class="rating-star">
+      <view class="logistics-star">
+        <view class="text"><text>描述相符</text></view>
+        <view class="star">
+          <icon wx:for="{{diagnosisStar}}" wx:key="index" bindtap="descriptionScoreStar" data-star="{{item}}" class="iconfont {{commentsForm.description_score>=item ? 'icon-xingxing' : 'icon-xingxing1'}}"></icon>
+        </view>
+
+        <view class="grade-text"><text>{{comments.countGradeText(commentsForm.description_score)}}</text></view>
+      </view>
+      <view class="logistics-star">
+        <view class="text"><text>服务态度</text></view>
+        <view class="star">
+          <icon wx:for="{{diagnosisStar}}" wx:key="index" bindtap="serviceScoreStar" data-star="{{item}}" class="iconfont {{commentsForm.service_score>=item ? 'icon-xingxing' : 'icon-xingxing1'}}"></icon>
+        </view>
+        <view class="grade-text"><text>{{comments.countGradeText(commentsForm.service_score)}}</text></view>
+      </view>
+      <view class="logistics-star">
+        <view class="text"><text>物流服务</text></view>
+        <view class="star">
+          <icon wx:for="{{diagnosisStar}}" wx:key="index" bindtap="deliveryScoreStar" data-star="{{item}}" class="iconfont {{commentsForm.delivery_score>=item ? 'icon-xingxing' : 'icon-xingxing1'}}"></icon>
+        </view>
+        <view class="grade-text"><text>{{comments.countGradeText(commentsForm.delivery_score)}}</text></view>
+      </view>
+    </view>
+  </view>
+  <cover-view class="cm-btn" wx:if="{{button_show}}" bindtap="submitForm">
+    <cover-view class="text">发表评论</cover-view>
+  </cover-view>
+</view>

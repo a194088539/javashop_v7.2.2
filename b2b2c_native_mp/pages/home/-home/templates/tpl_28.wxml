@@ -1,0 +1,15 @@
+<template name="tpl_28">
+  <view class="floor-layout tpl-28">
+    <view class="layout-main">
+      <swiper indicator-dots="true" indicator-active-color="#007aff" circular="true" style="height:{{imgheights[current]}}rpx;" bindchange="handleChange">
+        <swiper-item wx:for="{{item.blockList}}" wx:for-item="block" wx:key="index">
+          <view class="layout-item">
+            <view bindtap="blockHref" data-block="{{block}}">
+              <image lazy-load wx:if="{{block.block_type === 'IMAGE'}}" src="{{block.block_value}}" mode="widthFix" bindload="handleImageLoad" data-id="{{index}}"></image>
+            </view>
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
+</template>

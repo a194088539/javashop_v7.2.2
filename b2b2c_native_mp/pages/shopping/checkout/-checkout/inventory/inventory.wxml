@@ -1,0 +1,83 @@
+<view class="inventories">
+  <view class="inventories-container" wx:for="{{ inventories }}" wx:for-item="shop" wx:for-index="shopIndex" wx:key="shopIndex">
+	  <!--店铺信息-->
+	  <view class="shop-box">
+      <icon class="ivn-icon iconfont icon-dianpu"></icon>
+		  <text class="ivn-name">{{ shop.seller_name }}</text>
+	  </view>
+	  <!--运费合计 & 店铺总重-->
+	  <view class="shop-inner-cell">
+		  运费合计：<text class="price">￥{{ shop.price.freight_price }}</text>
+		  总重量：<text class="price">{{ shop.weight }}kg</text>
+	  </view>
+    <!--促销信息-->
+	  <view wx:if="{{ shop.promotion_notice && shop.showPromotionNotice }}" class="shop-inner-cell">
+		  <view class="promotion-notice">{{ shop.promotion_notice }}</view>
+	  </view>
+	  <!--商品信息-->
+	  <view class="shop-goods-info">
+		  <view class="sku-item"  wx:for="{{ shop.sku_list }}" wx:for-index="skuIndex" wx:for-item="sku" wx:key="skuIndex">
+			  <view class="sku-img">
+				  <image src="{{ sku.goods_image }}"></image>
+				  <text wx:if="{{ !sku.is_ship }}" class="out-of-stock-tip">该地区无货</text>
+			  </view>
+			  <view class="sku-info">
+				  <view class="sku-name">{{ sku.name }}</view>
+				  <view wx:if="{{ sku.spec_list }}" class="sku-spec">{{ sku.skuName }}</view>
+				  <view wx:if="{{ sku.promotion_tags && sku.promotion_tags.length }}">
+					  <text class="sku-act-tag" wx:for="{{ sku.promotion_tags }}" wx:for-item="tag" wx:key="index">{{ tag }}</text>
+				  </view>
+				  <view class="sku-price">
+					  <text>
+						  <text class="i price">¥{{ sku.purchase_price }}</text>
+						  <text class="original-price" wx:if="{{ sku.original_price }}">¥{{ sku.original_price }}</text>
+						  <text class="sku-weight">{{ sku.goods_weight }}kg</text>
+					  </text>
+					  <text class="sku-num">x{{ sku.num }}</text>
+				  </view>
+			  </view>
+		  </view>
+      <!-- 赠品信息 -->
+      <view class="act-cell" wx:if="{{shop.gift_coupon_list.length || shop.gift_list.length}}">
+        <view class="act-box" bindtap="handleShowActs" data-shop="{{shop}}">
+          <view class="inner-act">
+            <text class="inner-act-tit">赠品</text>
+            <view class="inner-act-list">
+              <view wx:for="{{shop.gift_coupon_list}}" wx:for-item="coupon" wx:key="index">
+                {{coupon.amount}}元的优惠券
+              </view>
+              <view wx:for="{{shop.gift_list}}" wx:for-item="gift" wx:key="index">
+                价值{{gift.gift_price}}元的{{gift.gift_name}}
+              </view>
+            </view>
+            <icon class="iconfont icon-xuanze2"></icon>
+          </view>
+        </view>
+      </view>
+	  </view>
+  </view>
+  <bottomFrame id="bottomFrame" frameTitle="赠品详情" >
+    <scroll-view scroll-y="true" class="acts-popup">
+      <view class="acts-container" wx:for="{{surActsShop.gift_coupon_list}}" wx:for-item="coupon" wx:key="index">
+        <view class="popup-act-item">
+          <view class="popup-act-img">
+            <image src="../../../../../static/images/icon-color-coupon.png"></image>
+          </view>
+          <view class="popup-act-name">
+            价值 <text class="price">{{ coupon.amount}}元</text> 的优惠券 [{{ coupon.use_term }}]
+          </view>
+        </view>
+      </view>
+      <view class="acts-container" wx:for="{{surActsShop.gift_list}}" wx:for-item="gift" wx:key="index">
+        <view class="popup-act-item">
+          <view class="popup-act-img">
+            <image src="{{gift.gift_img}}" alt="{{gift.gift_name}}"></image>
+          </view>
+          <view class="popup-act-name">
+            价值 <text class="price">{{ gift.gift_price }}元</text> 的{{ gift.gift_name }}
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </bottomFrame>
+</view>

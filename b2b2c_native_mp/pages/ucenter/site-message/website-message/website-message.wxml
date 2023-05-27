@@ -1,0 +1,23 @@
+<view class="site-message">
+  <view class="switch">
+    <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab" data-index='0'>未读消息</view>
+    <view class="item {{ showType == 1 ? 'active' : ''}}" bindtap="switchTab" data-index='1'>已读消息</view>
+  </view>
+  <scroll-view class='message-container' scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}" bindscroll="scroll" bindscrolltolower="loadMore">
+    <en-empty wx:if="{{!messageList.length && finished}}">暂无消息</en-empty>
+    <view wx:else class="message-list">
+      <view class="message-item" wx:for="{{messageList}}" wx:key="index">
+        <view class="msg-date">{{item.send_time}}</view>
+        <view class="msg-content">
+          <view bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.txtStyle}}" class="inner txt">
+            <view wx:if="{{item.title}}"  class="msg-title">{{item.title}}</view>
+            <view wx:else class="msg-title">系统消息</view>
+            <view class="msg-detail">{{item.content}}</view>
+          </view>
+          <view data-message_id="{{item.id}}" bindtap= "handleDeleteMessage" class="inner del">删除</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+</view>

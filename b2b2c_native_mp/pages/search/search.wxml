@@ -1,0 +1,42 @@
+  <view class="search-header">
+    <view class="left" bindtap="isShowSearchType">{{searchType}} <icon class="iconfont icon-xiajiantoushixinxiao"></icon></view>
+    <view class="search-type-box" wx:if="{{showSearchType}}">
+      <view class="box">
+        <view class="item" bindtap="searchTypeGood"> <icon class="iconfont icon-shangpin"></icon> 商品</view>
+        <view class="item" bindtap="searchTypeShop"> <icon class="iconfont icon-dianpu"></icon> 店铺</view>
+      </view>
+    </view>
+    <view class="input-box">
+      <image class="icon" src="/static/images/search2.png"></image>
+      <input name="input" placeholder='搜索商品/店铺' class="keywrod" focus="true" value="{{keyword}}" confirm-type="search" bindinput="inputChange" bindfocus="inputFocus" bindconfirm="onKeywordConfirm" />
+      <image class="del" wx:if="{{keyword}}" bindtap="clearKeyword" src="/static/images/clearIpt.png"></image>
+    </view>
+    <view class="right" bindtap="closeSearch">取消</view>
+  </view>
+  <view class="no-search">
+    <view class="search-keywords search-history" wx:if="{{!autoCompleteData.length  && historyKeyword.length}}">
+      <view class="h">
+        <text class="title">历史记录</text>
+        <image class="icon" bindtap="clearHistory" src="/static/images/del1.png"></image>
+      </view>
+      <view class="b">
+        <view class="item" bindtap="onKeywordTap" data-keyword="{{item}}" wx:for="{{historyKeyword}}" wx:key="item">{{item.value}}</view>
+      </view>
+    </view>
+    <view class="search-keywords search-hot" wx:if="{{!autoCompleteData.length && hotKeyword.length}}">
+      <view class="h">
+        <text class="title">热门搜索</text>
+      </view>
+      <view class="b">
+        <view class="item" bindtap="onKeywordTap" data-keyword="{{item}}" wx:for="{{hotKeyword}}" wx:key="item">{{item.hot_name}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="auto-complete" wx:if="{{ searchType === '商品' && autoCompleteData.length }} ">
+    <block wx:for="{{autoCompleteData}}" wx:for-item="word" wx:key="index">
+      <view class="auto-complete-item" bindtap="handleOnSubmit" data-keyword="{{word.words}}">
+        <text>{{word.words}}</text>
+        <text>约{{word.goods_num}}个商品</text>
+      </view>
+    </block>
+  </view>

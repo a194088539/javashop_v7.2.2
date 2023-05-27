@@ -1,0 +1,170 @@
+<view class="choose-type">
+  <view class="after-sale-container">
+    <view class="goods-info-box">
+      <view class="seller-tip">
+        <text class="tip01">本次售后服务将由 <text class="tip02">{{applyInfo.seller_name}}</text>为您提供</text>
+      </view>
+      <view class="goods-info-item">
+        <view class="goods-img">
+          <image src="{{applyInfo.goods_img}}"></image>
+        </view>
+        <view class="goods-name">
+          <text>{{applyInfo.goods_name}}</text>
+          <view class="price-num">
+            <text class="price-show">单价：￥{{applyInfo.goods_price}}</text>
+            <text class="price-show">购买数量：{{applyInfo.buy_num}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="apply-num">
+        <text class="apply-num-text">申请数量</text>
+        <view class="change-num">
+          <button disabled="{{disabled_reduce}}" size="mini" hover-class="none" bindtap="handleUpdateReturnNum" data-syboml="-">-</button>
+          <input class="" type="number" value="{{applyForm.return_num}}" bindinput="handleUpdateReturnNum" ></input>
+          <button disabled="{{disabled_add}}" size="mini" hover-class="none" bindtap="handleUpdateReturnNum" data-syboml="+">+</button>
+        </view>
+      </view>
+    </view>
+    <view class="apply-info-box">
+      <view class="apply-reason">
+        <view class="reason-show" bindtap="handleReasonSelectShow">
+          <text>申请原因</text>
+          <view class="reason-show">
+            <text style="font-weight: bold;">{{applyForm.reason}}</text>
+            <icon class="iconfont icon-xuanze2" style="margin:-20rpx 0 0 10rpx;font-size:26rpx"></icon>
+          </view>
+        </view>
+        <view class="black-line"></view>
+        <view class="desc-show">
+          <textarea class="desc-text" maxlength="200" placeholder="请描述申请售后服务的具体原因，不能超过200个字符，还可上传最多5张图片哦~" value="{{applyForm.problem_desc}}" bindinput="handleDescText"></textarea>
+        </view>
+        <view class="upload-img">
+          <view class="img-list" wx:if="{{applyForm.images && applyForm.images.length > 0}}" wx:for="{{applyForm.images}}" wx:for-item="image" wx:key="index">
+            <icon class="iconfont icon-shanchu" bindtap="clearImage" data-index="{{index}}"></icon>
+            <image src="{{image}}" mode="aspectFill"></image>
+          </view>
+          <view class="file">
+            <view class="file-box" wx:if="{{applyForm.images.length < 5}}">
+              <icon class="iconfont icon-xiangji" bindtap="handleUploader"></icon>
+            </view>
+          </view>
+        </view>
+        <view style="color:red">为了帮您更好的解决问题,请上传照片凭证</view>
+      </view>
+    </view>
+    <view class="refund-info-box" wx:if="{{service_type === 'RETURN_GOODS'}}">
+      <view class="refund-item">
+        <view class="item-key">
+          <text>退款方式</text>
+          <view class="item-val">
+            <text wx:if="{{applyInfo.is_retrace}}">原路退回</text>
+            <text wx:elif="{{applyInfo.is_retrace_balance}}">预存款退款</text>
+            <text wx:else>账号退款</text>
+          </view>
+          <image src="../../../../static/images/icon-warn.png" bindtap="handleTitleShow"></image>
+        </view>
+        <view wx:if="{{!applyInfo.is_retrace && !applyInfo.is_retrace_balance}}">
+          <view class="item-key" bindtap="handleAccountTypeShow">
+            <text>账户类型</text>
+            <view class="item-val">
+              <view class="reason-show">
+                <text style="font-weight: bold;">{{accountTypeText}}</text>
+                <icon class="iconfont icon-xuanze2" style="margin:-20rpx 0 0 10rpx;font-size:26rpx"></icon>
+              </view>
+            </view>
+          </view>
+          <view wx:if="{{applyForm.account_type === 'BANKTRANSFER'}}">
+            <view class="item-key">
+              <text>银行名称</text>
+              <view class="item-val"><input placeholder="请输入银行名称" value="{{applyForm.bank_name}}" bindinput="bankName"></input></view>
+            </view>
+            <view class="item-key">
+              <text>银行开户行</text>
+              <view class="item-val"><input placeholder="请输入银行开户行" value="{{applyForm.bank_deposit_name}}" bindinput="bankDepositAame"></input></view>
+            </view>
+            <view class="item-key">
+              <text>银行开户名</text>
+              <view class="item-val"><input placeholder="请输入银行开户名" value="{{applyForm.bank_account_name}}" bindinput="bankaccountName"></input></view>
+            </view>
+            <view class="item-key">
+              <text>银行账号</text>
+              <view class="item-val"><input placeholder="请输入银行账号" value="{{applyForm.bank_account_number}}" bindinput="bankAccountNumber"></input></view>
+            </view>
+          </view>
+          <view wx:else class="item-key">
+            <text>退款账户</text>
+            <view class="item-val"><input placeholder="请输入退款账号" value="{{applyForm.return_account}}" bindinput="returnAccount" maxlength="50"></input></view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="refund-info-box">
+      <view class="refund-item">
+        <view class="item-key">
+          <text>返回方式</text>
+          <view class="item-val">
+            <text>快递至第三方卖家</text>
+          </view>
+          <image src="../../../../static/images/icon-warn.png" bindtap="handleTipsShow"></image>
+        </view>
+        <view class="item-key" bindtap="handleVoucherPopupShow">
+          <text>申请凭证</text>
+          <view class="item-val">
+            <view class="reason-show">
+              <text style="font-weight: bold;">{{voucherText}}</text>
+              <icon class="iconfont icon-xuanze2" style="margin:-20rpx 0 0 10rpx;font-size:26rpx"></icon>
+            </view>
+          </view>
+        </view>
+        <view class="item-key" bindtap="handleAddressSelectorShow">
+          <text>收货地址</text>
+          <view class="item-val">
+            <view class="reason-show">
+              <text style="font-weight: bold;">{{addrText}}</text>
+              <icon class="iconfont icon-xuanze2" style="margin:-20rpx 0 0 10rpx;font-size:26rpx"></icon>
+            </view>
+          </view>
+        </view>
+        <view class="item-key">
+          <text>详细地址</text>
+          <view class="item-val">
+            <input placeholder="请输入详细地址" value="{{applyForm.ship_addr}}" bindinput="handleShipAddr" maxlength="50"></input>
+          </view>
+        </view>
+        <view class="item-key">
+          <text>联系人</text>
+          <view class="item-val">
+            <input placeholder="请输入联系人名称" value="{{applyForm.ship_name}}" bindinput="handleShipName" maxlength="20"></input>
+          </view>
+        </view>
+        <view class="item-key">
+          <text>联系方式</text>
+          <view class="item-val">
+            <input placeholder="请输入联系方式" value="{{applyForm.ship_mobile}}" bindinput="handleShipMobile"></input>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="tips-box">
+      <text>提交服务单后，售后专员可能与您电话沟通，请保持手机畅通</text>
+    </view>
+    <button class="btn" type="danger" size="normal" bindtap="submitApplyForm">提交</button>
+  </view>
+</view>
+<modal myVisible="{{reasonSelectShow}}" bindmyOnCancel="handleReasonSelectHide">
+  <view class="reason-name" wx:for="{{reasonSelectActions}}" wx:key="index" bindtap="handleReaseSelect" data-name="{{item.name}}">{{item.name}}</view>
+</modal>
+<modal myVisible="{{accountTypeSelectShow}}" bindmyOnCancel="handleAccountTypeHide">
+  <view class="account-name" wx:for="{{accountTypeSelectActions}}" wx:key="index" bindtap="handleAccountSelect" data-name="{{item.name}}" data-type="{{item.value}}">{{item.name}}</view>
+</modal>
+<modal myVisible="{{voucherPopupShow}}" bindmyOnCancel="handleVoucherPopupHide">
+  <view class="voucher-name"><text class="voucher-title">请选者申请凭证</text></view>
+  <view class="voucher-name voucher-cont" wx:for="{{voucherList}}" wx:key="index">
+    <text>{{item.name}}</text>
+    <icon class="iconfont {{item.checked ? 'icon-xuanze1' : 'icon-xuanze'}}" bindtap="handleVoucherCheck" data-index="{{index}}"></icon>
+  </view>
+  <button class="btn" type="danger" size="normal" bindtap="handleVoucherPopupHide">确定</button>
+</modal>
+<bottomFrame id="bottomFrame" frameTitle="地区选择">
+  <RegionPicker bind:areaschanged="addressSelectorChanged" bind:closeRegionpicke="handleAddressSelectorHide"></RegionPicker>
+</bottomFrame>

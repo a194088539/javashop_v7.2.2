@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.goods.TagGoodsMapper">
+
+    <!--查询标签商品 -->
+    <select id="queryTagGoods" resultType="com.enation.app.javashop.model.goods.vo.GoodsSelectLine" useCache="false">
+        select g.goods_id,g.goods_name,g.price,g.sn,g.thumbnail,g.big,g.quantity,g.buy_count from es_tag_goods r
+        inner join es_goods g on g.goods_id=r.goods_id
+        where g.disabled=1 and g.market_enable=1 and  r.tag_id=#{tag_id} limit 0,#{num}
+    </select>
+
+    <!-- 查询标签商品分页 -->
+    <select id="queryTagGoodsPage" resultType="java.util.Map" useCache="false">
+        select g.goods_id,g.goods_name,g.price,g.buy_count,g.enable_quantity,g.thumbnail from es_tag_goods r
+        LEFT JOIN es_goods g ON g.goods_id=r.goods_id
+        where g.disabled=1 and g.market_enable=1 and r.tag_id=#{tag_id}
+    </select>
+
+</mapper>

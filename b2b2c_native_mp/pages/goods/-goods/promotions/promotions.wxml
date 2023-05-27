@@ -1,0 +1,89 @@
+<view class='goods-promotions' wx:if="{{selectedSkuProm && showPromotion }}" bindtap="popup">
+  <view class='van-cell-group promotions-cells'>
+    <view class='van-cell'>
+      <view class='cell_title'>
+        <view class='promotions'>
+          <view class='promotion-title'>促销</view>
+          <view class='promotions-cell'>
+            <block wx:for="{{selectedSkuProm}}" wx:key="index">
+              <block wx:if="{{item.promotion_type === 'FULL_DISCOUNT'}}">
+                <text wx:if="{{item.full_discount_vo.is_full_minus}}" class='red_bg'>满减</text>
+                <text wx:if="{{item.full_discount_vo.is_discount}}" class='red_bg'>打折</text>
+                <text wx:if="{{item.full_discount_vo.is_send_gift}}" class='red_bg'>赠礼</text>
+                <text wx:if="{{item.full_discount_vo.is_send_bonus}}" class='red_bg'>赠券</text>
+                <text wx:if="{{item.full_discount_vo.is_free_ship}}" class='red_bg'>免邮</text>
+                <text wx:if="{{item.full_discount_vo.is_send_point}}" class='red_bg'>积分</text>
+              </block>
+              <text wx:if="{{item.promotion_type === 'MINUS'}}" wx:key="index" class='red_bg'>单品立减</text>
+              <text wx:if="{{item.promotion_type === 'HALF_PRICE'}}" wx:key="index" class='red_bg'>第二件半价</text>
+            </block>
+          </view>
+        </view>
+      </view>
+      <image class="i" src="/static/images/address_right.png" background-size="cover"></image>
+    </view>
+  </view>
+</view>
+<!-- 促销活动列表 -->
+<bottomFrame id="bottomFrame" frameTitle="促销信息">
+  <scroll-view scroll-y="true" class='proms-list'>
+    <block wx:for="{{selectedSkuProm}}" wx:key="index">
+      <!-- 满减 -->
+      <block wx:if="{{item.promotion_type === 'FULL_DISCOUNT'}}">
+        <view class='van-cell' wx:if="{{item.full_discount_vo.is_full_minus || item.full_discount_vo.is_discount}}">
+          <view wx:if="{{item.full_discount_vo.is_full_minus === 1}}" class='cell_title'>
+            <view class='red_bg'>满减</view>
+            <view class='red'>满{{item.full_discount_vo.full_money}}元，立减现金 <text class='price'>{{item.full_discount_vo.minus_value}}元</text></view>
+          </view>
+          <view wx:if="{{item.full_discount_vo.is_discount === 1}}" class='cell_title'>
+            <view class='red_bg'>打折</view>
+            <view class='red'>满{{item.full_discount_vo.full_money}}元，立享 <text class='price'>{{item.full_discount_vo.discount_value}}折</text>优惠</view>
+          </view>
+        </view>
+        <view class='van-cell' wx:if="{{item.full_discount_vo.is_send_gift}}">
+          <view class='red_bg'>赠礼</view>
+          <view class='red'>赠送价值 <text class='price'>{{item.full_discount_vo.full_discount_gift_do.gift_price}}元</text>的 
+            <image bindtap="previewImage" data-src="{{item.full_discount_vo.full_discount_gift_do.gift_img}}" class='gift-image' src="{{item.full_discount_vo.full_discount_gift_do.gift_img}}"></image>
+          </view>
+        </view>
+        <view class='van-cell' wx:if="{{item.full_discount_vo.is_send_bonus}}">
+          <view class="cell_title">
+            <view class='red_bg'>赠券</view>
+            <view class='red'>赠送 <text class='price'>{{item.full_discount_vo.coupon_do.coupon_price}}元</text>优惠券
+            </view>
+          </view>
+        </view>
+        <view class='van-cell' wx:if="{{item.full_discount_vo.is_free_ship}}">
+          <view class="cell_title">
+            <view class='red_bg'>免邮</view>
+            <view class='red'>满 <text class='price'>{{item.full_discount_vo.full_money}}元</text>免邮费
+            </view>
+          </view>
+        </view>
+        <view class='van-cell' wx:if="{{item.full_discount_vo.is_send_point}}">
+          <view class="cell_title">
+            <view class='red_bg'>积分</view>
+            <view class='red'>赠送 <text class='price'>{{item.full_discount_vo.point_value}}</text>积分
+            </view>
+          </view>
+        </view>
+      </block>
+      <!-- 单品立减 -->
+      <view class='van-cell' wx:if="{{item.promotion_type === 'MINUS'}}">
+        <view class="cell_title">
+          <view class='red_bg'>单品立减</view>
+          <view class='red'>单件立减现金 <text class='price'>{{item.minus_vo.single_reduction_value}}元</text>
+          </view>
+        </view>
+      </view>
+      <!-- 第二件半价 -->
+      <view class='van-cell' wx:if="{{item.promotion_type === 'HALF_PRICE'}}">
+        <view class="cell_title">
+          <view class='red_bg'>第二件半价</view>
+          <view class='red'>第二件半价优惠</view>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+</bottomFrame>
+

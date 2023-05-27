@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.enation.app.javashop.mapper.system.ArticleCategoryMapper">
+
+    <!--查询某个分类及相应的文章-->
+    <select id="queryForVo" resultType="com.enation.app.javashop.model.pagedata.vo.ArticleCategoryVO" useCache="false">
+        select * from es_article_category  where type = #{categoryType}
+    </select>
+
+    <!--获取文章分类树-->
+    <select id="queryForAsc" resultType="com.enation.app.javashop.model.pagedata.vo.ArticleCategoryVO" useCache="false">
+        select * from es_article_category order by id asc
+    </select>
+
+</mapper>

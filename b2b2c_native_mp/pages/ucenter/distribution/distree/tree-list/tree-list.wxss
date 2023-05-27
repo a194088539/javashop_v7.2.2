@@ -1,0 +1,3 @@
+.tree-wrap{
+  border-bottom: 2rpx solid #ccc;
+}

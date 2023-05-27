@@ -1,0 +1,72 @@
+
+<view class="container">
+  <view class="switch">
+      <view class="item {{ tabActive == 0 ? 'active' : ''}}" bindtap="switchTab" data-index='0'>
+          待评论
+      </view>
+      <view class="item {{ tabActive == 1 ? 'active' : ''}}" bindtap="switchTab" data-index='1'>
+          待追评
+      </view>
+      <view class="item {{ tabActive == 2 ? 'active' : ''}}" bindtap="switchTab" data-index='2'>
+          已评价
+      </view>
+  </view>
+  <scroll-view class='orders' scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+    <en-empty wx:if="{{!orderList.length && finished}}">暂无订单</en-empty>
+    <view class='order-item' wx-else wx:for="{{orderList}}" wx:for-item="order" wx:key="index">
+      <view class='sn-order-item'>
+        <text wx:if="{{params.order_status === 'WAIT_COMMENT'}}">订单号：{{order.sn}}</text>
+        <text wx:else>订单号：{{order.order_sn}}</text>
+      </view>
+      <view class='info-order-item'>
+        <view wx:if="{{order.order_status_text}}">
+          <text>状 态：</text><text class="status">{{order.order_status_text}}</text>
+        </view>
+        <view wx:if="{{order.audit_status}}">
+          <text>状 态：</text>
+          <wxs src="../../../utils/wxs.wxs" module="audit"/>
+          <text class="status" wx:if="{{order.additional_comment}}">{{audit.auditStatus(order.additional_comment.audit_status)}}</text>
+          <text class="status" wx:else>{{audit.auditStatus(order.audit_status)}}</text>
+        </view>
+        <view class='order-status'  wx:if="{{order.order_amount}}">
+          <text>总 价: </text> <text class='price'>￥{{order.order_amount}}</text>
+        </view>
+        <view class='order-btns'>
+          <navigator hover-class="none" wx:if="{{order.comment_status === 'UNFINISHED'}}" url="/pages/ucenter/comments/comments?order_sn={{order.sn}}" class='btns btn'>去评论</navigator>
+          <navigator hover-class="none" wx:if="{{order.audit_status === 'PASS_AUDIT' && params.order_status === 'WAIT_CHASE'}}" url="/pages/ucenter/comments/comments?order_sn={{order.order_sn}}&sku_id={{order.sku_id}}&append_comment=review" class='btns' >追加评论</navigator>
+          <navigator hover-class="none" wx:if="{{params.order_status === 'FINISHED'}}" url="/pages/ucenter/my-comments/detail/detail?comment_id={{order.comment_id}}" class='btns' >查看评价</navigator>
+        </view>
+      </view>
+      <navigator hover-class="none" url="/pages/shop/shop_id/shop_id?id={{order.seller_id}}" class='shop-order-item' wx:if="{{params.order_status === 'WAIT_COMMENT'}}">
+        <view class='txt'>{{order.seller_name}}</view>
+      </navigator>
+      <view class='sku-order-item' wx:if="{{params.order_status === 'WAIT_COMMENT'}}" wx:for="{{order.sku_list}}" wx:key="index" wx:for-item="sku">
+        <view class='sku-content'>
+          <navigator hover-class="none" url="/pages/goods/goods?goods_id={{sku.goods_id}}">
+            <image  class='img-info' src="{{sku.goods_image}}"></image>
+          </navigator>
+          <navigator hover-class="none" url="../orderDetail/orderDetail?order_sn={{order.sn}}">
+            <view class='sku-name'>{{sku.name}}</view>
+            <view class="sku-name">
+              <text class='sku-spec'>{{sku.skuName}}</text>
+              <text>{{sku.num}}件</text>
+            </view>
+          </navigator>
+          <navigator hover-class="none" wx:if="{{sku.goods_operate_allowable_vo.allow_apply_service}}" class='after-btn' url="/pages/ucenter/after-sale/choose-type/choose-type?orderSn={{order.sn}}&skuId={{sku.sku_id}}">申请售后</navigator>
+        </view>
+      </view>
+      <view class="sku-order-item" wx:if="{{params.order_status !== 'WAIT_COMMENT'}}">
+        <view class='sku-content'>
+          <navigator hover-class="none" url="/pages/goods/goods?goods_id={{order.goods_id}}">
+            <image  class='img-info' src="{{order.goods_img}}"></image>
+          </navigator>
+          <navigator hover-class="none" url="/pages/goods/goods?goods_id={{order.goods_id}}">
+            <view class='sku-name'>{{order.goods_name}}</view>
+          </navigator>
+        </view>
+      </view>
+    </view>
+    <view class="msg">{{msg}}</view>
+  </scroll-view>
+  <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+</view>

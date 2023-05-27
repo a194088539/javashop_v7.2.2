@@ -1,0 +1,136 @@
+.layout-main {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  clear: both;
+}
+.layout-item {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.layout-item  image {
+  width: 100%;
+  height: 100%;
+}
+
+.left, .right {
+  width: 50%;
+  height: 100%;
+  float: left;
+}
+.right { float: right }
+
+/* .tpl-23 {height: 312.5rpx;border-bottom: 2rpx solid #ebebeb;} */
+/** tpl-24 左一右二图片模块 */
+.tpl-24 .right .layout-item{ height: 50%;border-bottom: 2rpx solid #ebebeb; }
+.tpl-24 .left .layout-item { border-bottom: 2rpx solid #ebebeb; border-right: 2rpx solid #ebebeb;}
+/** tpl-25 左二右一图片模块 */
+.tpl-24, .tpl-25 {height: 320rpx; border-top: 2rpx solid #ebebeb;}
+.tpl-25 .left .layout-item { height: 50%;border-bottom: 2rpx solid #ebebeb; border-right: 2rpx solid #ebebeb; }
+.tpl-25 .right .layout-item { border-bottom: 2rpx solid #ebebeb;}
+/** tpl-26 左二右一图片模块 */
+.tpl-26 {height: 300rpx;}
+.tpl-26 .layout-item {
+  float: left;
+  width: 33.33%;
+  border-left: 2rpx solid #ebebeb;
+  border-bottom: 2rpx solid #ebebeb;
+}
+.tpl-26 .layout-item:first-child {border-left: none;}
+/** tpl-27 五列单行小图模块 */
+.tpl-27 {height: 128rpx;}
+.tpl-27 .layout-item {
+  float: left;
+  width: 20%;
+  border-right: 2rpx solid #ebebeb;
+  border-bottom: 2rpx solid #ebebeb;
+}
+/** tpl-28 轮播图模块 */
+.tpl-28 {border-bottom: 2rpx solid #ebebeb;}
+.tpl-28 .swiper-container {
+  width: 100%;
+  height: 100%;
+}
+/** tpl-29 四列单行图片模块 */
+.tpl-29 {height: 244rpx; border-bottom: 2rpx solid #ebebeb;}
+.tpl-29 .layout-item { width: 25%; float: left; border-left:2rpx solid #ebebeb; }
+.tpl-29 .layout-item:first-child {border-left: none;}
+.tpl-29 .no-image { background-size: 70% }
+/** tpl-30 标题或间隔性模块 */
+.tpl-30 {height: 116rpx;}
+.tpl-30 .no-image { background-size: 17.5% 75% }
+/** tpl-32 左一右二竖排模板 */
+.tpl-32 {height: 245rpx; border-bottom: 2rpx solid #ebebeb;border-top: 2rpx solid #ebebeb;}
+.tpl-32 .layout-item { width: 50%; float: left }
+.tpl-32 .left .layout-item { width: 100% }
+.tpl-32 .right .layout-item{border-left: 2rpx solid #ebebeb;}
+.tpl-32 .right .no-image {background-size: 75% auto;}
+/** tpl-37 商品模块 */
+.tpl-37 {margin-top: 20rpx;}
+.tpl-37 .layout-main {
+  display: flex;
+  justify-content: space-around;
+}
+.tpl-37 .layout-item {
+  width: 47%;
+  height: 100%;
+}
+.tpl-37 .image-goods::before{
+  content: "";
+  display: inline-block;
+  padding-bottom: 100%;
+  width: .2rpx;
+  vertical-align: middle;
+}
+.tpl-37 .image-goods{
+  position: relative;
+  width: 100%;
+}
+.tpl-37 .goods-item { 
+  background-color: #fff;
+  border-radius: 6rpx;
+  overflow: hidden;
+}
+.tpl-37 .image-goods image{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.tpl-37 .name-goods {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  min-height: 68rpx;
+  margin: 10rpx 0;
+}
+.tpl-37 .price-goods {
+  color: #f42424;
+  margin: 10rpx 0;
+  padding-top: 10rpx;
+}
+/** tpl-38 文本模块 */
+.tpl-38 {
+  margin: 20rpx;
+}
+.tpl-38 .layout-main {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.tpl-38 .layout-item {
+  width: 31%;
+  border: 2rpx solid #dfdfdf;
+  border-radius: 10rpx;
+}
+/** tpl-42 文本模块 */
+.tpl-42 .layout-item {
+  line-height: 80rpx;
+  padding: 0 20rpx;
+}

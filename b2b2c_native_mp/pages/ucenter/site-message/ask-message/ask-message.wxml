@@ -1,0 +1,41 @@
+<view class="site-message">
+  <view class="switch">
+    <view class="item {{ showType == 0 ? 'active' : ''}}" bindtap="switchTab" data-index='0'>未读消息</view>
+    <view class="item {{ showType == 1 ? 'active' : ''}}" bindtap="switchTab" data-index='1'>已读消息</view>
+  </view>
+  <scroll-view class='message-container' scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}" bindscroll="scroll" bindscrolltolower="loadMore">
+    <en-empty wx:if="{{!messageList.length && finished}}">暂无消息</en-empty>
+    <view wx:else class="message-list">
+      <view class="message-item" wx:for="{{messageList}}" wx:key="index">
+        <view class="msg-date">{{item.receive_time}}</view>
+        <view class="msg-content" wx:if="{{item.msg_type === 'ASK'}}">
+          <view bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.txtStyle}}" class="inner txt">
+            <view class="msg-title">问答消息--有人向你提问</view>
+            <view class="msg-detail ask-msg-detail" bindtap="handleToReply">
+              <image src="{{item.goods_img}}"></image>
+              <view class="msg-text">{{item.ask}}</view>
+            </view>
+          </view>
+          <view data-message_id="{{item.id}}" bindtap= "handleDeleteMessage" class="inner del">删除</view>
+        </view>
+        <view class="msg-content" wx:if="{{item.msg_type === 'REPLY'}}">
+          <view bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.txtStyle}}" class="inner txt">
+            <view class="msg-title">问答消息--有人回答了你</view>
+            <view class="msg-detail" bindtap="handleAskDetail" data-ask_id="{{item.ask_id}}">
+              <view class="msg-member ask-name">{{item.ask_member}}</view>
+              <view class="ask-content">{{item.ask}}</view>
+              <view class="msg-member reply-name">{{item.reply_member}}</view>
+              <view class="ask-content">{{item.reply}}</view>
+            </view>
+            <view class="msg-goods" bindtap="handleAskDetail" data-ask_id="{{item.ask_id}}">
+              <image src="{{item.goods_img}}"></image>
+              <view class="msg-text">{{item.goods_name}}</view>
+            </view>
+          </view>
+          <view data-message_id="{{item.id}}" bindtap= "handleDeleteMessage" class="inner del">删除</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+</view>

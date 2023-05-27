@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.goods.GoodsWordsMapper">
+
+    <!--查询商品分词的和对应数量 -->
+    <select id="getGoodsWords" resultType="com.enation.app.javashop.model.goodssearch.GoodsWords" useCache="false">
+        select words,goods_num from es_goods_words
+        where words like #{keyword} or quanpin like #{keyword} or szm like #{keyword} order by sort desc limit 15
+    </select>
+
+    <!--增加分词的数量-->
+    <update id="addGoodsNum">
+
+        update es_goods_words set goods_num=goods_num+1 where words=#{words}
+    </update>
+
+    <!--查询分词集合-->
+    <select id="selectWordsList" resultType="java.lang.String" useCache="false">
+        select words from es_goods_words where `type` = #{type}
+    </select>
+
+    <!--增加分词的数量-->
+    <update id="reduceGoodsNum">
+
+        update es_goods_words set goods_num  =  goods_num-1  where  goods_num-1 >=0 and  words=#{words}
+    </update>
+
+
+</mapper>

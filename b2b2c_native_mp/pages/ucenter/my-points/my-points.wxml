@@ -1,0 +1,33 @@
+<view class="my-points">
+  <view class="switch">
+    <view class="item {{ showType === 0 ? 'active' : ''}}" bindtap="switchTab" data-index='0'>我的积分</view>
+    <view class="item {{ showType === 1 ? 'active' : ''}}" bindtap="switchTab" data-index='1'>积分明细</view>
+  </view>
+  <view class='points-container'>
+    <view class="group valid" wx:if="{{showType === 0}}">
+      <view class='cell hairline'>
+        <view class='title'>消费积分</view>
+        <view class='value'>{{points.consum_point || 0}}</view>
+      </view>
+      <view class='cell hairline'>
+        <view class='title'>等级积分</view>
+        <view class='value'>{{points.grade_point || 0}}</view>
+      </view>
+    </view>
+    <view wx:else>
+      <scroll-view  scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}" bindscroll="scroll" bindscrolltolower="loadMore">
+        <en-empty wx:if="{{finished && !pointsList.length}}">暂无积分明细</en-empty>
+        <view class="group valid" wx:for="{{pointsList}}" wx:key="index">
+          <view class='cell hairline'>
+            <view class='title'>
+              <view class="time">{{item.time}}</view>
+              <view class="reason">{{item.reason}}</view>
+            </view>
+            <view class="value">消费：{{item.grade_point}} 等级：{{item.consum_point}}</view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+  <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+</view>

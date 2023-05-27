@@ -1,0 +1,248 @@
+page{
+  background-color: #f7f7f7;
+}
+view{
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+.seller-info {
+  background-color: rgb(255, 255, 255);
+  align-items: center;
+  height: 54rpx;
+  flex-direction: row;
+  justify-content: center;
+}
+.seller-info text {
+  display: inline-block;
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: rgb(140, 140, 140);
+  line-height: 28rpx;
+}
+.seller-info text text {
+  display: inline;
+  color: rgb(242, 48, 48);
+}
+
+.log-info {
+  flex-direction: column;
+  background-color: rgb(247, 247, 247);
+}
+
+.log-info .status-info {
+  flex-direction: row;
+  background-image: linear-gradient(14deg, #FF614D 0%, #FE7552 100%);
+}
+
+.status-info .status-info-box {
+  height: 220rpx;
+  flex-direction: column;
+  padding-left: 54rpx;
+  padding-right: 54rpx;
+}
+
+.status-info-box text {
+  display: inline-block;
+  margin:26rpx 0 0;
+  font-family: PingFangSC-Regular;
+  color: rgb(255, 255, 255);
+  background-color: rgba(0, 0, 0, 0);
+  line-height: 43rpx;
+  font-weight: bold;
+}
+.status-info-box .status-val {
+  font-size: 36rpx;
+}
+.status-info-box .status-tip {
+  font-size: 24rpx;
+}
+.log-box-bottom {
+  height: 146rpx;
+  flex-direction: column;
+  background-color: rgb(247, 247, 247);
+}
+.log-box-top {
+  height: 188rpx;
+  flex-direction: row;
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  top: 176rpx;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 22rpx;
+  padding: 52rpx 0 52rpx 32rpx;
+  border-radius: 22rpx;
+  justify-content: space-between;
+  align-items: center;
+}
+.log-box-top .top01 {
+  width: 90%;
+}
+.log-box-top .top01 text {
+  display: -webkit-box;
+  margin: 0 10rpx 0 0;
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  line-height: 30rpx;
+  color: rgb(46, 45, 45);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 60rpx;
+  white-space: normal;
+}
+
+.log-box-top .log-first-show {
+  flex-direction: row;
+  margin-top: 16rpx;
+  margin-right:44rpx;
+}
+.log-box-top .log-first-show text {
+  display: inline-block;
+  margin: 0 6rpx 0 0;
+  font-family: PingFangSC-Regular;
+  font-size: 22rpx;
+  color: rgb(140, 140, 140);
+  line-height: 30rpx;
+}
+
+.goods-info {
+  margin-top: 176rpx;
+  background-color: rgb(247, 247, 247);
+  flex-direction: column;
+}
+.goods-info .info-box {
+  margin: 0 22rpx;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  border-radius: 26rpx;
+  justify-content: center;
+  border-style: solid;
+  border-width: 2rpx;
+  border-color: rgb(255, 255, 255);
+  padding-left: 32rpx;
+  padding-right: 44rpx;
+}
+.goods-info .info-box .title {
+  display: inline-block;
+  margin: 30rpx 0 0;
+  font-family: PingFangSC-Regular;
+  font-size: 30rpx;
+  color: rgb(46, 45, 45);
+  font-weight: bold;
+  line-height: 36rpx;
+}
+.goods-info .info-box .goods-item {
+  padding:  32rpx 0;
+}
+.goods-info .item-info {
+  flex-direction: row;
+  align-items: center;
+}
+.goods-info .item-info image {
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: 132rpx;
+  width: 132rpx;
+  margin-right: 44rpx;
+}
+.goods-info .goods-name-info {
+  height: 132rpx;
+  width: 70%;
+  justify-content: space-between;
+}
+.goods-info .goods-name-info text {
+  display: -webkit-box;
+  color: rgb(132, 132, 132);
+  font-size:22rpx;
+  line-height: 34rpx;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 68rpx;
+  white-space: normal;
+}
+
+.service-info {
+  margin-top: 32rpx;
+  background-color: rgb(247, 247, 247);
+  flex-direction: column;
+  margin-bottom: 32rpx;
+}
+.service-info .service-info-box {
+  margin-left: 22rpx;
+  margin-right: 22rpx;
+  flex-direction: column;
+  background-color: rgb(255, 255, 255);
+  justify-content: center;
+  border-style: solid;
+  border-width: 2rpx;
+  border-color: rgb(255, 255, 255);
+  border-radius: 26rpx;
+  padding:32rpx;
+}
+.service-info-box .box-items {
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-right: 10rpx;
+  padding-bottom: 26rpx;
+}
+.service-info-box .box-items text{
+  display: inline-block;
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+}
+.service-info-box .box-items .item-key {
+  margin: 0 4rpx 0 0;
+  color: rgb(132, 132, 132);
+  width: 170rpx;
+  line-height: 28rpx;
+}
+.service-info-box .box-items .item-val {
+  flex: 1;
+  margin: 0 10rpx 0 0;
+  line-height: 30rpx;
+  color: rgb(46, 45, 45);
+}  
+.service-info-box .box-items image{
+  width: 120rpx;
+  height: 100rpx;
+  padding: 0 10rpx;
+}  
+.addr-title {
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-bottom: 2rpx solid #d6d6d6;
+}
+.addr-info {
+  padding: 50rpx;
+  font-size: 26rpx;
+  font-weight: bold;
+}
+.react-view{
+  border-style: solid; 
+  border-width: 2rpx 0 0; 
+  border-color: rgb(238, 238, 238); 
+  margin: 48rpx 0 32rpx 0;
+}
+.express-select{
+  height: 100rpx;
+  line-height: 100rpx;
+  font-size: 32rpx;
+  text-align: center;
+  background-color: #fff; 
+}

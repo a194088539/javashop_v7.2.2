@@ -1,0 +1,41 @@
+<view class="node list-item" data-type="0">
+  <block wx:if="{{root !==0 && nodes !== 0}}">
+    <text class="line"></text>
+  </block>
+  <view class="contanier flex" bindtap="openExpand" data-model="{{model}}" data-num="{{num}}">
+    <view class="small-panel flex">
+      <text class="label">[推荐人数]</text>
+      <text class="txt">{{model.downline}}</text>
+    </view>
+    <view class="body-panel flex">
+      <view class="title">
+        <text wx:if="{{model.item.length > 0}}" class="arrow {{model.isExpand ? 'open' : 'close'}}"></text>
+        <text class="t-icon m-dep"></text>
+        {{model.name}}
+      </view>
+      <view class="time" catchtap="handlelookDetails" data-model="{{model}}">详情</view>
+    </view>
+    <view class="bottom-panel flex">
+      <view class="left-wrap flex">
+        <text class="label">[返利]</text><text class="txt color-red">￥{{model.rebate_total}}</text>
+      </view>
+    </view>
+  </view>
+  <block wx:if="{{model.item.length > 0 && model.isExpand}}">
+    <view class="box">
+      <tree-item
+        wx:for="{{model.item}}"
+        wx:for-item="m"
+        wx:for-index="i"
+        root="1"
+        num="{{i}}"
+        nodes="{{model.item.length}}"
+        bind:openExpand="openExpand"
+        bind:delAction="delAction"
+        model="{{m}}"
+        wx:key="{{i}}"
+      >
+      </tree-item>
+    </view>
+  </block>
+</view>

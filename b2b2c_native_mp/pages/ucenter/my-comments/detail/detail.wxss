@@ -1,0 +1,95 @@
+.comments-item{
+  overflow: hidden;
+}
+.comments-goods{
+  padding: 20rpx 40rpx;
+  display:flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.goods-image{
+  width: 150rpx;
+  height: 150rpx;
+  margin: 0 auto;
+	flex:1;
+}
+.goods-image image{
+  width: 150rpx;
+  height: 150rpx;
+}
+.goods-name{
+  flex: 4;
+  margin-left: 10rpx;
+}
+.comments-comntent{
+  padding: 0 40rpx;
+}
+.comments-comntent .first-comments{
+  border-bottom: 2rpx solid #e4e4e4;
+}
+.comments-comntent .first-comments view{
+  line-height: 40rpx;
+  padding-bottom: 20rpx;
+  word-wrap: break-word;
+}
+.comments-comntent .append-comments{
+  padding-top: 60rpx;
+  border-bottom: 2rpx solid #e4e4e4;
+}
+.comments-comntent .append-comments view{
+  line-height: 40rpx;
+  padding-bottom: 20rpx;
+  word-wrap: break-word;
+}
+.comments-comntent image{
+  width: 100rpx;
+  height: 100rpx;
+  padding: 4rpx;
+}
+
+.shop-grade{
+  background-color: #fff;
+  padding: 10rpx 40rpx;
+}
+.shop-grade .shop-grade-nav{
+  display: flex;
+  align-items: center;
+  height: 90rpx;
+  line-height: 90rpx;
+  position: relative;
+}
+.shop-grade .shop-grade-nav icon{
+  font-size: 40rpx;
+  margin: 0 10rpx;
+}
+.rating-star .logistics-star {
+  height: 70rpx;
+  line-height: 70rpx;
+  clear: both;
+}
+.rating-star .logistics-star .text {
+  float: left;
+  font-size: 24rpx;
+  margin-left: 6%;
+  margin-right: 20rpx;
+  color: #999;
+}
+.rating-star .logistics-star .star {
+  float: left;
+}
+.rating-star .logistics-star .grade-text {
+  float: left;
+  font-size: 24rpx;
+  color: #999;
+  margin-left: 20rpx;
+}
+
+.icon-xingxing{
+  color: #f42424;
+}
+.icon-xingxing1,.icon-xingxing{
+  font-size: 32rpx;
+  margin-right: 5rpx;
+}

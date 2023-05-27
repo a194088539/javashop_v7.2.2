@@ -1,0 +1,10 @@
+<view class="menu-container">
+  <view class="menu-container-content" wx:if="{{newMenus}}">
+    <view class="menu-container-content-list" wx:for="{{newMenus}}" wx:for-item="menu" wx:key="index">
+      <navigator url="{{menu.url}}" class="menu-item" hover-class="none">
+        <image src="{{menu.image}}" class="menu-img"></image>
+        <view class="menu-title">{{menu.navigation_name}}</view>
+      </navigator>
+    </view>
+  </view>
+</view>

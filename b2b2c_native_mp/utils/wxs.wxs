@@ -1,0 +1,136 @@
+// 评论-店铺评分
+function countGradeText(val) {
+  switch (val) {
+    case 5: return '非常好'
+    case 4: return '好'
+    case 3: return '一般'
+    case 2: return '差'
+    case 1: return '非常差'
+    default: return '非常好'
+  }
+}
+
+// 增票资质
+function invoiceStatus(status){
+  switch (status) {
+    case 'NEW_APPLY': return '平台审核中'
+    case 'AUDIT_PASS': return '已通过审核'
+    case 'AUDIT_REFUSE': return '未通过审核'
+  }
+}
+
+//发票类型
+function receiptType(type) {
+  switch (type) {
+    case 'VATORDINARY': return '增值税普通发票'
+    case 'ELECTRO': return '电子普通发票'
+    case 'VATOSPECIAL': return '增值税专用发票'
+    default: return '不开发票'
+  }
+}
+//售后退款类型
+function accountType(val) {
+  switch (val) {
+    case 'ALIPAY': return '支付宝'
+    case 'WEIXINPAY': return '微信'
+    case 'BANKTRANSFER': return '银行转账'
+    case 'BALANCE': return '预存款'
+    default: return ''
+  }
+}
+
+//售后退款方式
+function refundWayType(val){
+  switch (val){
+    case 'ACCOUNT': return '账户退款'
+    case 'OFFLINE': return '线下退款'
+    case 'ORIGINAL' :return '原路退回'
+    case 'BALANCE': return '预存款退款'
+    default: return ''
+  }
+}
+
+//购物车活动
+function selectedActivity(list) {
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].is_check === 1) {
+      return list[i].promotion_name
+    }
+  }
+  return '不参加活动'
+}
+
+//评论
+function auditStatus(status){
+  switch (status) {
+    case 'WAIT_AUDIT': return '待审核';
+    case 'PASS_AUDIT': return '审核通过';
+    case 'REFUSE_AUDIT': return '审核拒绝'
+  }
+}
+
+//售后
+function statusFilter(val) {
+  switch (val) {
+    case 'APPLY':
+      return '售后服务申请成功，等待商家审核'
+    case 'PASS':
+      return '售后服务申请审核通过'
+    case 'REFUSE':
+      return '售后服务申请已被商家拒绝，如有疑问请及时联系商家'
+    case 'FULL_COURIER':
+      return '申请售后的商品已经寄出，等待商家收货'
+    case 'STOCK_IN':
+      return '商家已将售后商品入库'
+    case 'WAIT_FOR_MANUAL':
+      return '等待平台进行人工退款'
+    case 'REFUNDING':
+      return '商家退款中，请您耐心等待'
+    case 'COMPLETED':
+      return '售后服务已完成，感谢您对Javashop的支持'
+    case 'ERROR_EXCEPTION':
+      return '系统生成新订单异常，等待商家手动创建新订单'
+    case 'CLOSED':
+      return '售后服务已关闭'
+    default:
+      return ''
+  }
+}
+
+//交易投诉
+function complaintsStatusFilter(val) {
+  switch (val) {
+    case 'NEW': return '新投诉'
+    case 'CANCEL': return '已撤销'
+    case 'WAIT_APPEAL': return '待申诉'
+    case 'COMMUNICATION': return '对话中'
+    case 'WAIT_ARBITRATION': return '等待仲裁'
+    case 'COMPLETE': return '已完成'
+  }
+}
+
+// 直播
+function liveStatusFilter(val) {
+  switch(val) {
+    case '101': return '直播中'
+    case '102': return '未开始'
+    case '103': return '已结束'
+    case '104': return '禁播'
+    case '105': return '暂停中'
+    case '106': return '异常'
+    case '107': return '已过期'
+  }
+}
+
+module.exports = {
+  countGradeText: countGradeText,
+  invoiceStatus: invoiceStatus,
+  receiptType: receiptType,
+  accountType: accountType,
+  refundWayType: refundWayType,
+  selectedActivity: selectedActivity,
+  auditStatus: auditStatus,
+  statusFilter: statusFilter,
+  complaintsStatusFilter: complaintsStatusFilter,
+  liveStatusFilter: liveStatusFilter
+}

@@ -1,0 +1,145 @@
+<wxs src="../../../utils/wxs.wxs" module="receipttype"/>
+<view class="container">
+  <!--购物清单为空-->
+  <view class="checkout-container no-cart" wx:if="{{ inventories && inventories.length === 0 }}">
+	  <view class="c">
+		  <image src="/static/images/icon-warning.png"></image>
+		  <navigator url="/pages/home/home" hover-class="none">还没买？去逛逛</navigator>
+	  </view>
+  </view>
+	<!--购物清单存在-->
+  <scroll-view wx:else class="checkout-container" scroll-y style="height: {{ height }}px">
+	  <!--收货地址 start-->
+	  <view class="address-box box" bindtap="handleAddress" wx:if="{{ address }}">
+		  <view class="m">
+        <view class="tit-address">
+          <text class="name">{{ address.name }}</text>
+			    <text class="mobile">{{ address.mobile }}</text>
+        </view>
+        <view> <icon class="icon iconfont icon-dizhi"></icon><text class="address">{{ addressStr }}</text></view>
+		  </view>
+		  <view class="r">
+			  <image src="/static/images/address_right.png"></image>
+		  </view>
+	  </view>
+	  <view class="address-box address-empty" bindtap="handleAddress" wx:else>
+		  <view class="m">新建或选择收货地址以确保商品顺利送达</view>
+		  <view class="r"><image src="/static/images/address_right.png"></image></view>
+	  </view>
+    <view class="address-list-hr"></view>
+	  <!--收货地址 end-->
+	  <!--购物清单 start-->
+	  <view class="inventories" wx:if="{{ inventories && inventories.length }}">
+		  <checkout-inventory inventories="{{ inventories }}"/>
+	  </view>
+	  <!--购物清单 end-->
+	  <!--支付配送 start -->
+	  <view bindtap="handleShowPayment" class="box paymeny-box">
+		  <view class="m">支付配送</view>
+		  <view>
+			  <view>{{ params.payment_type === 'ONLINE' ? '在线支付' : '货到付款' }}</view>
+			  <view>{{ params.receive_time }}</view>
+		  </view>
+		  <view class="r">
+			  <image src="/static/images/address_right.png"></image>
+		  </view>
+	  </view>
+	  <!--支付配送 end -->
+	  <!--发票信息 start -->
+	  <view bindtap="handleShowReceipt" class="reicept-box box">
+		  <view class="m">发票信息</view>
+		  <text wx:if="{{ !params.receipt || !params.receipt.receipt_title || orderTotal.original_price === '0.00' }}">不开发票</text>
+		  <text wx:else>{{ receipttype.receiptType(params.receipt.receipt_type) }}-{{ params.receipt.receipt_title }}-{{ params.receipt.receipt_content }}</text>
+		  <view class="r">
+			  <image src="/static/images/address_right.png"></image>
+		  </view>
+	  </view>
+	  <!--发票信息 end -->
+    <!--优惠券 start-->
+	  <view class="coupon-box">
+		  <view class="coupon-item" wx:if="{{ !isAssemble }}" bindtap="handleShowCoupons">
+			  <view class="l">
+				  <text class="name">优惠券</text>
+				  <text class="txt can-use-coupon-num">{{ coupon_num }}张可用</text>
+			  </view>
+			  <view class="r">
+				  <text wx:if="{{ orderTotal.coupon_price === 0 }}">未使用</text>
+				  <text wx:else class="price">-￥{{ orderTotal.coupon_price }}</text>
+				  <image src="/static/images/address_right.png"></image>
+			  </view>
+		  </view>
+		  <view class="coupon-remark" bindtap="showPrompt">
+			  <view class="l">备注信息</view>
+        <text class="remark-cell">{{ params.remark || '未填写' }}</text>
+			  <view class="r">
+				  <image src="/static/images/address_right.png"></image>
+			  </view>
+		  </view>
+	  </view>
+	  <!--优惠券 end-->
+	  <!--订单金额 start-->
+	  <view class="order-box">
+		  <view class="order-item">
+			  <text>商品金额</text>
+			  <text class="price">￥{{ orderTotal.original_price }}</text>
+		  </view>
+		  <view class="order-item" wx:if="{{ orderTotal.coupon_price }}">
+			  <text>优惠券抵扣</text>
+			  <text class="price">-￥{{ orderTotal.coupon_price }}</text>
+		  </view>
+		  <view class="order-item" wx:if="{{ orderTotal.exchange_point }}">
+			  <text>积分抵扣</text>
+			  <view >
+          <text style="display:block;text-align:right">-{{ orderTotal.exchange_point }}积分</text>
+			    <text class="exchange-tip">温馨提示：订单取消、申请售后积分不退还</text>
+        </view>
+		  </view>
+		  <view class="order-item" wx:if="{{ orderTotal.cash_back }}" >
+			  <text>返现金额</text>
+			  <text class="price">-￥{{ orderTotal.cash_back }}</text>
+		  </view>
+		  <view class="order-item">
+			  <text>运费</text>
+			  <text class="price">￥{{ orderTotal.freight_price }}</text>
+		  </view>
+	  </view>
+	  <!--订单金额 end-->
+  </scroll-view>
+	<!--订单提交 start-->
+	<view class="order-total">
+		<view class="l">合计：<text class="price">￥{{ orderTotal.total_price }}</text> </view>
+		<view class="r" bindtap="handleCreateTrade">提交订单</view>
+	</view>
+	<!--订单提交 end-->
+</view>
+<!--支付配送组件 start-->
+<checkout-payment
+	wx:if="{{ params }}"
+	show="{{ showPaymentPopup }}"
+	receiveTime="{{ params.receive_time  }}"
+	paymentType="{{ params.payment_type  }}"
+	isAssemble="{{isAssemble}}"
+	bind:changed="handlePaymentChanged"
+/>
+<!--支付配送组件 end-->
+<!--优惠券popup start-->
+<checkout-coupons
+	show="{{ showCouponsPopup }}"
+	inventories="{{ inventories }}"
+	couponList="{{ couponList }}"
+	way="{{ way }}"
+	bind:changed="GET_Inventories"
+	bind:loaded="handleCouponsNum"
+/>
+<!--优惠券popup end-->
+<!--订单备注 start-->
+<prompt
+	id="prompt"
+	title='订单备注'
+	btn_certain='确定'
+	remark='{{params.remark}}'
+	bind:getInput="getInput"
+	bind:cancel="cancel"
+	bind:confirm="confirm">
+</prompt>
+<!--订单备注 end -->

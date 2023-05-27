@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "交易快照",
+  "usingComponents": {
+    "goods-gallery": "../-goods/gallery/gallery",
+    "shop-card": "../-goods/shop-card/shop-card",
+    "goods-params": "../-goods/params/params"
+  }
+}

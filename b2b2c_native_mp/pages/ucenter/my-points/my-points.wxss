@@ -1,0 +1,14 @@
+.points-container{
+    padding-top: 84rpx;
+}
+.value{
+    text-align: right !important;
+}
+.time{
+  font-size: 28rpx;
+}
+.reason{
+  font-size: 24rpx;
+  line-height: 1.2;
+  color: #666;
+}

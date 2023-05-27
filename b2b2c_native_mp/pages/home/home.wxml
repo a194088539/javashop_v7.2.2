@@ -1,0 +1,37 @@
+<import src="./-home/templates/tpl_23.wxml" /> 
+<import src="./-home/templates/tpl_24.wxml" /> 
+<import src="./-home/templates/tpl_25.wxml" /> 
+<import src="./-home/templates/tpl_26.wxml" /> 
+<import src="./-home/templates/tpl_27.wxml" /> 
+<import src="./-home/templates/tpl_28.wxml" /> 
+<import src="./-home/templates/tpl_29.wxml" /> 
+<import src="./-home/templates/tpl_30.wxml" /> 
+<import src="./-home/templates/tpl_31.wxml" /> 
+<import src="./-home/templates/tpl_32.wxml" /> 
+<import src="./-home/templates/tpl_37.wxml" /> 
+<import src="./-home/templates/tpl_38.wxml" /> 
+<import src="./-home/templates/tpl_42.wxml" /> 
+<view class="container">
+  <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+  <searchBar site_name="{{site_name}}" opacity="{{opacity}}"></searchBar>
+  <banner banner="{{banner}}"></banner>
+  <menu menus="{{menus}}"></menu>
+  <seckill></seckill>
+  <view wx:if="{{floorList}}" class="floor-container">
+    <view wx:for="{{floorList}}" wx:key="index" class="floor-item  item-{{item.tpl_id}}">
+      <template wx:if="{{item.tpl_id === 23}}" is="tpl_23" data="{{item}}"></template>
+      <template wx:if="{{item.tpl_id === 24}}" is="tpl_24" data="{{item}}"></template>
+      <template wx:if="{{item.tpl_id === 25}}" is="tpl_25" data="{{item}}"></template>
+      <template wx:if="{{item.tpl_id === 26}}" is="tpl_26" data="{{item}}"></template>
+      <template wx:if="{{item.tpl_id === 27}}" is="tpl_27" data="{{item}}"></template>
+      <template wx:if="{{item.tpl_id === 28}}" is="tpl_28" data="{{item,imgheights,current}}"></template>
+      <template wx:if="{{item.tpl_id === 29}}" is="tpl_29" data="{{item}}"></template>
+      <template wx:if="{{item.tpl_id === 30}}" is="tpl_30" data="{{item}}"></template>
+      <template wx:if="{{item.tpl_id === 31}}" is="tpl_31" data="{{item}}"></template>
+      <template wx:if="{{item.tpl_id === 32}}" is="tpl_32" data="{{item}}"></template>
+      <template wx:if="{{item.tpl_id === 37}}" is="tpl_37" data="{{item}}"></template>
+      <template wx:if="{{item.tpl_id === 38}}" is="tpl_38" data="{{item}}"></template>
+      <template wx:if="{{item.tpl_id === 42}}" is="tpl_42" data="{{item}}"></template>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,156 @@
+.container{
+  background: #fff;
+}
+.tabs_nav{
+  border-bottom: 2rpx solid #f5f5f5;
+}
+.tabs_nav .tab{
+  font-size: 28rpx;
+}
+.form-box{
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  padding: 0 40rpx;
+  margin-top: 10rpx;
+  background: #fff;
+}
+
+.form-item{
+  position: relative;
+  background: #fff;
+  height: 96rpx;
+  line-height: 96rpx;
+  display:flex;
+  border-bottom: 2rpx solid #f3f3f3;
+}
+.form-item .text:nth-child(2){
+  flex: 1;
+} 
+.form-item .text:first-child{
+  font-size: 28rpx;
+  width: 170rpx;
+} 
+.form-item .right_input{
+  position: absolute;
+  top: 24rpx;
+}
+.form-item .code{
+  position: absolute;
+  top: 24rpx;
+  width: 52%;
+}
+.form-item .captcha_url-image{
+  position: absolute;
+  top: 10rpx;
+  right: 0;
+
+}
+.form-item .captcha_url-image image{
+  width: 160rpx;
+  height: 75rpx;
+}
+.form-item .btn{
+  background-color: #4b0;
+  border-radius: 6rpx;
+  color: #fff;
+  padding: 0 16rpx;
+  margin-top: 16rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.login-btn{
+  margin: 60rpx 0 40rpx 0;
+  height: 86rpx;
+  line-height: 86rpx;
+  color: #fff;
+  font-size: 28rpx;
+  width: 100%;
+  background: #f42424;
+  border-radius: 10rpx;
+}
+.login-btn::after{
+  border: none;
+}
+.form-item-text{
+  height: 50rpx;
+  width: 100%;
+  background-color: #fff;
+  padding: 0 30rpx;
+}
+
+.form-item-text .register{
+  display: block;
+  float: right;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.form-item-text .reset{
+  display: block;
+  float: left;
+  font-size: 28rpx;
+  color: #666;
+}
+.form-item-text icon{
+  margin-top: -15rpx;
+  font-size: 30rpx;
+}
+
+/*微信授权*/
+.wx-auth-container {
+	width: 100%;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 10000;
+	background-color: #ffffff;
+}
+.logo-info {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	flex-direction: row;
+	align-items: center;
+	padding: 20rpx;
+	margin-top: 30%;
+}
+text.txt {
+	display: inline-block;
+	font-size: 30rpx;
+	color: #333;
+	margin-left: 30rpx;
+}
+
+/* 文字提示*/
+.small-tips {
+	margin: 100rpx;
+}
+.small-tips > view {
+	font-size: 26rpx;
+}
+.auth-button {
+	padding: 20rpx 40rpx;
+	width: calc(100% - 20 * 4rpx);
+}
+.btn-auth {
+	width: 60%;
+}
+.policy-tips {
+  text-align: center;
+  padding: 100rpx 30rpx;
+}
+.policy-tips text{
+  color: #666;
+}
+
+.policy-content {
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: calc(100% - 100rpx);
+}

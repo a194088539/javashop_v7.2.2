@@ -1,0 +1,10 @@
+<view class="prompt-box" hidden="{{isHidden}}">
+	<view class="prompt-content contentFontColor">
+		<view class="prompt-title">{{ title }}</view>
+		<textarea class="prompt-input" type="digit" bindinput="_input" maxlength="30" placeholder="超过30字我就记不住了哦" value="{{remark}}" ></textarea>
+		<view class="prompt-btn-group">
+			<view class="btn-item prompt-cancel-btn contentFontColor" bind:tap="_cancel">{{btn_cancel}}</view>
+			<view class="btn-item prompt-certain-btn" bind:tap="_confirm">{{btn_certain}}</view>
+		</view>
+	</view>
+</view>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.statistics.OrderStatisticsMapper">
+
+    <!-- 根据订单时间，订单状态，商家id查询订单数据-->
+    <select id="selectOrderPage" resultType="java.util.Map" useCache="false">
+        SELECT
+            o.sn,
+            o.create_time,
+            o.order_price,
+            o.order_status,
+            o.buyer_name
+        FROM ${tableName_es_sss_order_data} o
+        WHERE o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        <if test="orderStatus != null and orderStatus != ''">
+            AND o.order_status = #{orderStatus}
+        </if>
+    </select>
+
+    <!-- 根据订单时间，订单状态，商家id查询订单数据-->
+    <select id="selectOrderNumList" resultType="java.util.Map" useCache="false">
+        SELECT
+            o.id AS order_num,
+            o.create_time,
+            FROM_UNIXTIME(o.create_time, #{circle}) AS e_create_time
+        FROM ${tableName_es_sss_order_data} o
+        WHERE o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        <if test="orderStatus != null and orderStatus != ''">
+            AND o.order_status = #{orderStatus}
+        </if>
+    </select>
+
+    <!-- 根据订单时间查询订单数据,下单总金额-->
+    <select id="selectSalesMoneyPage" resultType="java.util.Map" useCache="false">
+        SELECT
+            oi.`goods_name`,
+            oi.goods_num,
+            oi.`price`,
+            oi.price*oi.goods_num AS total
+        FROM ${tableName_es_sss_order_goods_data} oi
+        LEFT JOIN ${tableName_es_sss_order_data} o ON oi.order_sn = o.sn
+        WHERE o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        ORDER BY oi.`goods_id`
+    </select>
+
+    <!-- 根据退货时间查询退货数据-->
+    <select id="selectAfterSalesMoneyPage" resultType="java.util.Map" useCache="false">
+        SELECT
+            refund_sn,
+            order_sn,
+            refund_price,
+            create_time
+        FROM ${tableName_es_sss_refund_data}
+        WHERE create_time &gt;= #{startTime}
+        AND create_time &lt;= #{endTime}
+    </select>
+
+    <!-- 根据订单时间查询订单总金额，退还总金额-->
+    <select id="selectSalesMoneyTotal" resultType="java.util.Map" useCache="false">
+        SELECT
+            SUM(o.`order_price`) AS receive_money,
+            SUM(r.`refund_price`) AS refund_money
+        FROM ${tableName_es_sss_order_data} o
+        LEFT JOIN ${tableName_es_sss_refund_data} r ON o.`sn` = r.`order_sn`
+        WHERE o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+    </select>
+
+    <!-- 根据订单时间，商家id查询每个地区的买家数量-->
+    <select id="selectOrderRegionMemberList" resultType="java.util.Map" useCache="false">
+        SELECT
+            o.`ship_province_id` AS region_id,
+            COUNT(DISTINCT o.`buyer_id`) AS value
+        FROM ${tableName_es_sss_order_data} o
+        WHERE o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        GROUP BY region_id
+    </select>
+
+    <!-- 根据订单时间，商家id查询每个地区的订单数量-->
+    <select id="selectOrderRegionNumList" resultType="java.util.Map" useCache="false">
+        SELECT
+            o.`ship_province_id` AS region_id,
+            COUNT(o.`sn`) AS value
+        FROM ${tableName_es_sss_order_data} o
+        WHERE o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        GROUP BY region_id
+    </select>
+
+    <!-- 根据订单时间，商家id查询每个地区的下单金额-->
+    <select id="selectOrderRegionMoneyList" resultType="java.util.Map" useCache="false">
+        SELECT
+            o.`ship_province_id` AS region_id,
+            SUM(o.`order_price`) AS value
+        FROM ${tableName_es_sss_order_data} o
+        WHERE o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        GROUP BY region_id
+    </select>
+
+    <!-- 根据订单时间，商家id查询每个地区的买家数量，下单总金额，订单数量-->
+    <select id="selectOrderRegionFormList" resultType="java.util.Map" useCache="false">
+        SELECT
+            o.`ship_province_id` AS region_id,
+            COUNT(DISTINCT o.`buyer_id`) AS member_num,
+            SUM(o.`order_price`) AS order_price,
+            COUNT(o.`sn`) AS sn_num
+        FROM ${tableName_es_sss_order_data} o
+        WHERE o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        GROUP BY region_id
+    </select>
+
+    <!-- 根据订单时间，商家id查询订单价格-->
+    <select id="selectUnitPriceList" resultType="java.util.Map" useCache="false">
+        SELECT
+            o.order_price AS price_interval
+        FROM ${tableName_es_sss_order_goods_data} oi
+        LEFT JOIN ${tableName_es_sss_order_data} o ON oi.order_sn = o.sn
+        WHERE o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+    </select>
+
+    <!-- 根据订单时间，商家id查询每小时的订单数量-->
+    <select id="selectUnitTimeList" resultType="java.util.Map" useCache="false">
+        SELECT
+            DATE_FORMAT(CONVERT_TZ(FROM_UNIXTIME(o.`create_time`), @@session.time_zone, '+8:00'), '%k') AS order_time,
+            COUNT(o.`sn`) AS order_num
+        FROM ${tableName_es_sss_order_data} o
+        WHERE o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        GROUP BY order_time
+    </select>
+
+    <!-- 根据订单时间，商家id查询退款金额，退款时间-->
+    <select id="selectReturnMoneyList" resultType="java.util.Map" useCache="false">
+        SELECT
+            f.`refund_price`,
+            FROM_UNIXTIME( f.`create_time`, #{circle} ) AS refund_time
+        FROM ${tableName_es_sss_refund_data} f
+        LEFT JOIN ${tableName_es_sss_order_data} o ON o.sn = f.order_sn
+        WHERE f.create_time &gt;= #{startTime}
+        AND f.create_time &lt;= #{endTime}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+    </select>
+</mapper>

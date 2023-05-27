@@ -1,0 +1,15 @@
+.payment-complete {
+  text-align: center;
+}
+.payment-complete .title {
+  line-height: 200rpx;
+  color: #67c23a;
+  font-size: 40rpx;
+  font-weight: 600;
+}
+.payment-complete .btn {
+  background-color: #f44;
+  color: #fff;
+  border: none;
+  margin-right: 25rpx;
+}

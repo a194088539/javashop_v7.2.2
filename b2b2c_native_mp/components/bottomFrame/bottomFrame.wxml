@@ -1,0 +1,15 @@
+<view wx:if='{{flag}}' catchtouchmove="true">
+  <view class='wrap {{wrapAnimate}}' style='background:rgba(0,0,0,{{bgOpacity}});'></view>
+  <view catchtap='hideFrame' class='frame-wrapper {{frameAnimate}}'>
+    <view catchtap='catchNone' class='frame'>
+      <!-- 标题 -->
+      <view class='title-wrapper flex' wx:if="{{showtitle}}">
+        <view class="left"></view>
+        <view class="title">{{frameTitle}}</view>
+        <view class="right"><image catchtap='hideFrame' src='../../static/images/icon_close.png'></image></view>
+      </view>
+      <!-- 内容 -->
+      <slot></slot>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,68 @@
+<view class="my-profile">
+  <view class='profile-container'>
+    <view class='face cell hairline'>
+      <view class='title face-title'><text>头像</text></view>
+      <view class='value' bindtap='updateFace'>
+          <image class='img-face' src="{{profileForm.face || defaultFace}}"></image>
+          <icon class="iconfont icon-xuanze2"></icon>
+      </view>
+    </view>
+    <view class='uname cell hairline'>
+      <view class='title'>用户名</view>
+      <view class='value'>{{profileForm.uname}}</view>
+    </view>
+    <view class='nickname cell hairline' bindtap='nicknameChange'>
+      <view class='title'>昵称</view>
+      <view class='value'>{{nickname}}</view>
+      <icon class="iconfont icon-xuanze2"></icon>
+    </view>
+    <view class='sex cell hairline' bindtap='sexChange'>
+      <view class='title'>性别</view>
+      <view class='value'>{{profileForm.sex}}</view>
+      <icon class="iconfont icon-xuanze2"></icon>
+    </view>
+    <picker mode="date" value="{{profileForm.birthday}}" bindchange='bindDateChange' start="1940-01-01" end="{{time}}">
+      <view class='birthday cell hairline'>
+        <view class='title'>生日</view>
+        <view class='value'>{{profileForm.birthday}}</view>
+        <icon class="iconfont icon-xuanze2"></icon>
+      </view>
+    </picker>
+  </view>
+  <view class='big-btn'>
+    <button class='btn' bindtap='submitProfile'>
+      <text class='btn-text'>保存修改</text>
+    </button>
+  </view>
+  <view class='modal' hidden="{{showEditNickname}}">
+    <view class='dialog'>
+      <view class='dialog_title'>请输入昵称</view>
+      <view class='dialog_content'>
+        <view class='van-cell' style="padding: 30rpx 10rpx 30rpx 30rpx;">
+          <input class='form-item' bindinput="bindKeyInput" placeholder='2-20位字符、字母或数字' value="{{profileForm.nickname}}"></input>
+          <image class="del" wx:if="{{profileForm.nickname.length>0}}" bindtap="clearNickname" src="/static/images/clearIpt.png"></image>
+        </view>
+      </view>
+      <view class='dialog_buttons'>
+        <view class='button dialog_cancel' bindtap='cloneDialog'>
+          <text class='button_text'>取消</text>
+        </view>
+        <view class='button dialog_confirm' bindtap='updateNickname'>
+          <text class='button_text'>确定</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='modal' hidden="{{showSexActionsheet}}" bindtap='cloneDialog'>
+    <view class='actionsheet'>
+      <view class='bottom'>
+        <view class='actionsheet_item' wx:for="{{sexActions}}" wx:key="index" bindtap='bindGenderTap' data-gender="{{item.gender}}">
+          <text>{{item.name}}</text>
+        </view>
+      </view>
+      <view class='actionsheet_cancel' bindtap='cloneDialog'>
+        <text>取消</text>
+      </view>
+    </view>
+  </view>
+</view>

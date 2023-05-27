@@ -1,0 +1,190 @@
+<wxs src="../../../../utils/wxs.wxs" module="receipttype"/>
+<view class="reicept-popup" >
+  <scroll-view scroll-y="true" class="receipt-container">
+    <!--发票类型 start-->
+    <view class="item receipt-type">
+      <view class="title-receipt-type">
+        <text>发票类型</text>
+        <text>{{receipttype.receiptType(current_receipt_type)}}</text>
+      </view>
+      <view wx:if="{{receipt_type_list && receipt_type_list.length}}" class="type-receipt-type">
+        <view wx:for="{{receipt_type_list}}" wx:for-item="receipt" wx:key="index" class="receipt_type_list" bindtap="handleToggleType" data-receipt="{{receipt}}">
+          <view class="type">
+            <icon class="iconfont {{receipt.checked ? 'icon-xuanze1' : 'icon-xuanze'}}"></icon>
+            <text>{{receipttype.receiptType(receipt.receipt_type)}}</text>
+          </view>
+          <view wx:if="{{receipt.receipt_type === 'ELECTRO'}}" class="receipt_type_list_info">电子普通发票与普通纸质发票具有同等法律效力，支持报销入账</view>
+          <view wx:if="{{receipt.receipt_type === 'VATOSPECIAL'}}" class="receipt_type_list_info">我司依法开具发票，请您按照税法规定使用发票</view>
+        </view>
+      </view>
+      <view wx:else class="receipt_type_list_info">商家未开通任何发票</view>
+    </view>
+    <!--发票类型 end-->
+    <view hidden="{{ !need_receipt }}">
+      <!--发票抬头 start-->
+      <view class="item receipt-head">
+        <view class="title-receipt">
+          <text>发票抬头</text>
+          <tex>{{receiptForm.receipt_title}}</tex>
+        </view>
+        <view class="head-receipt-item" wx:if="{{current_receipt_type !== 'VATOSPECIAL'}}" bindtap="handlePersonReceipt">
+          <icon class="iconfont {{receipt_title_type === 0 ? 'icon-xuanze1' : 'icon-xuanze'}}"></icon>
+          <text>个人</text>
+        </view>
+        <view class="head-receipt-item" bindtap="handleChooseReceipt">
+          <icon class="iconfont {{receipt_title_type === 1 ? 'icon-xuanze1' : 'icon-xuanze'}}"></icon>
+          <text>单位</text>
+          <view class="receipt-word" wx:if="{{current_receipt_type !== 'VATOSPECIAL' && receipt_title_type === 1}}">
+            <input
+              bindfocus="handleFocus"
+              bindblur="handleOutReceipt"
+              bindinput="handleBindTitle"
+              value="{{ receiptForm.receipt_title }}"
+              placeholder="请输入单位名称"
+              cursor-spacing="{{height}}"
+            />
+            <view wx:if="{{ receipts.length && show_receipts }}" class="receipts">
+              <view
+                class="rep-item"
+                wx:for="{{ receipts }}"
+                wx:for-item="rep"
+                wx:key="index"
+                catchtap="handleSelectReceipt"
+                data-rep="{{ rep }}"
+              >
+                {{ rep.receipt_title }}
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="head-receipt-item" wx:if="{{current_receipt_type !== 'VATOSPECIAL' && receipt_title_type === 1}}">
+          <text class="head-receipt-item-no">税号</text>
+          <view class="receipt-word-no">
+            <input value="{{ receiptForm.tax_no }}" bindinput="handleBindTaxNo" autocomplete="off" placeholder="请输入纳税人识别号" maxlength="20"/>
+          </view>
+        </view>
+      </view>
+      <!--发票抬头 end-->
+      <!-- 收票人信息 start-->
+      <view class="item receiver-info" wx:if="{{current_receipt_type === 'ELECTRO'}}">
+        <view class="title-receipt">
+          <text>收票人信息</text>
+        </view>
+        <view class="valid">
+          <view class='cell-group'>
+            <view class='cell'>
+              <view class='title must'>收票人手机</view>
+              <view class='value'>
+                <input type='tel' placeholder="请输入收票人手机" maxlength="11" value="{{receiptForm.member_mobile || ''}}" bindinput="syncMemberMobile"></input>
+              </view>
+            </view>
+            <view class='cell'>
+              <view class='title'>收票人邮箱</view>
+              <view class='value'>
+                <input type='email' placeholder='请输入收票人邮箱'  value="{{receiptForm.member_email || ''}}" bindinput="syncMemberEmail"></input>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 收票人信息 end-->
+      <!-- 收票信息 start-->
+      <view class="item receiver-info" wx:if="{{current_receipt_type === 'VATOSPECIAL'}}">
+        <view class="title-receipt">
+          <text>收票信息</text>
+        </view>
+        <view class="valid">
+          <view class='cell-group'>
+            <view class='cell'>
+              <view class='title'>收票人</view>
+              <view class='value'>
+                <input type='text' placeholder="请输入收票人姓名" value='{{receiptForm.member_name}}' bindinput="syncMemberName"></input>
+              </view>
+            </view>
+            <view class='cell'>
+              <view class='title'>手机号</view>
+              <view class='value'>
+                <input type='tel' placeholder='请输入收票人手机号' maxlength="11"  value="{{receiptForm.member_mobile}}" bindinput="syncMemberMobile"></input>
+              </view>
+            </view>
+            <bottomFrame id="bottomFrame" frameTitle="地区选择">
+              <RegionPicker bind:areaschanged="addressSelectorChanged" bind:closeRegionpicke="closeRegionpicke"></RegionPicker>
+            </bottomFrame>
+            <view class='cell' bindtap='openRegionpicke'>
+              <view class='title'>所在地区</view>
+              <view class='value'>
+                <input placeholder='请选择所在地区' disabled value="{{receiptForm.address}}"></input>
+              </view>
+              <view class='right-icon face-icon'>
+                <image class='icon' src='../../../../static/images/go.png'></image>
+              </view>
+            </view>
+            <view class='cell'>
+              <view class='title'>详细地址</view>
+              <view class='value'>
+                <input type='tel' placeholder='请输入详细地址' maxlength="50"  value="{{receiptForm.detail_addr}}" bindinput="syncDetailAddr"></input>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 收票信息 end-->
+      <!--发票内容 start-->
+      <view class="item receipt-content">
+        <view class="title-receipt">
+          <text>发票内容</text>
+          <text>{{receiptForm.receipt_content}}</text>
+        </view>
+        <view class="receipt-tip" wx:if="{{isShowtip}}">
+          根据国家相关规定，发票的开票内容需与购买的商品一致，暂不支持手动选择开票内容。
+          <icon class="iconfont icon-shanchu receipt-tip-close" bindtap="closeTip"></icon>
+        </view>
+        <view class="content-receipt">
+          <view class="content-receipt-list" wx:for="{{receipt_contents}}" wx:key="index" wx:if="{{item.receipt_type === current_receipt_type || !item.receipt_type}}" bindtap="handleChooseContent" data-item="{{item}}">
+            <view class="content">
+              <icon class="iconfont {{item.code ? 'icon-xuanze1' : 'icon-xuanze'}}"></icon>
+              <text>{{item.receipt_content}}</text>
+            </view>
+            <view class="info" wx:if="{{!item.receipt_type && current_receipt_type !== 'VATOSPECIAL'}}">商品明细显示详细商品名称及价格信息</view>
+            <view class="info" wx:if="{{item.receipt_type === 'ELECTRO'}}">本单可开发票内容:商品类别集合</view>
+          </view>
+        </view>
+      </view>
+      <!--发票内容 end-->
+      <!-- 明细 start -->
+      <view class="item detailed" wx:if="{{current_receipt_type === 'VATOSPECIAL'}}">
+        <view class="title-receipt">明细</view>
+        <view class="detailed-list">
+          <view class="detailed-list-item">
+            <text>单位名称：</text>
+            <text>{{invoiceInfo.company_name}}</text>
+          </view>
+          <view class="detailed-list-item">
+            <text>纳税人识别号：</text>
+            <text>{{invoiceInfo.taxpayer_code}}</text>
+          </view>
+          <view class="detailed-list-item">
+            <text>注册地址：</text>
+            <text>{{invoiceInfo.register_address}}</text>
+          </view>
+          <view class="detailed-list-item">
+            <text>注册电话：</text>
+            <text>{{invoiceInfo.register_tel}}</text>
+          </view>
+          <view class="detailed-list-item">
+            <text>开户银行：</text>
+            <text>{{invoiceInfo.bank_name}}</text>
+          </view>
+          <view class="detailed-list-item">
+            <text>银行账户：</text>
+            <text>{{invoiceInfo.bank_account}}</text>
+          </view>
+        </view>
+      </view>
+      <!-- 明细 end -->
+    </view>
+  </scroll-view>
+  <view class="big-btn">
+    <button bindtap="handleConfirmReceipt">保存</button>
+  </view>
+</view>

@@ -1,0 +1,6 @@
+{
+  "component":true,
+  "usingComponents":{
+    "prom-bar":"../prom-bar/prom-bar"
+  }
+}

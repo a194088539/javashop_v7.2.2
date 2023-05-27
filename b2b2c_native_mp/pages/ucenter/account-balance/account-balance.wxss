@@ -1,0 +1,106 @@
+page {
+  height: 100%;
+  background-color: #f4f4f4;
+}
+.balance {
+  padding: 40rpx 0;
+  text-align: center;
+  background-color: #fff;
+}
+.balance .account_balance {
+  font-size: 42rpx;
+}
+.balance .account_balance .txt {
+  font-size: 52rpx;
+  font-weight: 600;
+}
+.balance .balance-tip {
+  color: #8f8f8f;
+}
+
+.recharge {
+  margin: 20rpx 0;
+  padding: 20rpx;
+  background-color: #fff;
+}
+.recharge .amount-money, .recharge .amount-money .money {
+  display: flex;
+  align-items: center;
+  margin: 20rpx;
+}
+.recharge .amount-money .input {
+  width: 160rpx;
+  padding: 0 10rpx;
+  border: 2rpx solid #E2E5EB;
+  border-top-left-radius: 8rpx;
+  border-bottom-left-radius: 8rpx;
+}
+.recharge .amount-money .txt {
+  width: 80rpx;
+  height: 54rpx;
+  line-height: 54rpx;
+  text-align: center;
+  background-color: #F5F7FA;
+  border: 2rpx solid #E2E5EB;
+  border-left: none;
+  border-top-right-radius: 8rpx;
+  border-bottom-right-radius: 8rpx;
+}
+.recharge .payment-btn {
+  background-color: #f42424;
+  color: #fff;
+  text-align: center;
+  border-radius: 8rpx;
+  line-height: 70rpx;
+  margin: 0 20rpx;
+}
+
+.details-switch{
+  width: 100%;
+  background: #fff;
+  height: 84rpx;
+}
+
+.details-switch .item{
+  display: inline-block;
+  height: 82rpx;
+  line-height: 80rpx;
+  width: 50%;
+  padding: 0 15rpx;
+  text-align: center;
+  font-size: 30rpx;
+}
+
+.details-switch .item.active{
+  color: #f42424;
+  border-bottom: 4rpx solid #f42424;
+}
+
+.recharge-list, .balancelog-list {
+  background-color: #fff;
+}
+.recharge-item, .balancelog-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15rpx 20rpx;
+  border-bottom: 2rpx solid #CCCCCC;
+}
+.recharge-item .left, .balancelog-item .left {
+  flex: 1;
+  line-height: 35rpx;
+}
+.recharge-item .left .time, .balancelog-item .left .time {
+  font-size: 22rpx;
+  color: #8f8f8f;
+}
+.recharge-item .right, .balancelog-item .right {
+  font-size: 32rpx;
+  font-weight: 600;
+}
+.recharge-item .right.red, .balancelog-item .right.red {
+  color: #f42424;
+}
+.balancelog-item .right.green {
+  color: #009933;
+}

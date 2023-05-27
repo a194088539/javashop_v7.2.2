@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: framework
+  cloud:
+    config:
+      uri: http://localhost:8888
+      profile: test
+server:
+  port: 7080

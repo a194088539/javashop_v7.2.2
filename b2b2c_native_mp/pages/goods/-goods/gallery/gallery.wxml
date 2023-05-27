@@ -1,0 +1,10 @@
+<view class="gallery-container">
+  <swiper class="goodsimgs" indicator-dots="true" circular="true">
+		<swiper-item wx:if="{{goods_video}}">
+			<video class="goods_video" src="{{goods_video}}" poster="{{gallery_list[0].original}}" show-mute-btn="true" enable-play-gesture="true" autoplay></video>
+		</swiper-item>
+		<swiper-item wx:for="{{gallery_list}}" wx:key="*this">
+			<image src="{{item.original}}" data-index="{{index}}" bindtap="previewImg" mode="widthFix"></image>
+		</swiper-item>
+	</swiper>
+</view>

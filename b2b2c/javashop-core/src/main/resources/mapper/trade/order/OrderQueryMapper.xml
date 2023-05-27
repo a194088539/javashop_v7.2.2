@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.trade.order.OrderQueryMapper">
+
+    <!-- 按条件分页查询订单列表 -->
+    <select id="selectOrderQueryPage" resultType="com.enation.app.javashop.model.trade.order.dos.OrderDO"
+            useCache="false">
+        SELECT * FROM es_order
+        WHERE disabled = 0
+        <if test="param.keywords != null and param.keywords != ''">
+            AND (
+                sn LIKE concat('%',#{param.keywords},'%') OR
+                items_json LIKE concat('%',#{param.keywords},'%')
+            )
+        </if>
+        <if test="param.sellerId != null">
+            AND seller_id = #{param.sellerId}
+        </if>
+        <if test="param.memberId != null">
+            AND member_id = #{param.memberId}
+        </if>
+        <if test="param.orderSn != null and param.orderSn != ''">
+            AND sn LIKE concat('%', #{param.orderSn}, '%')
+        </if>
+        <if test="param.tradeSn != null and param.tradeSn != ''">
+            AND trade_sn LIKE concat('%', #{param.tradeSn}, '%')
+        </if>
+        <if test="param.startTime != null">
+            AND create_time &gt;= #{param.startTime}
+        </if>
+        <if test="param.endTime != null">
+            AND create_time &lt;= #{param.endTime}
+        </if>
+        <if test="param.buyerName != null and param.buyerName != ''">
+            AND member_name LIKE concat('%',#{param.buyerName},'%')
+        </if>
+        <if test="param.tag != null and param.tag != ''">
+            <if test="param.tag == 'WAIT_PAY'">
+                AND (
+                ( payment_type != 'cod' AND order_status='CONFIRM') OR
+                ( payment_type = 'cod' AND order_status='ROG') OR
+                order_status = 'NEW'
+                )
+            </if>
+            <if test="param.tag == 'WAIT_SHIP'">
+                AND (
+                ( payment_type != 'cod' AND (order_type='NORMAL' OR order_type='CHANGE' OR order_type='SUPPLY_AGAIN')
+                AND order_status='PAID_OFF') OR
+                ( payment_type= 'cod' AND order_type='NORMAL' AND order_status='CONFIRM') OR
+                ( order_type = 'PINTUAN' AND order_status='FORMED')
+                )
+            </if>
+            <if test="param.tag == 'WAIT_ROG'">
+                AND order_status = 'SHIPPED'
+            </if>
+            <if test="param.tag == 'WAIT_COMMENT'">
+                AND ship_status = 'SHIP_ROG' AND comment_status = 'UNFINISHED'
+            </if>
+            <if test="param.tag == 'WAIT_CHASE'">
+                AND ship_status = 'SHIP_ROG' AND comment_status = 'WAIT_CHASE'
+            </if>
+            <if test="param.tag == 'CANCELLED'">
+                AND order_status='CANCELLED'
+            </if>
+            <if test="param.tag == 'COMPLETE'">
+                AND order_status='COMPLETE'
+            </if>
+        </if>
+        <if test="param.orderStatus != null and param.orderStatus != ''">
+            AND order_status = #{param.orderStatus}
+        </if>
+        <if test="param.goodsName != null and param.goodsName != ''">
+            AND items_json LIKE concat('%', #{param.goodsName}, '%')
+        </if>
+        <if test="param.shipName != null and param.shipName != ''">
+            AND ship_name LIKE concat('%', #{param.shipName}, '%')
+        </if>
+        <if test="param.paymentType != null and param.paymentType != ''">
+            AND payment_type = #{param.paymentType}
+        </if>
+        <if test="param.clientType != null and param.clientType != ''">
+            AND client_type = #{param.clientType}
+        </if>
+        ORDER BY order_id DESC
+    </select>
+
+    <!-- 按条件查询订单导出列表 -->
+    <select id="selectExportList" resultType="com.enation.app.javashop.model.trade.order.dos.OrderDO" useCache="false">
+        SELECT * FROM es_order
+        WHERE disabled = 0
+        <if test="orderSn != null and orderSn != ''">
+            AND sn LIKE concat('%', #{orderSn} ,'%')
+        </if>
+        <if test="shipName != null and shipName != ''">
+            AND ship_name LIKE concat('%' ,#{shipName}, '%')
+        </if>
+        <if test="goodsName != null and goodsName != ''">
+            AND items_json LIKE concat('%', #{goodsName},'%')
+        </if>
+        <if test="buyerName != null and buyerName != ''">
+            AND member_name LIKE concat('%',#{buyerName} ,'%')
+        </if>
+        <if test="orderStatus != null and orderStatus != ''">
+            AND order_status = #{orderStatus}
+        </if>
+        <if test="startTime != null">
+            AND create_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND create_time &lt;= #{endTime}
+        </if>
+        <if test="sellerId != null and sellerId != 0">
+            AND seller_id = #{sellerId}
+        </if>
+        <if test="paymentType != null and paymentType != ''">
+            AND payment_type = #{paymentType}
+        </if>
+        <if test="clientType != null and clientType != ''">
+            AND client_type = #{clientType}
+        </if>
+
+        <if test="tag != null and tag != ''">
+            <if test="tag == 'WAIT_PAY'">
+                AND (
+                ( payment_type != 'cod' AND order_status='CONFIRM') OR
+                ( payment_type = 'cod' AND order_status='ROG') OR
+                order_status = 'NEW'
+                )
+            </if>
+            <if test="tag == 'WAIT_SHIP'">
+                AND (
+                ( payment_type != 'COD' AND (order_type='NORMAL' OR order_type='CHANGE' OR order_type='SUPPLY_AGAIN')
+                AND order_status='PAID_OFF') OR
+                ( payment_type= 'COD' AND order_type='NORMAL' AND order_status='CONFIRM') OR
+                ( order_type = 'PINTUAN' AND order_status='FORMED')
+                )
+            </if>
+            <if test="tag == 'WAIT_ROG'">
+                AND order_status = 'SHIPPED'
+            </if>
+            <if test="tag == 'CANCELLED'">
+                AND order_status='CANCELLED'
+            </if>
+            <if test="tag == 'COMPLETE'">
+                AND order_status='COMPLETE'
+            </if>
+        </if>
+        ORDER BY order_id DESC
+    </select>
+
+    <!-- 根据订单编号读取订单列表 -->
+    <select id="getOrderByTradeSn" resultType="com.enation.app.javashop.model.trade.order.vo.OrderDetailVO"
+            useCache="false">
+        SELECT * FROM es_order WHERE trade_sn = #{tradeSn}
+    </select>
+
+    <!-- 获取几个月之内购买过相关商品的订单数据 -->
+    <select id="listOrderByGoods" resultType="com.enation.app.javashop.model.trade.order.dos.OrderDO" useCache="false">
+        SELECT o.* FROM es_order o
+        LEFT JOIN es_order_items oi ON o.sn = oi.order_sn
+        WHERE o.disabled = '0'
+        AND (
+            o.order_status = 'ROG' OR o.order_status = 'COMPLETE'
+        )
+        AND o.create_time &gt;= #{beforeMonthDateline}
+        AND oi.goods_id = #{goodsId}
+        AND o.member_id != #{memberId}
+        GROUP BY o.member_id
+        ORDER BY o.create_time DESC
+    </select>
+
+    <!-- 根据订单编号查询货物相关信息 -->
+    <select id="getItemsPromotionTypeandNum" resultType="java.util.Map" useCache="false">
+        SELECT goods_id,promotion_type,num,product_id FROM es_order_items WHERE order_sn = #{orderSn}
+    </select>
+
+</mapper>

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "系统消息",
+  "usingComponents": {
+    "en-empty": "../../../../components/empty/empty",
+    "en-top": "../../../../components/top/top"
+  }
+}

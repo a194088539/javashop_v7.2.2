@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.promotion.groupbuy.GroupbuyCatMapper">
+
+    <!-- 查询团购分类已被团购活动或者团购商品占用的数量 -->
+    <select id="selectCatCount" resultType="java.lang.Integer" useCache="false">
+      select count(0) from es_groupbuy_cat gc
+      left join es_groupbuy_goods gg on gc.cat_id = gg.cat_id
+      left join es_groupbuy_active ga on gg.act_id = ga.act_id
+      <where>
+          gc.cat_id = #{cat_id} and ga.end_time &gt;= #{time}
+      </where>
+    </select>
+
+</mapper>

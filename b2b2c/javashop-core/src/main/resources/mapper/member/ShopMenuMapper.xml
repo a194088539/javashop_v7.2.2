@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.member.ShopMenuMapper">
+    <!-- 获取店铺菜单信息集合 -->
+    <select id="selectShopMenusListVo" resultType="com.enation.app.javashop.model.shop.vo.ShopMenusVO" useCache="false">
+        select * from es_shop_menu ${ew.customSqlSegment}
+    </select>
+
+</mapper>

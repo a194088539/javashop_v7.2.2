@@ -1,0 +1,67 @@
+<wxs src="../../../../utils/wxs.wxs" module="comments"/>
+<view class="comments-goods-box">
+  <view class="comments-item">
+    <view class="comments-goods" wx:if="{{commentsDetail.goods_images}}">
+      <view class="goods-image">
+        <navigator url="/pages/goods/goods?goods_id={{commentsDetail.goods_images.goods_id}}" hover-class="none">
+          <image src="{{commentsDetail.goods_images.original}}"></image>
+        </navigator>
+      </view>
+      <view class="goods-name">
+        <text>{{commentsDetail.goods_name}}</text>
+      </view>
+    </view>
+    <view class="comments-comntent">
+      <view class="first-comments">
+        <view>初评日期：{{commentsDetail.create_time}}</view>
+        <view>{{commentsDetail.grade}}</view>
+        <view>{{commentsDetail.content}}</view>
+        <view wx:if="{{commentsDetail.have_image === 1}}">
+          <image bindtap="handleImagePreview" data-urls="{{commentsDetail.images}}" data-img="{{item}}" wx:for="{{commentsDetail.images}}" wx:key="index" src="{{item}}" mode="aspectFill"></image>
+        </view>
+        <view wx:if="{{commentsDetail.reply_status === 1 && commentsDetail.reply}}" class="com-reply">
+          <text>初评回复：</text>
+          <text class="reply-content">{{commentsDetail.reply.content}}</text>
+        </view>
+      </view>
+      <view class="append-comments" wx:if="{{commentsDetail.additional_comment}}">
+        <view>追评日期：{{commentsDetail.additional_comment.create_time}}</view>
+        <view>{{commentsDetail.additional_comment.content}}</view>
+        <view wx:if="{{commentsDetail.additional_comment.have_image === 1}}">
+          <image wx:for="{{commentsDetail.additional_comment.images}}" wx:key="index" src="{{item}}" bindtap="handleImagePreview" data-urls="{{commentsDetail.additional_comment.images}}" data-img="{{item}}" mode="aspectFill"></image>
+        </view>
+        <view wx:if="{{commentsDetail.additional_comment.reply_status === 1 && commentsDetail.additional_comment.reply}}" class="com-reply">
+          <text>追评回复：</text>
+          <text class="reply-content">{{commentsDetail.additional_comment.reply.content}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="shop-grade" wx:if="{{commentsDetail.member_shop_score}}">
+    <view class="shop-grade-nav"><icon class="iconfont icon-dianpu"></icon> 店铺评分</view>
+    <view class="rating-star">
+      <view class="logistics-star">
+        <view class="text"><text>描述相符</text></view>
+        <view class="star">
+          <icon wx:for="{{diagnosisStar}}" wx:key="index" class="iconfont {{commentsDetail.member_shop_score.description_score>=item ? 'icon-xingxing' : 'icon-xingxing1'}}"></icon>
+        </view>
+
+        <view class="grade-text"><text>{{comments.countGradeText(commentsDetail.member_shop_score.description_score)}}</text></view>
+      </view>
+      <view class="logistics-star">
+        <view class="text"><text>服务态度</text></view>
+        <view class="star">
+          <icon wx:for="{{diagnosisStar}}" wx:key="index" class="iconfont {{commentsDetail.member_shop_score.service_score>=item ? 'icon-xingxing' : 'icon-xingxing1'}}"></icon>
+        </view>
+        <view class="grade-text"><text>{{comments.countGradeText(commentsDetail.member_shop_score.service_score)}}</text></view>
+      </view>
+      <view class="logistics-star">
+        <view class="text"><text>物流服务</text></view>
+        <view class="star">
+          <icon wx:for="{{diagnosisStar}}" wx:key="index" class="iconfont {{commentsDetail.member_shop_score.delivery_score>=item ? 'icon-xingxing' : 'icon-xingxing1'}}"></icon>
+        </view>
+        <view class="grade-text"><text>{{comments.countGradeText(commentsDetail.member_shop_score.delivery_score)}}</text></view>
+      </view>
+    </view>
+  </view>
+</view>

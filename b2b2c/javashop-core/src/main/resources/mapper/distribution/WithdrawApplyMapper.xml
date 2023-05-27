@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.enation.app.javashop.mapper.distribution.WithdrawApplyMapper">
+
+    <!--根据member_id查询提现记录-->
+    <select id="pageWithdrawApply" resultType="com.enation.app.javashop.model.distribution.vo.WithdrawApplyVO" useCache="false">
+        select * from es_withdraw_apply where member_id=#{memberId} order by id desc
+    </select>
+
+
+</mapper>

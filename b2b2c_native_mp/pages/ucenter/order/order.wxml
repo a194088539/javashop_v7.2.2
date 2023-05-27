@@ -1,0 +1,101 @@
+<view class="container">
+  <view class="header">
+    <view class="search">
+      <view class="input">
+        <image class="icon" src="../../../static/images/search2.png"></image>
+        <input value="{{searchKeyword}}" placeholder="请输入商品名称或订单号" confirm-type="search" bindconfirm="handleSearchOrder" bindinput="handleSearchKeyword"></input>
+        <image class="del" wx:if="{{searchKeyword}}" bindtap="clearSearchKeyword" src="../../../static/images/clearIpt.png"></image>
+      </view>
+    </view>
+    <view class="orders-switch">
+        <view class="item {{ tabActive == 0 ? 'active' : ''}}" bindtap="switchTab" data-index='0'>
+            全部
+        </view>
+        <view class="item {{ tabActive == 1 ? 'active' : ''}}" bindtap="switchTab" data-index='1'>
+            待付款
+        </view>
+        <view class="item {{ tabActive == 2 ? 'active' : ''}}" bindtap="switchTab" data-index='2'>
+            待发货
+        </view>
+        <view class="item {{ tabActive == 3 ? 'active' : ''}}" bindtap="switchTab" data-index='3'>
+            待收货
+        </view>
+        <view class="item {{ tabActive == 4 ? 'active' : ''}}" bindtap="switchTab" data-index='4'>
+            待评论
+        </view>
+    </view>
+  </view>
+  <scroll-view class='orders' scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+    <en-empty wx:if="{{!orderList.length && finished}}">暂无订单</en-empty>
+    <view class='order-item' wx-else wx:for="{{orderList}}" wx:key="index">
+      <view class='sn-order-item'>
+        <text>订单号：{{item.sn}}</text>
+        <text class="pintuan" wx:if="{{item.order_type === 'PINTUAN'}}"> {{ item.ping_tuan_status }} </text>
+      </view>
+      <view class='info-order-item'>
+        <view class='order-status'>
+          <text>状 态: </text> <text class='status'>{{item.order_status_text}}</text>
+        </view>
+        <view class='order-status'>
+          <text>总 价: </text> <text class='price'>￥{{item.order_amount}}</text>
+        </view>
+        <view class='order-btns'>
+          <text wx:if="{{item.order_operate_allowable_vo.allow_cancel}}" bindtap="cancelOrder"  data-sn='{{item.sn}}' class='btn' style="background-color: #f19325">取消订单</text>
+          <navigator hover-class="none" wx:if="{{item.order_operate_allowable_vo.allow_service_cancel}}" url="/pages/ucenter/after-sale/apply-cancel/apply-cancel?order_sn={{item.sn}}"  data-sn='{{item.sn}}' class='btn' style="background-color: #f19325">取消订单</navigator>
+          <text wx:if="{{item.order_operate_allowable_vo.allow_rog}}" bindtap='rogOrder' data-sn='{{item.sn}}' class='btn'>确认收货</text>
+          <navigator hover-class="none" url="/pages/cashier/cashier?order_sn={{item.sn}}" wx:if="{{item.order_operate_allowable_vo.allow_pay}}" bindtap='paymentOrder' class='btn' >订单付款</navigator>
+          <navigator hover-class="none" wx:if="{{item.order_operate_allowable_vo.allow_comment && item.comment_status === 'UNFINISHED'}}" url="/pages/ucenter/comments/comments?order_sn={{item.sn}}"  class='btn' >去评论</navigator>
+          <navigator hover-class="none" wx:if="{{item.comment_status === 'WAIT_CHASE'}}" url="/pages/ucenter/comments/comments?order_sn={{item.sn}}&&append_comment=review"  class='btn' >追加评论</navigator>
+          <navigator hover-class="none" url="/pages/ucenter/orderDetail/orderDetail?order_sn={{item.sn}}" class='btn'>查看详情</navigator>
+        </view>
+      </view>
+      <navigator hover-class="none" url="/pages/shop/shop_id/shop_id?id={{item.seller_id}}" class='shop-order-item'>
+        <view class='txt'>{{item.seller_name}}</view>
+      </navigator>
+      <view class='sku-order-item' wx:for="{{item.sku_list}}" wx:key="iindex" wx:for-item="iitem" wx:for-index="iindex">
+        <view class='sku-content'>
+          
+          <navigator hover-class="none" url="/pages/goods/goods?goods_id={{iitem.goods_id}}" class="navigat-left">
+            <image  class='img-info' src="{{iitem.goods_image}}"></image>
+            <text class="pintuan" wx:if="{{item.order_type === 'PINTUAN'}}">多人拼团</text>
+          </navigator>
+          <view class="navigat-right">
+            <navigator hover-class="none" url="../orderDetail/orderDetail?order_sn={{item.sn}}">
+              <view class='sku-name'>{{iitem.name}}</view>
+              <view class="sku-name num">
+                <text class='sku-spec'>{{iitem.skuName}}</text>
+                <text>{{iitem.num}}件</text>
+                <text class="sku-assemble" wx:if="{{item.waiting_group_nums}}">还差 <text style="color:#f42424;">{{item.waiting_group_nums}}</text> 人成团</text>
+              </view>
+            </navigator>
+            <navigator hover-class="none" wx:if="{{iitem.goods_operate_allowable_vo.allow_apply_service}}" class='after-btn' url="/pages/ucenter/after-sale/choose-type/choose-type?orderSn={{item.sn}}&skuId={{iitem.sku_id}}">申请售后</navigator>
+            <navigator hover-class="none" wx:if="{{item.order_status_text !=='待付款' & iitem.goods_operate_allowable_vo.allow_order_complain & iitem.complain_status === 'NO_APPLY' || iitem.complain_status === 'COMPLETE'}}" class='after-btn' url="/pages/ucenter/complaint-apply/complaint-apply?order_sn={{item.sn}}&sku_id={{iitem.sku_id}}">交易投诉</navigator>
+            <view class="after-btn" wx:if="{{iitem.complain_status === 'APPLYING'}}">投诉申请中</view>
+            <view class="after-btn" wx:if="{{iitem.complain_status === 'EXPIRED'}}">投诉已失效</view>
+            <navigator hover-class="none" wx:if="{{iitem.snapshot_id}}" url="/pages/goods/snapshot/snapshot?id={{iitem.snapshot_id}}&sku_id={{iitem.sku_id}}&owner=BUYER" class='after-btn'>交易快照</navigator>
+          </view>
+          <view style="clear:both;"></view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  <view class='modal' hidden="{{cancelOrder}}" catchtouchmove="true">
+      <view class='dialog'>
+        <view class='dialog_title'>取消订单</view>
+        <view class='dialog_content'>
+          <view class='van-cell'>
+            <textarea bindinput="bindinput" placeholder='请输入取消原因' maxlength='200' value='{{reason}}'  class='field_control'></textarea>
+          </view>
+        </view>
+        <view class='dialog_buttons'>
+          <view class='button dialog_cancel' bindtap='cloneDialog'>
+            <text class='button_text'>取消</text>
+          </view>
+          <view class='button dialog_confirm' bindtap='confirmCancelOrder'>
+            <text class='button_text'>确定</text>
+          </view>
+        </view>
+      </view>
+  </view>
+  <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+</view>

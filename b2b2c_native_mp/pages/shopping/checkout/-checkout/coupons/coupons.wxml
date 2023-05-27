@@ -1,0 +1,59 @@
+<bottomFrame id="bottomFrame" frameTitle="优惠券" >
+  <scroll-view scroll-y="true" class="coupons-container">
+		<view
+			class="shop-item"
+			wx:for="{{ inventories }}"
+			wx:for-item="shop"
+			wx:for-index="shopIndex"
+			wx:key="shopIndex"
+		>
+			<view class="content-shop-item" wx:if="{{ !couponList || !couponList.length }}">
+				<view class="no-coupon"
+				>您在 {{shop.seller_name}} 店铺还没有领到优惠券，
+        <text bindtap="handleShop" data-shopId="{{shop.seller_id}}">[去店铺]</text> 看看？</view>
+			</view>
+		</view>
+
+    <view
+      wx:if="{{ couponList || couponList.length }}"
+      wx:for="{{ couponList }}"
+      wx:for-item="coupon"
+      wx:for-index="couponIndex"
+      wx:key="couponIndex"
+      class="bonus-item {{ coupon.enable === 0 ? 'unavailable' : '' }}"
+      data-coupon="{{ coupon }}"
+      bindtap="useCoupon"
+    >
+      <view class="top-bg-bonus-item"></view>
+      <view class="content-bonus-item">
+        <view class="check-bonus-item">
+          <icon class="iconfont {{ coupon.selected === 1 ? 'icon-xuanze1' : 'icon-xuanze' }}"></icon>
+        </view>
+        <view class="money-bonus-item">
+          <view class="use-money">
+            <text class="symbol-yuan">￥</text>
+            <text class="bonus-money">{{ coupon.amount }}</text>
+          </view>
+          <view class="limit-money">
+            满{{ coupon.use_term }}可用
+          </view>
+          <view class="limit-money">
+            使用有效期截止：{{ coupon.end_time }}
+          </view>
+          <view class="limit-money">
+            <view class="shop-name" wx:if="{{coupon.use_scope}}">
+              仅限
+              <text wx:if="{{coupon.use_scope === 'ALL'}}">全平台</text>
+              <text wx:if="{{coupon.use_scope === 'CATEGORY'}}">品类</text>
+              <text wx:if="{{coupon.use_scope === 'SOME_GOODS'}}">部分商品</text>
+              使用
+            </view>
+            <view class="shop-name" wx:else>
+              仅限 <navigator hover-class="none" url="/pages/shop/shop_id/shop_id?id={{coupon.seller_id}}">{{coupon.seller_name}}</navigator> 店铺使用
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+	</scroll-view>
+</bottomFrame>

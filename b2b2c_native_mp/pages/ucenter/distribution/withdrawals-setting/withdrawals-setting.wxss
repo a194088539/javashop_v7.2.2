@@ -1,0 +1,13 @@
+.big-btn {
+  margin: 20rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 26rpx;
+  color: #fff;
+  background-color: #f42424;
+  text-align: center;
+  border-radius: 10rpx;
+}
+.valid .title {
+  max-width: 180rpx;
+}

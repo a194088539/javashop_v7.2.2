@@ -1,0 +1,30 @@
+<view id="group-buy">
+	<en-tabs topNavs="{{ categories }}" bind:changed="handleClickCate" title="cat_name"></en-tabs>
+	<en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+	<en-empty wx:if="{{ finished && !groupBuy.length }}" style="line-height:420px">暂无商品</en-empty>
+	<scroll-view class="group-buy-container" wx:else scroll-y="true" scroll-top="{{scrollTop}}" style="height:{{scrollHeight}}px;" bindscrolltolower='loadMore' bindscroll="scroll">
+		<block wx:for="{{ groupBuy }}" wx:for-item="goods" wx:key="index">
+			<view class="item-goods">
+				<view class="dt">
+					<navigator url="/pages/goods/goods?goods_id={{ goods.goods_id }}&&sku_id={{ goods.sku_id }}" hover-class="none">
+						<image src="{{ goods.img_url }}"></image>
+					</navigator>
+				</view>
+				<view class="dd">
+					<view class="name-goods">{{ goods.goods_name }}</view>
+					<view class="descrip-goods">
+						<view></view>
+						<view class="price">￥{{ goods.price }}</view>
+						<navigator class="grab-btn" url="/pages/goods/goods?goods_id={{ goods.goods_id }}&&sku_id={{ goods.sku_id }}" hover-class="none">
+							去团购
+						</navigator>
+					</view>
+					<view class="price-goods">
+						<view>原价：￥{{ goods.original_price }}</view>
+						<view>已售出：<text>{{ goods.show_buy_num }}</text>件</view>
+					</view>
+				</view>
+			</view>
+		</block>
+	</scroll-view>
+</view>

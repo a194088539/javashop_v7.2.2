@@ -1,0 +1,10 @@
+<view class="prompt-box" hidden="{{isHidden}}">
+	<view class="prompt-content contentFontColor">
+		<view class="prompt-title">{{title}}</view>
+		<view class="prompt-cont">确定要删除这条消息吗?</view>
+		<view class="prompt-btn-group">
+			<view class="btn-item prompt-cancel-btn contentFontColor" bind:tap="_cancel">{{btn_cancel}}</view>
+			<view class="btn-item prompt-certain-btn" bind:tap="_confirm">{{btn_certain}}</view>
+		</view>
+	</view>
+</view>

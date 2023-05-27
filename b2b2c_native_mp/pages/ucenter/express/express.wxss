@@ -1,0 +1,79 @@
+page{
+  background-color: rgb(247, 247, 247);
+}
+.logistics {
+  display: flex;
+  align-items: center;
+  height: 140rpx;
+  background-color: #fff;
+}
+.logi-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: left;
+  width: 180rpx;
+  height: 140rpx;
+}
+.iconfont {
+  font-size: 130rpx;
+}
+.no-ship{
+  display: block;
+  width:100%;
+  text-align: center;
+  line-height: 200rpx;
+}
+.logistics-info{
+  clear: both;
+  margin-top: 20rpx;
+  background-color: #fff;
+  padding: 0 20rpx;
+}
+.logistics-info .ship-item{
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+}
+.logistics-info .ship-item:first-child .shop-dot{
+  background-color: #f42424;
+}
+.logistics-info .ship-item:first-child view{
+  color: #f42424;
+}
+.logistics-info .ship-item:not(:last-child):after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    background-color: #e5e5e5;
+    width: 2rpx;
+    top: 74rpx;
+    left: 20rpx;
+    bottom: -40rpx;
+}
+.logistics-info .shop-dot {
+    position: relative;
+    line-height: 40rpx;
+    font-size: 20rpx;
+    text-align: center;
+    color: #666;
+    margin: 48rpx 30rpx 0 10rpx;
+    width: 20rpx;
+    height: 20rpx;
+    border-radius: 10rpx;
+    background-color: #ccc;
+  }
+  .ship-msg {
+    flex: 1;
+    padding: 30rpx 0;
+  }
+  .ship-msg-text {
+    color: #333;
+    font-size: 28rpx;
+    line-height: 36rpx;
+  }
+  .ship-msg-time {
+    font-size: 24rpx;
+    color: #999;
+  }

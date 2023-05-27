@@ -1,0 +1,38 @@
+<scroll-view scroll-y="true" style="height:{{scrollHeight}}px;" bindscrolltolower='loadMore'>
+  <view class='comments-list'>
+    <en-empty wx:if="{{!comments.length && finished}}">暂无评价</en-empty>
+    <view wx:else class='some-comments'>
+      <view class='com-item' wx:for="{{comments}}" wx:key="index" wx:if="{{item.audit_status === 'PASS_AUDIT'}}">
+        <view class='com-user'>
+          <text class='user'>{{item.member_name}}</text>
+          <text class='credit'>{{item.grade}}</text>
+          <text class='date'>{{item.create_time}}</text>
+        </view>
+        <view class='com-content'>{{item.content}}</view>
+        <view class="com-gallery" wx:if="{{item.images && item.images.length}}">
+          <block wx:for="{{item.images}}" wx:for-item="img" wx:key="index">
+            <image lazy-load class="img"  src="{{img}}" bindtap="handleImagePreview" data-urls="{{item.images}}" data-img="{{img}}" mode="aspectFill"></image>
+          </block>
+        </view>
+        <view class='com-reply' wx:if="{{item.reply_status === 1 && item.reply}}">
+          <text>商家回复：</text>
+          <text>{{item.reply.content}}</text>
+        </view>
+        <!-- 追加评论 -->
+        <view class="append" wx:if="{{item.additional_comment && item.additional_comment.audit_status === 'PASS_AUDIT'}}">
+          <view>追加评论 {{item.additional_comment.create_time}}</view>
+          <view class="com-content">{{item.additional_comment.content}}</view>
+          <view class="com-gallery" wx:if="{{item.additional_comment.images && item.additional_comment.images.length}}">
+            <block wx:for="{{item.additional_comment.images}}" wx:for-item="img" wx:key="index">
+              <image lazy-load class="img"  src="{{img}}" bindtap="handleImagePreview" data-urls="{{item.additional_comment.images}}" data-img="{{img}}" mode="aspectFill"></image>
+            </block>
+          </view>
+          <view wx:if="{{item.additional_comment.reply_status === 1 && item.additional_comment.reply}}" class="com-reply">
+            <text>商家回复：</text>
+            <text class="reply-content">{{item.additional_comment.reply.content}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</scroll-view>

@@ -1,0 +1,100 @@
+spring:
+  #分库分表配置
+  shardingsphere:
+    sharding:
+      tables:
+        #交易表(用trade sn 分库，用trade_id分表) 
+        es_trade:
+          actual-data-nodes: ds$->{0..1}.es_trade$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: trade_sn
+              algorithm-expression: ds$->{ new Long(trade_sn) % 2}
+          table-strategy:
+            inline:
+              sharding-column: trade_id
+              algorithm-expression: es_trade$->{trade_id % 2}
+
+        #订单表(用ordersn分库，用member_id分表) 
+        es_order:
+          actual-data-nodes: ds$->{0..1}.es_order$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: trade_sn
+              algorithm-expression: ds$->{ new Long(trade_sn) % 2}
+          table-strategy:
+            inline:
+              sharding-column: member_id
+              algorithm-expression: es_order$->{member_id % 2}
+
+        #订单项表(用ordersn分库，用item_id分表) 
+        es_order_items:
+          actual-data-nodes: ds$->{0..1}.es_order_items$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: trade_sn
+              algorithm-expression: ds$->{new Long(trade_sn) % 2}
+          table-strategy:
+            inline:
+              sharding-column: item_id
+              algorithm-expression: es_order_items$->{item_id % 2}
+
+        #订单日志表(用order_sn分库，用log_id分表) 
+        es_order_log:
+          actual-data-nodes: ds$->{0..1}.es_order_log$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: order_sn
+              algorithm-expression: ds$->{new Long(order_sn) % 2}
+          table-strategy:
+            inline:
+              sharding-column: log_id
+              algorithm-expression: es_order_log$->{log_id % 2}  
+
+        #支付日志表(用order_sn分库，用pay_log_id分表) 
+        es_pay_log:
+          actual-data-nodes: ds$->{0..1}.es_pay_log$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: order_sn
+              algorithm-expression: ds$->{new Long(order_sn) % 2}
+          table-strategy:
+            inline:
+              sharding-column: pay_log_id
+              algorithm-expression: es_pay_log$->{pay_log_id % 2}  
+
+        #es_order_out_status
+        es_order_out_status:
+          actual-data-nodes: ds$->{0..1}.es_order_out_status$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: order_sn
+              algorithm-expression: ds$->{new Long(order_sn) % 2}
+          table-strategy:
+            inline:
+              sharding-column: out_id
+              algorithm-expression: es_order_out_status$->{out_id % 2}  
+            
+        #订单meta表(用order_sn分库，用meta_id分表) 
+        es_order_meta:
+          actual-data-nodes: ds$->{0..1}.es_order_meta$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: order_sn
+              algorithm-expression: ds$->{new Long(order_sn) % 2}
+          table-strategy:
+            inline:
+              sharding-column: meta_id
+              algorithm-expression: es_order_meta$->{meta_id % 2}
+
+        #拼团表(用ordersn分库，用child_order_id分表)  
+        es_pintuan_child_order:
+          actual-data-nodes: ds$->{0..1}.es_pintuan_child_order$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: order_sn
+              algorithm-expression: ds$->{new Long(order_sn) % 2}
+          table-strategy:
+            inline:
+              sharding-column: child_order_id
+              algorithm-expression: es_pintuan_child_order$->{child_order_id % 2}  

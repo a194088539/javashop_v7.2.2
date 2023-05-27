@@ -1,0 +1,13 @@
+@import '../../styles/floor-moblie.wxss';
+page{
+  background-color: #f9f9f9;
+}
+.floor-container {
+  width: 100%;
+  margin: 0 auto;
+}
+.floor-item::after {
+  content: ' ';
+  display: block;
+  clear: both;
+}

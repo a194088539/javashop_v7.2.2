@@ -1,0 +1,40 @@
+<wxs src="../../../utils/wxs.wxs" module="complaints"/>
+<view class="container">
+  <view class="complaint-switch">
+    <view wx:for="{{navList}}" wx:key="index" class="item {{navActive === index ? 'active' : ''}}" bindtap="switchNav" data-index="{{index}}" data-tag="{{item.tag}}">{{item.title}}</view>
+  </view>
+  <view class="complaint-list">
+    <en-empty wx:if="{{!complaintData.length && finished}}">暂无交易投诉</en-empty>
+    <block wx:else>
+      <scroll-view scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+        <view class="complaint-item" wx:for="{{complaintData}}" wx:key="index">
+          <view class="sn comp">投诉编号：{{item.complain_id}}</view>
+          <view class="title comp">标题：{{item.complain_topic || ''}}</view>
+          <view class="complaint-content comp">
+            <navigator class="shop-info" url="/pages/shop/shop_id/shop_id?id={{item.seller_id}}" hover-class="none">
+              <view class="shop-name">{{item.seller_name}}</view>
+              <view class="shop-icon"><icon class="icon iconfont icon-xuanze2"></icon></view>
+            </navigator>
+            <navigator class="goods-info" url="/pages/goods/goods?goods_id={{item.goods_id}}" hover-class="none">
+              <view class="goods-img">
+                <image class="img" src="{{item.goods_image}}"></image>
+              </view>
+              <view class="goods-cont">
+                <view class="goods-name">{{item.goods_name}}</view>
+                <view class="order-sn">订单编号：{{item.order_sn}}</view>
+              </view>
+            </navigator>
+          </view>
+          <view class="complaint-status">
+            <view class="left">状态： <text class="status">{{complaints.complaintsStatusFilter(item.status)}}</text></view>
+            <view class="right">
+              <navigator url="/pages/ucenter/complaint-details/complaint-details?id={{item.complain_id}}" hover-class="none" class="txt">查看详情</navigator>
+              <text class="txt" wx:if="{{item.status === 'NEW'}}" bindtap="handleCancel" data-id="{{item.complain_id}}">撤销投诉</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </block>
+  </view>
+  <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+</view>

@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "增票资质",
+  "disableScroll": true,
+  "usingComponents": {
+    "bottomFrame": "../../../components/bottomFrame/bottomFrame"
+  }
+}

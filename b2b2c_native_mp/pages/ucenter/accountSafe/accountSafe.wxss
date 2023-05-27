@@ -1,0 +1,29 @@
+.cell {
+    width: 100%;
+    display: flex;
+    padding: 20rpx 30rpx;
+    box-sizing: border-box;
+    line-height: 56rpx;
+    position: relative;
+    background-color: #fff;
+    color: #333;
+    font-size: 28rpx;
+    overflow: hidden;
+    vertical-align:middle;
+    border-bottom: 1rpx solid #e5e5e5;
+}
+.title,.value {
+    flex: 1;
+}
+.value {
+    overflow: hidden;
+    text-align: right;
+    position: relative;
+    vertical-align: middle;
+}
+.right-icon {
+    color: #999;
+    font-size: 20rpx;
+    line-height: 56rpx;
+    margin-left: 10rpx;
+}

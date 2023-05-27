@@ -1,0 +1,14 @@
+<!--pages/home/-home/searchBar/searchBar.wxml-->
+<view class="search">
+  <view class="search-container">
+    <view class="search-bg" style="opacity:{{opacity}}"></view>
+    <view class="search-main">
+      <view class="search-logo">{{site_name}}</view>
+      <navigator url="/pages/search/search" class="search-input" hover-class="none">
+        <icon class="iconfont icon-sousuo"></icon>
+        <text class="place-holder-text">搜索商品/店铺</text>
+      </navigator>
+      <view class="search-icon" bindtap="handlePersonal"><icon class="iconfont icon-wode"></icon></view>
+    </view>
+  </view>
+</view>

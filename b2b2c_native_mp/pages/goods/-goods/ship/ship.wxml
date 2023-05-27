@@ -1,0 +1,20 @@
+<view class='goods-ship' bindtap='popup'>
+  <view class='van-cell-group ship-cell'>
+    <view class='van-cell'>
+      <view class='cell_title'>
+        <view class='ship'>
+          <text>送至</text>
+          <view class='area-box'>
+            <text class='area-str'>{{region || '选择配送地区'}}</text>
+            <view wx:if="{{in_store === 0}}" class='area-tip'>无货 <text>该配送地区暂时无货</text></view>
+          </view>
+        </view>
+      </view>
+      <image class="i" src="/static/images/address_right.png" background-size="cover"></image>
+    </view>
+  </view>
+</view>
+
+<bottomFrame id="bottomFrame" frameTitle="地区选择">
+  <RegionPicker bind:areaschanged="addressSelectorChanged" bind:closeRegionpicke="closeRegionpicke"></RegionPicker>
+</bottomFrame>

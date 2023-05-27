@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.goods.SpecificationMapper">
+
+    <!--查询分类关联的参数 -->
+    <select id="getCatSpecification" resultType="com.enation.app.javashop.model.goods.vo.SelectVO" useCache="false">
+        select s.spec_id id , cs.category_id falgid , s.spec_name `text`
+        from es_specification s left join  es_category_spec cs on s.spec_id=cs.spec_id
+        and category_id=#{category_id} where s.seller_id=0 and s.disabled=1
+    </select>
+
+    <!--验证商家规格名称是否存在-->
+    <select id="checkSellerSpecName" resultType="java.lang.Integer" useCache="false">
+        select count(0) from es_specification s inner join es_category_spec cs on s.spec_id = cs.spec_id
+        where disabled = 1 and category_id = #{ew.category_id} and seller_id = #{ew.seller_id} and spec_name = #{ew.spec_name}
+    </select>
+
+    <!--查询分类绑定的商家规格-->
+    <select id="queryCatSpec" resultType="com.enation.app.javashop.model.goods.vo.SpecificationVO" useCache="false">
+        select s.spec_id,s.spec_name from es_specification s inner join es_category_spec cs on s.spec_id=cs.spec_id
+        where cs.category_id = #{category_id} and (s.seller_id=0 or s.seller_id=#{seller_id})
+    </select>
+
+</mapper>

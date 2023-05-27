@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.goods.BrandMapper">
+
+    <!--查询某分类下的品牌 -->
+    <select id="getBrandsByCategory" resultType="com.enation.app.javashop.model.goods.dos.BrandDO" useCache="false">
+        select b.brand_id,b.`name`,b.logo from es_category_brand cb inner join es_brand b on cb.brand_id=b.brand_id
+        where cb.category_id=#{category_id} and b.disabled = 1
+    </select>
+
+    <!--查询分类品牌，所有品牌，分类绑定的品牌为已选中状态 -->
+    <select id="getCatBrand" resultType="com.enation.app.javashop.model.goods.vo.SelectVO" useCache="false">
+        select b.brand_id id , cb.category_id falgid  , b.`name` `text`
+        from es_brand b left join  es_category_brand cb on b.brand_id=cb.brand_id and category_id = #{category_id}
+        where b.disabled=1
+    </select>
+
+</mapper>

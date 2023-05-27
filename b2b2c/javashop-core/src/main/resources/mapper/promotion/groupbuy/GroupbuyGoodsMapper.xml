@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.promotion.groupbuy.GroupbuyGoodsMapper">
+
+    <!-- 获取团购商品分页列表数据 -->
+    <select id="sellerSelectPageVo" resultType="com.enation.app.javashop.model.promotion.groupbuy.vo.GroupbuyGoodsVO" useCache="false">
+        select gg.*,ga.act_name as title,ga.start_time,ga.end_time,ga.delete_status,ga.delete_reason,ga.delete_name,ga.delete_time
+        from es_groupbuy_goods as gg left join es_groupbuy_active as ga on gg.act_id = ga.act_id
+        <where>
+            ga.delete_status = #{delete_status}
+
+            <!-- 如果客户端类型不为空并且类型是平台管理端并且活动id不为空，则以活动id为查询条件 -->
+            <if test="params.clientType != null and params.clientType != '' and params.clientType == 'ADMIN'">
+                and gg.act_id = #{params.actId}
+            </if>
+
+            <!-- 如果商家ID不为空并且不等于0，则以商家id为查询条件 -->
+            <if test="params.sellerId != null and params.sellerId != 0">
+                and gg.seller_id = #{params.sellerId}
+            </if>
+
+            <!-- 如果商品名称不为空，则以商品名称为条件进行模糊查询 -->
+            <if test="params.goodsName != null and params.goodsName != ''">
+                and gg.goods_name like concat('%',#{params.goodsName},'%')
+            </if>
+
+            <!-- 如果团购名称不为空，则以团购名称为条件进行模糊查询 -->
+            <if test="params.gbName != null and params.gbName != ''">
+                and gg.gb_name like concat('%',#{params.gbName},'%')
+            </if>
+
+            <!-- 如果商品审核状态不为空，则以商品审核状态为条件查询 -->
+            <if test="params.gbStatus != null">
+                and gg.gb_status = #{params.gbStatus}
+            </if>
+
+            <!-- 如果团购活动名称不为空，则以团购活动名称为条件进行模糊查询 -->
+            <if test="params.actName != null and params.actName != ''">
+                and ga.act_name like concat('%',#{params.actName},'%')
+            </if>
+
+            <!-- 如果团购活动状态不为空并且状态不等于查询全部 -->
+            <if test="params.actStatus != null and params.actStatus != '' and params.actStatus != 'ALL'">
+                <!-- 如果团购活动状态等于查询未开始的活动 -->
+                <if test="params.actStatus == 'NOT_STARTED'">
+                    and ga.start_time &gt; #{now_time}
+                </if>
+                <!-- 如果团购活动状态等于查询进行中的活动 -->
+                <if test="params.actStatus == 'STARTED'">
+                    and ga.start_time &lt;= #{now_time} and ga.end_time &gt;= #{now_time}
+                </if>
+                <!-- 如果团购活动状态等于查询已结束的活动 -->
+                <if test="params.actStatus == 'OVER'">
+                    and ga.end_time &lt; #{now_time}
+                </if>
+            </if>
+
+            order by gg.add_time desc
+        </where>
+    </select>
+
+    <!-- 获取团购商品分页列表数据 -->
+    <select id="buyerSelectPageVo" resultType="com.enation.app.javashop.model.promotion.groupbuy.vo.GroupbuyGoodsVO" useCache="false">
+        select gg.*,ga.start_time,ga.end_time
+        from es_groupbuy_goods gg left join es_groupbuy_active ga on gg.act_id = ga.act_id
+        <where>
+            gg.gb_status = #{audit_status} and ga.delete_status = #{delete_status}
+
+            <!-- 如果查询活动时间范围不为空，则以活动时间在此时间范围内进行查询 -->
+            <if test="params.startTime != null and params.endTime != null">
+                and #{params.startTime} &gt;= ga.start_time and #{params.endTime} &lt;= ga.end_time
+            </if>
+
+            <!-- 如果分类ID不为空，则以分类id为查询条件 -->
+            <if test="params.catId != null">
+                and gg.cat_id = #{params.catId}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据团购商品ID获取团购商品信息 -->
+    <select id="selectGroupbuyGoodsVo" resultType="com.enation.app.javashop.model.promotion.groupbuy.vo.GroupbuyGoodsVO" useCache="false">
+        select gg.*,ga.act_name as title,ga.start_time,ga.end_time
+        from es_groupbuy_goods as gg left join es_groupbuy_active as ga on gg.act_id=ga.act_id where gb_id = #{gb_id}
+    </select>
+</mapper>

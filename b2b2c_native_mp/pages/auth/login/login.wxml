@@ -1,0 +1,73 @@
+<import src="../../../lib/wxParse/wxParse.wxml" />
+<view class="container">
+  <view class='tabs_nav'>
+    <view class="tab {{login_type === 'account' ? 'tab-active':''}}" bindtap='handleTabs' data-index="0">账户密码登录</view>
+    <view class="tab {{login_type === 'quick' ? 'tab-active':''}}" bindtap='handleTabs' data-index="1">短信验证码登录</view>
+  </view>
+  <!-- 账户密码登录、短信验证登录 -->
+  <view class="login-content">
+    <view class="form-box" wx:if="{{login_type === 'account'}}">
+      <view class="form-item">
+        <text class="text" decode="{{true}}">用&ensp;&ensp;户&ensp;&ensp;名</text>
+        <view class="text"><input class="right_input" value="{{accountForm.username}}" bindinput="bindUsernameInput" placeholder="邮箱/用户名/已验证手机"/></view>
+      </view>
+      <view class="form-item">
+        <text class="text" decode="{{true}}">密&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;码</text>
+        <view class="text"><input class="right_input" value="{{accountForm.password}}" password bindinput="bindPasswordInput" placeholder="请输入密码"/></view>
+      </view>
+      <view class="form-item">
+        <view class="text">图片验证码</view>
+        <view class="text">
+          <input class="code" maxlength="4" value="{{accountForm.captcha}}" bindinput="bindCodeInput" placeholder="请输入图片验证码"/>
+        </view>
+        <view class="captcha_url-image" bindtap="handleChangeCaptchalUrl">
+          <image src="{{ captcha_url }}" bindtap="handleChangeCaptchalUrl" id="clear-code"/>
+        </view>
+      </view>
+      <button class="login-btn" bindtap="accountLogin" disabled="{{login_disabled_account}}">登录</button>
+    </view>
+    <view class="form-box" wx:if="{{login_type === 'quick'}}">
+      <view class="form-item">
+        <text class="text" decode="true">手&ensp;&ensp;机&ensp;&ensp;号</text>
+        <view class="text"><input class="right_input" value="{{quickForm.mobile}}" maxlength="11" bindinput="syncMobile" placeholder="请输入手机号"/></view>
+      </view>
+      <view class="form-item">
+        <text class="text">图片验证码</text>
+        <view class="text"><input class="code" value="{{quickForm.captcha}}" bindinput="syncMobilImgCode" placeholder="请输入图片验证码" maxlength="4"/></view>
+        <view class="text captcha_url-image" bindtap="handleChangeCaptchalUrl">
+          <image src="{{ captcha_url }}" bindtap="handleChangeCaptchalUrl" id="clear-code"/>
+        </view>
+      </view>
+      <view class="form-item">
+        <view class="text">短信验证码</view>
+        <view class="text"><input class="code" maxlength="6" value="{{quickForm.sms_code}}" bindinput="syncMobilSmsCode" placeholder="请输入短信验证码"/></view>
+        <button class='text btn' disabled="{{disabled}}"  bindtap='sendValidMobileSms'>{{ message || initTip }}</button>
+      </view>
+      <button class="login-btn" bindtap="accountLogin" disabled="{{login_disabled_quick}}">登录</button>
+    </view>
+  </view>
+  <!-- 忘记密码、手机注册 -->
+  <view class="form-item-text">
+    <navigator url="/pages/auth/reset/reset" class="reset" hover-class="none"><icon class="iconfont icon-mimasuo"></icon>忘记密码</navigator>
+    <navigator url="/pages/auth/register/register" class="register" hover-class="none"><icon class="iconfont icon-shouji"></icon>手机注册</navigator>
+  </view>
+  <view class="policy-tips">
+    登录即代表您已同意 <text bindtap="handleShowPolicy">《{{projectName}}隐私政策》</text>
+  </view>
+  <bottomFrame id="bottomFrame" frameTitle="隐私政策">
+    <view class="policy-content">
+      <template is="wxParse" data="{{wxParseData:policy.nodes}}" />
+    </view>
+  </bottomFrame>
+	<!--授权弹窗-->
+	<view class="wx-auth-container" hidden="{{showWxAuth}}">
+		<view class="logo-info">
+			<text class="txt">欢迎来到{{ projectName }}</text>
+		</view>
+		<view class="small-tips">
+			<view>为您提供优质服务,{{ projectName }}需要获取以下信息</view>
+			<view>.您的公开信息（昵称、头像等）</view>
+		</view>
+		<button type="primary" open-type="getUserInfo" class="btn-auth" bindgetuserinfo="wxLoginAuth">确认微信授权</button>
+	</view>
+</view>

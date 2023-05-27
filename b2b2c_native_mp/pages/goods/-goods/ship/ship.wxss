@@ -1,0 +1,59 @@
+.ship{
+	display: flex;
+}
+.spec-vals{
+	margin-left: 10rpx;
+	font-size: 22rpx;
+}
+.area-box{
+	margin-left: 10rpx;
+}
+.area-str{
+	font-size: 22rpx;
+}
+.van-cell-group{
+	background-color: #fff;
+}
+.specs-cell{
+	margin-top: 18rpx;
+}
+.van-cell {
+	width: 100%;
+	display: flex;
+	padding: 20rpx 0 20rpx 30rpx;
+	box-sizing: border-box;
+	line-height: 48rpx;
+	position: relative;
+	background-color: #fff;
+	color: #333;
+	font-size: 28rpx;
+	overflow: hidden;
+	border-bottom: 2rpx solid #f3f3f3;
+}
+.cell_title, .cell_value {
+	flex: 1;
+}
+.cell_value{
+	overflow: hidden;
+	text-align: right;
+	position: relative;
+	vertical-align: middle;
+}
+.van-cell .i{
+	float:right;
+	width:45rpx;
+	height:45rpx;
+	margin-right:16rpx;
+}
+.cell_title .rate{
+	color: #f42424;
+	margin-left: 6rpx;
+	font-size: 24rpx;
+}
+.area-tip{
+  color: #f42424;
+}
+.area-tip text{
+  margin-left: 10rpx;
+  color:#f42424;
+}

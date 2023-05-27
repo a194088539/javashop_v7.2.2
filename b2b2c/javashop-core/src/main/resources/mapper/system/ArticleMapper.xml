@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.enation.app.javashop.mapper.system.ArticleMapper">
+
+    <!--查询文章列表-->
+    <select id="queryPageDetail" resultType="com.enation.app.javashop.model.pagedata.vo.ArticleDetail" useCache="false">
+        select a.*,ac.name category_name from es_article a left join es_article_category ac on a.category_id=ac.id
+        <where>
+            <if test="name != null and name != ''">
+                article_name like concat('%', #{name} ,'%')
+
+            </if>
+            <if test="categoryId != null">
+                <if test="articleCategorys.size() &lt;= 0">
+                    a.category_id = #{categoryId}
+                </if>
+                <if test="articleCategorys.size() &gt; 0">
+                    a.category_id in
+                    <foreach collection="articleCategorys" index="index" item="item" open="(" separator="," close=")">
+                        #{item.id}
+                    </foreach>
+                </if>
+            </if>
+        </where>
+        order by article_id desc
+    </select>
+
+    <!--查询分类下的文章-->
+    <select id="queryForCatIds" resultType="com.enation.app.javashop.model.pagedata.vo.ArticleVO" useCache="false">
+        select * from es_article where category_id in
+        <foreach collection="array" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order  by sort
+    </select>
+
+    <!--测试使用-->
+    <select id="listDetail" resultType="com.enation.app.javashop.model.pagedata.vo.ArticleDetail" useCache="false">
+        select a.*,ac.name category_name from es_article a left join es_article_category ac on a.category_id=ac.id
+        <where>
+            <if test="params.name != null and params.name != ''">
+                article_name like concat('%', #{params.name} ,'%')
+            </if>
+            <if test="params.list != null">
+                and a.category_id in
+                <foreach collection="params.list" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+
+</mapper>

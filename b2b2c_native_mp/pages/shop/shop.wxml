@@ -1,0 +1,35 @@
+<scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style="height:{{scrollHeight}};" bindscrolltolower='loadMore'  bindscroll="scroll">
+  <en-empty wx:if="{{!shopList.length && finished}}">暂无店铺</en-empty>
+  <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+  <view class="shop-list-container">
+      <view class='shop-item' wx:for="{{shopList}}" wx:key="index">
+        <view class='shop-hd'>
+          <view class='shop-logo'>
+            <image class='img' src='{{item.shop_logo}}'></image>
+          </view>
+          <view class='shop-info'>
+            <view class='shop-name'>{{item.shop_name}}</view>
+            <view class='shop-desc'>
+              <view class='shop-collect'>关注数: {{item.shop_collect}}</view>
+            </view>
+          </view>
+          <navigator hover-class="none" class='shop-btn' url='/pages/shop/shop_id/shop_id?id={{item.shop_id}}'>进店</navigator>
+        </view>
+        <view class='shop-bd'>
+          <view class='shop-rec'>
+            <view class='shop-rec-item' wx:for="{{item.goods_list}}" wx:for-item="iitem" wx:for-index="iindex" wx:key="iindex" wx:if="{{iindex<3}}">
+              <navigator hover-class="none" class='item-url' url="/pages/goods/goods?goods_id={{iitem.goods_id}}">
+                <view class='cover'>
+                  <image class='img' src='{{iitem.small}}'></image>
+                </view>
+                <view class='item-price'>￥{{iitem.price}}</view>
+              </navigator>
+            </view>
+          </view>
+        </view>
+        <view class='shop-aside'>
+          <view class='shop-count'>店铺商品：{{item.goods_num}}件</view>
+        </view>
+      </view>
+  </view>
+</scroll-view>

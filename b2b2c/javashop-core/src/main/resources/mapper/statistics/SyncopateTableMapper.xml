@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.statistics.SyncopateTableMapper">
+
+    <!-- 创建统计年份表 -->
+    <update id="createTable">
+        CREATE TABLE ${tableName}_${year} LIKE ${tableName}
+    </update>
+
+    <!-- 删除年份表 -->
+    <update id="dropTable">
+        DROP TABLE IF EXISTS ${tableName}_${year}
+    </update>
+
+    <!-- 查询主表某一年的数据 -->
+    <select id="selectData" resultType="java.util.Map" useCache="false">
+        <choose>
+            <when test="tableName == 'es_sss_shop_pv' or tableName == 'es_sss_goods_pv'" >
+                SELECT * FROM ${tableName} WHERE vs_year = #{year}
+            </when>
+            <otherwise>
+                SELECT * FROM ${tableName} WHERE create_time &gt;= #{yearStartTime} AND create_time &lt; #{yearEndTime}
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 插入数据到年份表 -->
+    <insert id="insertData">
+        INSERT INTO ${tableName}_${year}(${columnNames}) value
+        <foreach collection="dataList" item="columnValueList" separator=",">
+            <foreach collection="columnValueList" item="columnValue" open="(" close=")" separator=",">
+                #{columnValue}
+            </foreach>
+        </foreach>
+    </insert>
+</mapper>

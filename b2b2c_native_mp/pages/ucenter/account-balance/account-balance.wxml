@@ -1,0 +1,54 @@
+<view class="balance-container">
+  <view class="balance">
+    <view class="account_balance">￥<text class="txt">{{account_balance}}</text></view>
+    <view class="balance-tip">仅限用于本商城购买商品使用，不能提现</view>
+  </view>
+  <view class="recharge">
+    <view class="recharge-title">充余额</view>
+    <view class="amount-money">
+      <view class="money-name">金额：</view>
+      <view class="money">
+        <input class="input" value="{{recharge_amount}}" bindinput="handleRechargeAmount"></input>
+        <view class="txt">元</view>
+      </view>
+    </view>
+    <view class="payment-btn" bindtap="handlePayment">立即支付</view>
+  </view>
+  <view class="details-list">
+    <view class="details-switch">
+      <view class="item {{ activeTab == 0 ? 'active' : ''}}" bindtap="handleSwitchTab" data-index='0'>余额日志</view>
+      <view class="item {{ activeTab == 1 ? 'active' : ''}}" bindtap="handleSwitchTab" data-index='1'>充值明细</view>
+    </view>
+    <block wx:if="{{activeTab == 0}}">
+      <scroll-view class="balancelog-container" scroll-y="true" style="height:{{ scrollHeight }}px;" bindscrolltolower="loadBalanceLogListMore">
+        <en-empty wx:if="{{!balanceLogList.length && finished}}">暂无消费明细</en-empty>
+        <block wx:else>
+          <view class="balancelog-list">
+            <view class="balancelog-item" wx:for="{{balanceLogList}}" wx:key="index">
+              <view class="left">
+                <view class="sn">{{item.detail}}</view>
+                <view class="time">{{item.time}}</view>
+              </view>
+              <view class="right red" wx:if="{{item.money > 0}}">+{{item.money}}</view>
+              <view class="right green" wx:else>{{item.money}}</view>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </block>
+    <block wx:if="{{activeTab == 1}}">
+      <scroll-view class="recharge-container" scroll-y="true" style="height:{{ scrollHeight }}px;" bindscrolltolower="loadRechargeLisMore">
+        <en-empty wx:if="{{!rechargeDetailsList.length && finished}}">暂无充值记录</en-empty>
+        <view wx:else class="recharge-list">
+          <view class="recharge-item" wx:for="{{rechargeDetailsList}}" wx:key="index">
+            <view class="left">
+              <view class="sn">{{item.recharge_sn}}({{item.pay_status}})</view>
+              <view class="time">{{item.recharge_time}}</view>
+            </view>
+            <view class="right red">+{{item.recharge_money}}</view>
+          </view>
+        </view>
+      </scroll-view>
+    </block>
+  </view>
+</view>

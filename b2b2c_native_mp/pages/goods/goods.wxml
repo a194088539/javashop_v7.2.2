@@ -1,0 +1,162 @@
+
+<view class="container">
+  <view wx:if="{{goods.goods_off === 0}}" class="goods-auth">
+    <image src="../../static/images/background-goods-off.jpg" mode="widthFix"></image>
+    <text class="btn" bindtap="goHome">去首页</text>
+    <text class="btn" bindtap="goReturn">返回上页</text>
+  </view>
+  <block wx:else>
+    <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style="height:{{ scrollHeight }}px" bindscroll="scroll">
+      <!-- 商品轮播图 -->
+      <goods-gallery gallery_list="{{gallery_list}}" goods_video="{{goods.goods_video}}"></goods-gallery>
+      <!-- 团购、限时抢购 -->
+      <goods-groupbuy-seckill promotions="{{promotions}}" selectedSku="{{selectedSku}}"></goods-groupbuy-seckill>
+      <!-- 积分兑换 -->
+      <goods-exchange promotions="{{promotions}}"></goods-exchange>
+      <!-- 拼团 -->
+      <goods-assemble assemble="{{assemble}}"></goods-assemble>
+      <!-- 商品信息 -->
+      <view class="goods-info">
+        <view class="price_wrap">
+          <block wx:if="{{originPriceShow}}">
+            <view class="left">
+              <text class="goods_price" wx:if="{{selectedSku && selectedSku.price}}">￥{{selectedSku.price}}</text>
+              <text wx:else class="goods_price">￥{{goods.price}}</text>
+            </view>
+          </block>
+          <view class="right">
+            <view bindtap="addCannelCollect" class="collect"> 
+              <icon class="iconfont {{ collected ? 'icon-shoucang' : 'icon-shoucang1'}}"></icon>
+              <text class="goods-btn">{{ collected ? '已收藏' : '收藏商品' }}</text>
+            </view>
+            <view bindtap="handShare" class="share">
+              <icon class="iconfont icon-fenxiang"></icon>
+              <text class="goods-btn">分享</text>
+            </view>
+          </view>
+        </view>
+        <view class="name">{{goods.goods_name}}</view>
+      </view>
+      <text class="separated"></text>
+      <!-- 店铺优惠券 -->
+      <goods-coupons goodsId="{{goods_id}}" selectedSku="{{selectedSku}}"></goods-coupons>
+      <!-- 促销活动 -->
+      <goods-promotions promotions="{{promotions}}" selectedSku="{{selectedSku}}"></goods-promotions>
+      <!--商品规格选择组件-->
+      <goods-specs
+        goods="{{ goods }}"
+        skuId="{{ skuId }}"
+        pintuanId="{{pintuanId}}"
+        from_nav="{{from_nav}}"
+        show="{{ showSpecsPopup }}"
+        promotions="{{ promotions }}"
+        bind:skuchanged="onSkuChanged"
+        bind:numchanged="onNumChanged"
+        bind:add-acrt="handleAddToCart"
+        bind:buy-now="BuyNow"
+      />
+      <!-- 配送地区 -->
+      <goods-ship goodsId="{{goods_id}}" bind:in-stock-change="handleInStockChange" ></goods-ship>
+      <text class="separated"></text>
+      <!-- 店铺  -->
+      <shop-card shopId="{{goods.seller_id}}"></shop-card>
+      <text class="separated"></text>
+      <!-- 拼團訂單 -->
+      <goods-assemble-order 
+        goodsId="{{goods.goods_id}}" 
+        skuId="{{skuId}}"
+        bind:to-assemble-buy-now="toAssembleBuyNow">
+      </goods-assemble-order>
+      <text class="separated"></text>
+      <!-- 评价 -->
+      <goods-comments goodsId="{{goods_id}}" grade="{{grade}}"></goods-comments>
+      <text class="separated"></text>
+      <!-- 商品资询 -->
+      <goods-ask goodsId="{{goods_id}}" selectedSku="{{selectedSku}}"></goods-ask>
+      <text class="separated"></text>
+      <!-- 商品详情 商品参数 -->
+      <view class='tabs'>
+        <view class='tabs_nav'>
+          <view class="tab {{tabIndex == 0 ? 'tab-active':''}}" bindtap='tabs' data-index="0">商品详情</view>
+          <view class="tab {{tabIndex == 1 ? 'tab-active':''}}" bindtap='tabs' data-index="1">商品参数</view>
+        </view>
+        <view class='tab_content'>
+          <view class='goods_params'>
+            <view class='params_detail' wx-if="{{tabIndex == 0}}">
+              <view wx:for="{{mobile_intro}}" wx:key="index" class="{{item.type === 'text' ? 'm-text' : 'm-image'}}">
+                <text wx:if="{{item.type === 'text'}}">{{item.content}}</text>
+                <image wx:else src="{{item.content}}" mode="widthFix"></image>
+              </view>
+            </view>
+            <view class="param_list" wx-if="{{tabIndex == 1}}" >
+              <goods-params param_list="{{param_list}}"></goods-params>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 分享 -->
+      <view class='modal' wx:if="{{showShare}}" bindtap='cloneDialog'>
+        <view class='actionsheet'>
+          <button class='actionsheet_item item' open-type="share">发送给朋友</button>
+          <button class='actionsheet_item' bindtap='handleCreatePoster'>生成海报</button>
+          <view class='actionsheet_item cancel' bindtap='cloneDialog'>取消</view>
+        </view>
+      </view>
+      <goods-distribution
+        show="{{showDisPopup}}"
+        goods_name="{{goods.goods_name}}"
+        goods_price="{{goods.price}}"
+        minicode="{{minicode}}"
+        thumbnail="{{thumbnail}}"
+        userInfo="{{userInfo}}"  
+        exchange="{{exchange}}"
+        skuPromotions="{{skuPromotions}}"
+        assemble="{{assemble}}"
+      ></goods-distribution>
+      <view class="bottom-btn">
+        <view class="l">
+          <button class="l-chat" open-type="contact">
+            <icon class="iconfont icon-xiaoxi"></icon>
+            <text class="text">客服</text>
+          </button>
+        </view>
+        <view class="l l-cart" bindtap="openCartPage">
+          <view class="box">
+            <text wx:if="{{cartGoodsCount !== 0}}" class="cart-count">{{ cartGoodsCount ? (cartGoodsCount > 99 ? '99+' : cartGoodsCount) : cartGoodsCount }}</text>
+            <icon class="icon iconfont icon-gouwuche"></icon>
+            <text class="text">购物车</text>
+          </view>
+        </view>
+        <view class="l l-seller" bindtap="openSeller" data-seller_id="{{goods.seller_id}}">
+          <icon class="icon iconfont icon-dianpu"></icon>
+          <text class="text">店铺</text>
+        </view>
+        <block wx:if="{{goods.is_auth === 0 || goods.goods_off === 0}}">
+          <view class="examine buy-disabled">{{goods.is_auth === 0 ? '商品审核中' : '商品已下架'}}</view>
+        </block>
+        <block wx:if="{{goods.is_auth !== 0 && goods.goods_off !== 0 && !is_assemble}}">
+          <view class="c {{!in_store ? 'buy-disabled' : ''}}" bindtap="handleAddToCart">加入购物车</view>
+          <view class="r {{!in_store ? 'buy-disabled' : ''}}" bindtap="BuyNow">立即购买</view>
+        </block>
+        <block wx:if="{{goods.is_auth !== 0 && goods.goods_off !== 0 && is_assemble}}">
+          <view class="alone-buy {{!in_store ? 'buy-disabled' : ''}}" bindtap="BuyNow">
+            <text>￥{{assemble.origin_price || '0.00'}}</text>
+            <text>单独购买</text>
+          </view>
+          <view class="assemble-buy {{!in_store ? 'buy-disabled' : ''}}" bindtap="handleAssembleBuyNow">
+            <text>￥{{assemble.sales_price || '0.00'}}</text>
+            <text>{{assemble.required_num}}人团</text>
+          </view>
+        </block>
+      </view>
+      <!-- 直播 -->
+      <view class="live-video" bindtap="handleLiveVideo" data-roomid="{{ room_id }}" wx:if="{{ is_liveVideo }}">
+        <text class="iconfont icon-zhibo"></text>
+        <text style="margin:0 10rpx;">正在直播，点击查看</text>
+        <text class="icon iconfont icon-xuanze2"></text>
+        <text class="icon iconfont icon-guanbi" catchtap="handleDeleteLive"></text>
+      </view>
+      <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+    </scroll-view>
+  </block>
+</view>

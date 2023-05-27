@@ -1,0 +1,128 @@
+<view class="container">
+  <view class='login'>
+	  <!--没有商品-->
+    <view class="no-cart" wx:if="{{ !shopList.length && finished}}">
+      <view class="c">
+        <image src="http://nos.netease.com/mailpub/hxm/yanxuan-wap/p/20150730/style/img/icon-normal/noCart-a8fe3f12e5.png" />
+        <text>购物车空空如也</text>
+        <text class="goshopping" bindtap="goshopping">去购物</text>
+      </view>
+    </view>
+	  <!--存在商品-->
+    <block wx:else>
+      <scroll-view class="cart-container" scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll">
+        <view class="shop-item" wx:for="{{ shopList }}" wx:for-item="shop" wx:for-index="shopIndex" wx:key="index">
+          <view class="inner-shop-item">
+            <view class="title-shop-item">
+              <view wx:if="{{ shop.invalid === 1 }}" style="width: 10%"></view>
+              <view wx:else class="shop-check" data-shop="{{ shop }}" bindtap="handleCheckShop">
+                <icon class="checkbox iconfont {{ shop.checked ? 'icon-xuanze1' : 'icon-xuanze' }}"></icon>
+              </view>
+              <view class="shop-name">{{ shop.seller_name }}</view>
+              <view class="shop-other">
+                <view class="receive-coupons">
+                  <navigator class='seller-coupons' hover-class="none" url="/pages/cart/coupons/coupons?shop_id={{ shop.seller_id }}">
+                    领券
+                  </navigator>
+                </view>
+              </view>
+            </view>
+            <view class="promotion-notice" wx:if="{{ shop.promotion_notice && shop.showPromotionNotice }}">{{ shop.promotion_notice }}</view>
+            <view class="content-shop-item">
+              <view
+                wx:for="{{ shop.sku_list }}"
+                wx:for-item="sku"
+                wx:for-index="skuIndex"
+                wx:key="index"
+                class="sku-item-li {{ sku.invalid === 1 ? 'invalid' : '' }}"
+              >
+                <view wx:if="{{ sku.error_message }}" class="error-message"> {{ sku.error_message }} </view>
+                <view class="sku-items">
+                  <view bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-shopIndex="{{shopIndex}}" data-skuIndex="{{skuIndex}}" style="{{sku.txtStyle}}" class="inner txt">
+                    <view class="sku-item">
+                      <view wx:if="{{ sku.invalid === 1 }}" class="sku-check">已失效</view>
+                      <view wx:else class="sku-check" bindtap="handleCheckSku" data-sku="{{ sku }}">
+                        <icon class="checkbox iconfont {{ sku.checked ? 'icon-xuanze1' : 'icon-xuanze' }}"></icon>
+                      </view>
+                      <navigator class='sku-image' hover-class="none" url="/pages/goods/goods?goods_id={{ sku.goods_id }}">
+                        <image src="{{ sku.goods_image }}"></image>
+                        <text wx:if="{{ !sku.is_ship }}" class="out-of-stock-tip">该地区无货</text>
+                      </navigator>
+                      <view class="sku-content">
+                        <navigator class='sku-name' hover-class="none" url="/pages/goods/goods?goods_id={{ sku.goods_id }}">
+                          {{ sku.name }}
+                        </navigator>
+                        <view class="sku-spec" wx:if="{{ sku.spec_list }}">
+                          <text>{{ sku.skuName }}</text>
+                        </view>
+                        <view wx:if="{{ sku.promotion_tags && sku.promotion_tags.length }}">
+                          <text
+                            class="sku-act-tag"
+                            wx:for="{{ sku.promotion_tags }}"
+                            wx:for-item="tag"
+                            wx:key="index"
+                          >{{ tag }}</text>
+                        </view>
+                        <view class="sku-tools">
+                          <view class="sku-price">
+                            <text>￥{{ sku.purchase_price }}</text>
+                          </view>
+                          <view wx:if="{{ sku.invalid !== 1 }}" class="sku-num">
+                            <text class="sku-symbol symbol-less minus unable" bindtap="handleUpdateSkuNum" data-symbol="-" data-sku="{{ sku }}">-</text>
+                            <input type="number" class="sku-num-input" size="4" value="{{ sku.num }}" data-sku="{{ sku }}" bindinput="handleUpdateSkuNum" bindblur="handleBlur" maxlength="9"/>
+                            <text class="sku-symbol symbol-add add" data-sku="{{ sku }}" data-symbol="+" bindtap="handleUpdateSkuNum">+</text>
+                          </view>
+                        </view>
+                      </view>
+                    </view>
+                  </view>
+                  <view data-sku="{{sku}}" bindtap= "handleDelete" class="inner del">删除</view>
+                </view>
+                <view class="act-box">
+                  <view wx:if="{{sku.single_list && sku.single_list.length}}" class="act-item" bindtap="handleChangeActivity" data-sku="{{sku}}">
+                    <view class="left">
+                        <text class="act-item-title">促销</text>
+                        <wxs src="../../utils/wxs.wxs" module="cart"/>
+                        <text class="act-item-cont">{{cart.selectedActivity(sku.single_list)}}</text>
+                    </view> 
+                    <view wx:if="{{sku.single_list.length>1}}" class="act-item-select">
+                      <text>{{sku.single_list.length}}个可选</text>
+                      <image class="icon" src="{{cur_sku_id === sku.sku_id ? '../../static/images/icon_up.png' : '../../static/images/icon_down.png'}}"></image>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </block>
+	  <!--底部按钮-->
+	  <view class="cart-bottom" wx:if="{{ shopList.length }}">
+      <view class="checkbox f28"><icon class="iconfont {{ all_checked ? 'icon-xuanze1' : 'icon-xuanze' }}" bindtap="handleCheckAll"></icon>全选</view>
+		  <view hidden="{{ !checkedCount }}" class="total" bindtap="handleBatchDelete">删除已选</view>
+		  <view class="cat-bar-price f28">
+			  合计:
+			  <text class="price">¥{{  cartTotal.total_price }}</text>
+			  <view wx:if="{{ cartTotal.cash_back }}" class="back-price">
+				  返现：<text class="price">-￥{{ cartTotal.cash_back }}</text>
+			  </view>
+		  </view>
+		  <view class="checkout {{!checkedCount?'disabled':''}}" bindtap="handleCheckout">去结算</view>
+	  </view>
+    <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+    <!-- 促销选择 -->
+    <view class="modal" wx:if="{{showActivityActionsheet}}" bindtap='cloneDialog' catchtouchmove="true">
+      <view class='actionsheet'>
+        <view class='bottom'>
+          <view class='actionsheet_item' wx:for="{{activity_options}}" wx:key="index" bindtap='handleActivitySelect' data-item="{{item}}">
+            <text class="{{item.className=='checked'?'checked':''}} {{item.disabled ? 'disabled' :''}}">{{item.name}}{{item.disabled ? '(活动已失效)' :''}}</text>
+          </view>
+        </view>
+        <view class='actionsheet_cancel' bindtap='cloneDialog'>
+          <text>取消</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,4 @@
+<view class="empty">
+	<image class="icon-empty" src="/static/images/icon-warning.png"></image>
+	<text class="text-empty"><slot></slot></text>
+</view>

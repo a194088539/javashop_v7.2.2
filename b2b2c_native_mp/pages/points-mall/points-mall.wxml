@@ -1,0 +1,27 @@
+<view id="points-mall">
+	<en-tabs topNavs="{{ categories }}" bind:changed="handleClickCate" title="name"></en-tabs>
+	<en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+	<en-empty wx:if="{{ finished && !pointsList.length }}" style="line-height:420px">暂无商品</en-empty>
+	<scroll-view class="points-goods-container" wx:else scroll-y="true" scroll-top="{{scrollTop}}" style="height:{{scrollHeight}}px;" bindscrolltolower='loadMore' bindscroll="scroll">
+		<block wx:for="{{ pointsList }}" wx:for-item="goods" wx:key="index">
+			<view  wx:if="{{ goods.enable_exchange === 1 }}" class="item-goods">
+				<view class="dt">
+					<navigator url="/pages/goods/goods?goods_id={{ goods.goods_id }}" hover-class="none">
+						<image src="{{ goods.goods_img }}"></image>
+					</navigator>
+				</view>
+				<view class="dd">
+					<view class="name-goods">{{ goods.goods_name }}</view>
+					<view class="descrip-goods">
+						<view></view>
+						<view class="price">{{ goods.exchange_point }}积分 + ￥{{ goods.exchange_money }}</view>
+					</view>
+					<view class="price-goods">
+						<view>原价：￥{{ goods.goods_price }}</view>
+					</view>
+					<navigator class="grab-btn" url="/pages/goods/goods?goods_id={{ goods.goods_id }}" hover-class="none">兑换</navigator>
+				</view>
+			</view>
+		</block>
+	</scroll-view>
+</view>

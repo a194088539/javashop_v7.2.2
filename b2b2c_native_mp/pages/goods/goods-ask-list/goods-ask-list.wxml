@@ -1,0 +1,54 @@
+<view class="goods_asks_list">
+  <scroll-view scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+    <!-- 商品信息 -->
+    <view class="faq_goods">
+      <navigator url="/pages/goods/goods?goods_id={{goods_id}}" class="faq_goods_navigator" hover-class="none">
+        <view class="faq_goods_cover">
+          <image src="{{goods.thumbnail}}"></image>
+        </view>
+        <view class="faq_goods_info">
+          <view class="faq_goods_info_name">{{goods.goods_name}}</view>
+        </view>
+        <view class="faq_goods_right">
+          <image src="/static/images/address_right.png" background-size="cover"></image>
+        </view>
+      </navigator>
+    </view>
+    <!-- 资询内容 -->
+    <view class="ask-list {{isShowAskList?'':'hide'}}">
+      <view class="no-askdata" wx:if="{{!asks.length && finished}}">暂无咨询信息</view>
+      <view class="faq_area" wx:else>
+        <view class="faq_area_list" wx:for="{{asks}}" wx:for-item="ask" wx:key="index" bindtap="handleAskDetail" data-ask_id="{{ask.ask_id}}">
+          <view class="faq_area_head">
+            <text wx:if="{{ask.anonymous === 'NO'}}">用户{{ask.member_name}}的提问：</text>
+            <text wx:if="{{ask.anonymous === 'YES'}}">匿名用户的提问：</text>
+            <text class="faq_area_head_time">{{ask.create_time}}</text>
+          </view>
+          <view class="faq_area_tit">{{ask.content}}</view>
+          <view class="faq_area_desc" wx:if="{{ask.reply_status === 'YES'}}">{{ask.reply}}</view>
+          <view class="faq_area_desc" wx:if="{{ask.reply_status === 'NO'}}">{{ask.first_reply.content}}</view>
+          <view class="faq_area_num">查看全部{{ask.reply_num}}个回答 <icon class="iconfont icon-xuanze2"></icon></view>
+        </view>
+      </view>
+    </view>
+    <!-- 提问 -->
+    <view class="faq_publish {{isShowSubmitAsk?'':'hide'}}">
+      <view class="faq_publish_text">
+        <textarea placeholder="说出您想要问的问题，字数请控制在3-120个。我们将邀请已购用户帮您解答~" maxlength="120" value="{{ask_content}}" bindinput="handleAskContent"></textarea>
+      </view>
+      <view class="checked" bindtap="handleCheck">
+        <icon class="iconfont {{checked ? 'icon-xuanze1' : 'icon-xuanze'}}"></icon>
+        <text>匿名提问</text>
+      </view>
+      <view class="btns">
+        <view class="faq_publish_btn" bindtap="handleCancelSubmitAsk">取消</view>
+        <view class="faq_publish_btn {{disabled ? '' : 'disabled'}}" bindtap="handleSubmitQuestion">发布</view>
+      </view>
+    </view>
+  </scroll-view>
+  <view class="faq_btn fixed {{isShowSubmitBtn?'':'hide'}}" bindtap="handleSubmitAsk">向已购买的用户提问</view>
+  <!-- 返回顶部 -->
+  <view class='gotop' bindtap='goTop' wx:if="{{showGoTop}}">
+    <text class='icon iconfont icon-up'></text>
+  </view>
+</view>

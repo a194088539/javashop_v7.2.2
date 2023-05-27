@@ -1,0 +1,138 @@
+.success-item {
+	width: 100%;
+	height: 100%;
+}
+
+.inner-delivery {
+	width: 420rpx;
+	margin: 70rpx auto 40rpx;
+	height: 100rpx;
+}
+.inner-delivery image {
+	float: left;
+	width: 100rpx;
+	height: 100rpx;
+}
+
+.content-delivery {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	height: 100rpx;
+	justify-content: center;
+}
+.content-delivery view{
+  font-size: 28rpx;
+}
+
+.btns-delivery {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	margin-bottom: 30rpx;
+}
+.btns-delivery button {
+	background: none;
+	border: 2rpx solid #ddd;
+	line-height: 54rpx;
+	outline: none;
+  font-size: 24rpx;
+}
+
+.success-item-pay {
+  display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10rpx;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	border-top: 2rpx solid #ddd;
+	border-bottom: 2rpx solid #ddd;
+}
+.img-payment {
+	width: 300rpx;
+	height: 70rpx;
+}
+.success-item-pay view {
+	display: flex;
+	align-items: center;
+}
+
+.success-item-pay view image {
+	width: 40rpx;
+	height: 40rpx;
+}
+
+.pre-deposit {
+	padding: 30rpx;
+	border-top: 2rpx solid #ddd;
+}
+.pm-wrap {
+	display: flex;
+	align-items: center;
+}
+
+.pm-wrap .pm-box .wx-checkbox-input{
+  width: 25rpx;
+	height: 25rpx;
+	border: 2rpx solid #ddd;
+}
+.pm-wrap .pm-box .wx-checkbox-input.wx-checkbox-input-checked::before{
+  font-size:24rpx;
+}
+.pm-wrap .pm-txt .txt{
+	font-size: 22rpx;
+}
+
+.step-tit {
+	position: relative;
+}
+.step-tip {
+	display: flex;
+	align-items: center;
+	font-size: 22rpx;
+	color: #f59c1a;
+}
+.step-tip .icon {
+	margin: -12rpx 10rpx 0 0;
+}
+.step-tip .txt {
+	font-size: 22rpx;
+	color: #f59c1a;
+}
+.step-tip .txt.tip {
+	display: inline-block;
+	background-color: #f59c1a;
+	border-color: #f59c1a;
+	color: #fff;
+	padding: 8rpx 16rpx;
+	border-radius: 10rpx;
+	margin-left: 10rpx;
+}
+.input_row{
+	height: 98rpx;
+	margin: 20rpx 0;
+	display: flex;
+	align-items: center;
+	border: 1rpx solid #ddd;
+}
+.input_row .pwd_item{
+	flex: 1;
+	display: flex; 
+	align-items: center;
+	justify-content: center; 
+	height: 100%;
+	border-right: 1rpx solid #ddd;
+}
+.pwd_item:last-child { border-right: 0; } 
+.pwd_item .txt { 
+	width: 30rpx;
+	height: 30rpx;
+	border-radius: 30rpx;
+	background-color: #555;
+}
+.input_control { 
+	position: absolute;
+	left: -300rpx;
+	top: 85rpx;
+}

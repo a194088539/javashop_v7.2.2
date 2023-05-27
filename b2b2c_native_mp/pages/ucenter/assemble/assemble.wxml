@@ -1,0 +1,92 @@
+<view class="assemble-container">
+  <!-- 商品信息 -->
+  <view class="assemble-goods">
+    <navigator hover-class="none" url="/pages/goods/goods?goods_id={{assemble.goods_id}}&sku_id={{assemble.sku_id}}&from_nav=assemble">
+      <image src="{{assemble.thumbnail}}"></image>
+    </navigator>
+    <view class="goods-info">
+      <navigator hover-class="none" url="/pages/goods/goods?goods_id={{assemble.goods_id}}&sku_id={{assemble.sku_id}}&from_nav=assemble">
+        <view>{{assemble.goods_name}}</view>
+      </navigator>
+      <view>
+        <view class="info">{{assemble.required_num}}人团 - 已有{{ assemble.offered_num }}人参团</view>
+        <view class="info">
+          <text class="price">￥{{assemble.origin_price}}</text>
+          <text>拼团省￥{{assemble.savePrice}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 邀请好友参团 -->
+  <view class="pt_share">
+    <image class="pt-bg" src="{{pintuan_bg}}" mode="widthFix"></image>
+    <view class="assemble-invitations">
+      <view class="assemble-num" wx:if="{{isPay || isFinshed}}">
+        <text class="num" wx:if="{{assemble.required_num > assemble.offered_num}}">
+          仅剩{{assemble.required_num - assemble.offered_num}}个名额
+        </text>
+        <text wx:else>已成团</text>
+      </view>
+      <!-- 参团人数 -->
+      <scroll-view scroll-x="true" class="assemble-ul" wx:if="{{isPay || isFinshed}}">
+        <view class="assemble-item">
+          <view class="assemble-li" wx:for="{{assemble.participants}}" wx:for-item="user" wx:key="index">
+            <image wx:if="{{user.face && user.face !== 'null'}}" src="{{user.face}}"></image>
+            <image wx:else src="../../../static/images/icon-noface.jpg"></image>
+            <text wx:if="{{user.is_master === 1}}">团长</text>
+          </view>
+        </view>
+      </scroll-view> 
+      <!-- 倒计时 -->
+      <view class="assemble-invitations-countdown" wx:if="{{assemble.left_time}}">
+        剩余
+        <text class="text" wx:if="{{day}}">{{day}}</text><text wx:if="{{day}}"> 天 </text>
+        <text class="text">{{hours}}</text> 时
+        <text class="text">{{minutes}}</text> 分
+        <text class="text">{{seconds}}</text> 秒
+        结束
+      </view>
+      <!-- 分享 -->
+      <view class="invite-friends">
+        <button bindtap="handlePay" data-order_sn="{{order_sn}}"  class="btn" wx:if="{{assemble.left_time && !isPay && !isShared && !isFinshed}}">去支付</button>
+        <!--未成团 - 被分享-->
+        <button class="btn" wx:if="{{assemble.left_time && !isFinshed && isShared && !isPay}}" bindtap="handleAssemble">我也要参团</button>
+        <!--未成团 - 未被分享-->
+        <button class="btn" open-type="share" wx:if="{{assemble.left_time && !isFinshed && !isShared && isPay}}">邀请好友</button>
+        <!--已成团 - 被分享 -->
+        <button class="btn" wx:if="{{assemble.left_time && isFinshed && isShared}}" bindtap="handleAssemble">一键发起拼团</button>
+        <!--已成团 - 未被分享 -->
+        <button class="btn" bindtap="goShopping" wx:if="{{assemble.left_time && isFinshed && !isShared}}">去逛逛</button>
+        <!--拼团活动已结束-->
+        <button class="btn" bindtap="goShopping" wx:if="{{!assemble.left_time}}">去逛逛</button>
+      </view>
+    </view>
+  </view>
+  <!-- 您可能喜欢 -->
+  <view class="maybe-like-goods" wx:if="{{!isShared && maybelikegoods.length}}">
+    <view class="title">您可能喜欢</view>
+    <view class="goods-list">
+      <view class="list" wx:for="{{maybelikegoods}}" wx:for-item="goods" wx:key="index">
+        <navigator url="/pages/goods/goods?goods_id={{goods.goods_id}}&sku_id={{goods.sku_id}}&from_nav=assemble">
+          <image src="{{goods.thumbnail}}"></image>
+        </navigator>
+        <navigator url="/pages/goods/goods?goods_id={{goods.goods_id}}&sku_id={{goods.sku_id}}&from_nav=assemble">
+          <view class="goods-name">{{goods.goods_name}}</view>
+        </navigator>
+        <view>￥ <text>{{goods.origin_price}}</text></view>
+      </view>
+    </view>
+  </view>
+</view>
+<goods-specs
+  goodsId="{{ assemble.goods_id }}"
+  skuId="{{ assemble.sku_id }}"
+  pintuanId="{{ pintuan_id }}"
+  show="{{ showSpecsPopup }}"
+  bind:skuchanged="onSkuChanged"
+  bind:numchanged="onNumChanged"
+  bind:to-assemble-buy-now="toAssembleBuyNow"
+/>
+<view class="weixin-mask" wx:if="{{showWxAssShare}}">
+  <image src="../../../static/images/background-zhezhao.png"></image>
+</view>

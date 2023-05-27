@@ -1,0 +1,73 @@
+<view class='valid-password valid' wx:if="{{step === 1}}">
+  <view class='cell-group'>
+    <view class='cell'>
+      <text class='title' decode="true">账&ensp;&ensp;户&ensp;&ensp;名</text>
+      <view class='value'>
+        <input type='text' placeholder='请输入账户名' value='{{validAccountForm.account}}' bindinput='synCaccount'></input>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>图片验证码</view>
+      <view class='value'>
+        <view class='field'>
+          <input style="vertical-align:bottom" type='text' placeholder='请输入图片验证码' maxlength='4' value='{{validAccountForm.img_code}}' bindinput='syncImgCode'></input></view>
+        <view class='field'>
+          <image class='captcha-img' bindtap='getValidImgUrl' src="{{valid_img_url}}"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class='big-btn'>
+    <button class="button_large"  bindtap='handleValidAccount'><text>验证账户</text></button>
+  </view>
+</view>
+<view class='valid-password valid' wx:if="{{step === 2}}">
+  <view class='cell-group'>
+    <view class='cell'>
+      <view class='title'>已验证手机</view>
+      <view class='value'>
+        <input type='text' disabled='disabled' value='{{validMobileForm.mobile}}'></input>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>图片验证码</view>
+      <view class='value'>
+        <view class='field'>
+          <input type='text' placeholder='请输入图片验证码' maxlength='4' value='{{validMobileForm.img_code}}' bindinput='syncMobilImgCode'></input></view>
+        <view class='field'>
+          <image class='captcha-img' bindtap='getValidImgUrl' src="{{valid_img_url}}"></image>
+        </view>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>短信验证码</view>
+      <view class='value'>
+        <view class='field'><input placeholder='请输入短信验证码' maxlength='6' value='{{validMobileForm.sms_code}}' bindinput='syncMobilSmsCode'></input></view>
+        <button class='field btn' disabled="{{disabled}}"  bindtap='sendValidMobileSms'>{{ message || initTip }}</button>
+      </view>
+    </view>
+  </view>
+  <view class='big-btn'>
+    <button class="button_large"  bindtap='handleNextStep'><text>下一步</text></button>
+  </view>
+</view>
+<view class='valid-password valid' wx:if="{{step === 3}}">
+<view class='notice'><text>请务必牢记您的新密码！为了您的账户安全，请定期更换密码！</text></view>
+  <view class='cell-group'>
+    <view class='cell'>
+      <text class='title' decode="true">新&ensp;&ensp;密&ensp;&ensp;码</text>
+      <view class='value'>
+        <input type='password' placeholder='请输入密码' value='{{changePasswordForm.password}}' bindinput='syncPassword'></input>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>确认新密码</view>
+      <view class='value'>
+        <input type='password' placeholder='请确认密码'  value='{{changePasswordForm.rep_password}}' bindinput='syncRePassword'></input>
+      </view>
+    </view>
+  </view>
+  <view class='big-btn'>
+    <button class="button_large"  bindtap='submitChangeForm'><text>确认修改</text></button>
+  </view>
+</view>

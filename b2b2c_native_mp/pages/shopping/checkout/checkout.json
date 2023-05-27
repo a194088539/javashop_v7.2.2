@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "填写订单",
+  "usingComponents": {
+    "checkout-coupons": "./-checkout/coupons/coupons",
+    "checkout-inventory": "./-checkout/inventory/inventory",
+    "checkout-payment": "./-checkout/payment/payment",
+    "prompt": "../../../components/prompt/prompt"
+  }
+}

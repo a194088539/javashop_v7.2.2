@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "优惠券市场",
+  "usingComponents": {
+    "en-empty": "../../components/empty/empty"
+  }
+}

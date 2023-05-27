@@ -1,0 +1,51 @@
+<view class="choose-type">
+  <view class="after-sale-container">
+    <view class="goods-info-box">
+      <view class="seller-tip">
+        <text class="tip01">本次售后服务将由 <text class="tip02">{{applyInfo.seller_name}}</text>为您提供</text>
+      </view>
+      <view class="goods-info-item">
+        <view class="goods-img">
+          <image src="{{applyInfo.goods_img}}"></image>
+        </view>
+        <view class="goods-name">
+          <text>{{applyInfo.goods_name}}</text>
+          <view class="price-num">
+            <text class="price-show">单价：￥{{applyInfo.goods_price}}</text>
+            <text class="price-show">购买数量：{{applyInfo.buy_num}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="service-type-box">
+      <view class="box-info">
+        <view class="info-return" wx:if="{{applyInfo.allow_return_goods}}" bindtap="handleApplyService" data-type="RETURN_GOODS">
+          <view class="icon-con">
+            <image src="../../../../static/images/icon-tuihuo.png"></image>
+            <text>退货</text>
+          </view>
+          <view class="title-tips"><text>退回收到的商品</text></view>
+          <icon class="iconfont icon-xuanze2" style="font-size:23rpx;margin-top:-18rpx;"></icon>
+        </view>
+        <view class="divider-line"></view>
+        <view class="info-return" bindtap="handleApplyService" data-type="CHANGE_GOODS">
+          <view class="icon-con">
+            <image src="../../../../static/images/icon-huanhuo.png"></image>
+            <text>换货</text>
+          </view>
+          <view class="title-tips"><text>更换收到的商品</text></view>
+          <icon class="iconfont icon-xuanze2" style="font-size:23rpx;margin-top:-18rpx;"></icon>
+        </view>
+        <view class="divider-line"></view>
+        <view class="info-return" bindtap="handleApplyService" data-type="SUPPLY_AGAIN_GOODS">
+          <view class="icon-con">
+            <image src="../../../../static/images/icon-bufa.png"></image>
+            <text>补发商品</text>
+          </view>
+          <view class="title-tips"><text>商家少发商品</text></view>
+          <icon class="iconfont icon-xuanze2" style="font-size:23rpx;margin-top:-18rpx;"></icon>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,66 @@
+<view class="change-mobile-container" wx:if="{{step !== 3}}">
+  <view class='valid-mobile valid' wx:if="{{step === 1}}">
+    <view class='cell-group'>
+      <view class='cell'>
+        <view class='title'>已验证手机</view>
+        <view class='value'>
+          <input type='text' disabled='disabled' value='{{mobile}}'></input>
+        </view>
+      </view>
+      <view class='cell'>
+        <view class='title'>图片验证码</view>
+        <view class='value'>
+          <input class="field clear" type='text' placeholder='请输入图片验证码' maxlength='4' value='{{validMobileForm.captcha}}' bindinput='syncImgCode'></input>
+          <image src="{{valid_img_url}}" id='clear-onecode' class='captcha-img' bindtap='getValidImgUrl'></image>
+        </view>
+      </view>
+      <view class='cell'>
+        <view class='title'>短信验证码</view>
+        <view class='value'>
+          <input class="field clear" placeholder='请输入短信验证码' maxlength='6' value='{{validMobileForm.sms_code}}' bindinput='syncSmsCode'></input>
+          <button class='field btn' disabled="{{disabled}}"  bindtap='sendValidMobileSms'>{{ message || initTip }}</button>
+        </view>
+      </view>
+    </view>
+    <view class='big-btn'>
+      <button class="button_large"  bindtap='submitValMobileForm'><text>提交校验</text></button>
+     </view>
+  </view>
+  <view class='change-mobile valid' wx:if="{{step === 2}}">
+    <view class='cell-group'>
+      <view class='cell'>
+        <view class='title'>手机号码</view>
+        <view class='value'>
+          <input class="field clear" type='text' placeholder='请输入新的手机号码' maxlength='11' value='{{changeMobileForm.mobile}}' bindinput='syncNewPhone'></input>
+        </view>
+      </view>
+      <view class='cell'>
+        <view class='title'>图片验证码</view>
+        <view class='value'>
+          <input class="field clear" type='text' placeholder='请输入图片验证码' maxlength='4' value='{{changeMobileForm.captcha}}' bindinput='syncNewImgCode'></input>
+          <view class='field'>
+            <image id='clear-twocode' class='captcha-img' bindtap='getValidImgUrl' src="{{valid_img_url}}"></image>
+          </view>
+        </view>
+      </view>
+      <view class='cell'>
+        <view class='title'>短信验证码</view>
+        <view class='value'>
+          <input class="field clear" placeholder='请输入短信验证码' maxlength='6' value='{{changeMobileForm.sms_code}}' bindinput='syncNewSmsCode'></input>
+          <button class='field btn' disabled="{{disabled}}"  bindtap='sendChangeMobileSms'>{{ message || initTip }}</button>
+        </view>
+      </view>
+    </view>
+    <view class='big-btn'>
+      <button class="button_large" bindtap='submitChangeForm'><text>确认修改</text></button>
+     </view>
+  </view>
+</view>
+<view class='change-success' wx:else>
+  <view class="inner-success">
+    <image class="icon-success" src='../../../../static/images/icon-success.png'></image>
+    <view class="success-title">
+      您的手机号已成功更换为：<view class="success-mobile">{{ new_phone }}</view>
+    </view>
+  </view>
+</view>

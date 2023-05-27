@@ -1,0 +1,28 @@
+<view>
+	<view class="coupon-empty" wx:if="{{ !coupons || !coupons.length }}">
+		<image src="/static/images/icon-warning.png"></image>该店铺暂无优惠券
+	</view>
+	<view wx:else class="coupons-container">
+		<view
+			class="coupon-item {{coupon.received_num === coupon.create_num ? 'unavailable' : ''}}"
+			wx:for="{{ coupons }}"
+			wx:for-item="coupon"
+			wx:key="index"
+			data-coupon="{{ coupon }}"
+			bindtap="handleReceiveCoupons"
+		>
+			<view class="par">
+        <view>{{ coupon.title }}</view>
+				<text class="sign">￥</text><text>{{ coupon.coupon_price }}</text>
+				<view>订单满{{ coupon.coupon_threshold_price }}元</view>
+			</view>
+			<view class="copy">
+				<text>副券</text>
+				<view>{{ coupon.start_time }}</view>
+				<view>~</view>
+				<view>{{ coupon.end_time }}</view>
+			</view>
+      <view class="i"></view>
+		</view>
+	</view>
+</view>

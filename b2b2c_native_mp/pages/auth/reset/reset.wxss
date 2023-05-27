@@ -1,0 +1,56 @@
+.big-btn {
+    padding: 20rpx 20rpx 0 20rpx;
+}
+.big-btn .button_large {
+    background-color: #f42424;
+}
+.big-btn .button_large text{
+    color: #fff;
+}
+.button_disabled {
+    background-color: #e8e8e8;
+}
+.button_disabled text{
+    color: #999;
+}
+.change-success {
+    padding-top: 92rpx;
+    width: 100%;
+    min-height: 600rpx;
+}
+.inner-success {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40rpx;
+}
+.icon-success {
+    width: 100rpx;
+    height: 100rpx;
+    margin-right: 30rpx;
+}
+.success-title {
+    font-size: 32rpx;
+    color: #333;
+}
+.success-mobile {
+    margin-top: 10rpx;
+}
+.notice {
+    display: flex;
+    color: #f85;
+    padding: 18rpx 30rpx;
+    font-size: 24rpx;
+    line-height: 1.5;
+    position: relative;
+    background-color: #fff7cc;
+}
+.notice text{
+    flex: 1;
+    height: 36rpx;
+    overflow: hidden;
+    position: relative;
+}
+.valid .title {
+  max-width: 180rpx;
+}

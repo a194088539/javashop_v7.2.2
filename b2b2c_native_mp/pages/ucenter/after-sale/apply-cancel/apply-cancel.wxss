@@ -1,0 +1,63 @@
+.apply-service-cont{
+  height: 90rpx;
+  line-height: 90rpx;
+  padding: 0 20rpx;
+}
+.apply-service-cont:first-child{
+  border-bottom: 1rpx solid #e5e5e5;
+}
+.apply-service-cont text{
+  float: left;
+}
+.apply-service-cont icon{
+  float: right;
+}
+.icon-xuanze1{
+  color: #06bf04;
+}
+
+.cancle_tip_bar {
+  padding: 16rpx 20rpx;
+  line-height: 36rpx;
+  background: #fcf6ed;
+}
+.cancle_tip_bar view{
+  font-size:24rpx;
+  color: #de8c17;
+}
+
+.submit-btn {
+  display: flex;
+  text-align: center;
+  margin-top: 40rpx;
+}
+.cancle-container{
+  padding: 0 20rpx;
+}
+.item-key {
+  height: 90rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: 2rpx solid #f5f5f5;
+}
+.item-key text {
+  display: inline-block;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 33rpx;
+}
+.item-val {
+  flex-direction: row;
+  align-items: center;
+  flex: 1 1 0%;
+  padding:20rpx;
+  text-align: right;
+}
+.reason-name,.account-name{
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 32rpx;
+  text-align: center;
+  border-bottom: 1rpx solid #e5e5e5;
+}

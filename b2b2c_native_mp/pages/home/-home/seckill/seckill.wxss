@@ -1,0 +1,135 @@
+@import '../../../../styles/iconfont.wxss';
+.seckill-container {
+  border: 2rpx solid #dfdfdf;
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 2rpx #f2f2f2;
+  background: #FF5104;
+  margin: 20rpx;
+}
+.title-seckill{
+  display: flex;
+  align-items: flex-end;
+  vertical-align: middle;
+  padding: 20rpx 20rpx 10rpx 20rpx;
+}
+.seckill-left-link {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+}
+.seckill-tit-txt {
+  margin: 0 12rpx;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 42rpx;
+  color: #232326;
+  font-weight: 700;
+}
+.seckill-tit-txt .txt:first-child {
+  font-style: oblique;
+  margin-right: 10rpx;
+  font-size: 32rpx;
+}
+.seckill-tit-txt .txt {
+  font-size: 28rpx;
+  color: #fff;
+}
+.seckill-tit-txt .img {
+  width: 20rpx;
+  margin-left: 10rpx;
+  vertical-align: middle;
+}
+.seckill-nth {
+  font-size: 24rpx;
+  color: #fff;
+  display: inline-block;
+}
+.seckill-time {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 12rpx 6rpx 0;
+  color: #fff;
+}
+.seckill-time .txt {
+  background-color: #000;
+  color: #fff;
+  padding: 4rpx 6rpx;
+  border-radius: 4rpx;
+}
+.seckill-times .img{
+  width: 24rpx;
+  height: 24rpx;
+  vertical-align: middle;
+  margin-left: 10rpx;
+}
+.seckill-more-link {
+  display: flex;
+  align-items: center;
+}
+.seckill-more-link .txt {
+  color: #fff;
+}
+.seckill-more-link .icon{
+  color: #fff;
+  font-size: 40rpx;
+  margin-left: 5rpx;
+}
+
+.seckill-slider {
+  margin: 10rpx 8rpx;
+}
+.seckill-item {
+  width: 23%;
+  border-left: 2rpx solid #e3e3e3;
+  display: inline-block;
+  background: #fff;
+  margin: 8rpx;
+  border-radius: 10rpx;
+}
+.seckill-item-img {
+  width: 100%;
+  height: 150rpx;
+  padding: 10rpx;
+  box-sizing: border-box;
+}
+.seckill-new-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.seckill-new-link image {
+  width: 100%;
+  height: 140rpx;
+  overflow: hidden;
+}
+.seckill-item-price {
+  margin: 0 auto;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.seckill-item-price .new-price {
+  margin: 10rpx 10rpx 0 10rpx;
+  display: block;
+  font-size: 24rpx;
+  text-align: center;
+  font-weight: 700;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.seckill-item-price .original-price {
+  color: #ABABAB;
+  font-size: 22rpx;
+  line-height: 24rpx;
+  margin-bottom: 15rpx;
+  padding: 0 4rpx;
+  display: block;
+  position: relative;
+  text-decoration: line-through;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

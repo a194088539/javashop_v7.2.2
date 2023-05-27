@@ -1,0 +1,22 @@
+<view class="security-container">
+  <navigator hover-class="none" class='cell' url="./changepassword/changepassword">
+    <view class='title'>账户密码</view>
+    <view class='value'>修改</view>
+    <text class='right-icon iconfont icon-xuanze2'></text>
+  </navigator>
+  <navigator hover-class="none" class='cell' url="./changemobile/changemobile">
+    <view class='title'>手机号码</view>
+    <view class='value'>修改</view>
+    <text class='right-icon iconfont icon-xuanze2'></text>
+  </navigator>
+  <navigator hover-class="none" class='cell' url="./changeemail/changeemail">
+    <view class='title'>电子邮箱</view>
+    <view class='value'>修改</view>
+    <text class='right-icon iconfont icon-xuanze2'></text>
+  </navigator>
+  <navigator hover-class="none" url="./changepaypassword/changepaypassword" class='cell'>
+    <view class='title'>支付密码</view>
+    <view class='value'>{{isPassword ? '修改' : '设置'}}</view>
+    <text class='right-icon iconfont icon-xuanze2'></text>
+  </navigator>
+</view>

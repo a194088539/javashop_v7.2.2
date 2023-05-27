@@ -1,0 +1,104 @@
+.goods-promotions{
+  border-bottom: 20rpx solid #f4f4f4;
+}
+.van-cell-group{
+	background-color: #fff;
+}
+.van-cell {
+	width: 100%;
+  display:-webkit-box;
+  display:-webkit-flex;
+	display: flex;
+	padding: 20rpx 0 20rpx 30rpx;
+	box-sizing: border-box;
+	line-height: 48rpx;
+	position: relative;
+	background-color: #fff;
+	color: #333;
+	font-size: 28rpx;
+	overflow: hidden;
+	border-bottom: 2rpx solid #f3f3f3;
+}
+.van-cell:last-child{
+  border-bottom: none;
+}
+.cell_title, .cell_value {
+	flex: 1;
+}
+.cell_value{
+	overflow: hidden;
+	text-align: right;
+	position: relative;
+	vertical-align: middle;
+}
+.van-cell .i{
+	float:right;
+	width:45rpx;
+	height:45rpx;
+	margin-right:16rpx;
+}
+.cell_title .rate{
+	color: #f42424;
+	margin-left: 6rpx;
+	font-size: 24rpx;
+}
+
+.promotions{
+	display: flex;
+}
+
+.promotions-cell{
+  flex: 1;
+  margin-left: 10rpx;
+}
+
+.red_bg{
+	position: relative;
+	padding: 4rpx;
+	margin: 0 0 0 10rpx;
+	height: 30rpx;
+	line-height: 30rpx;
+	font-size: 20rpx;
+	color: #f42424;
+	background: #fff;
+}
+.red_bg::before{
+	content: "";
+	display: block;
+	border: 1px solid #f42424;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	pointer-events: none;
+	border-radius: 4rpx;
+}
+.red{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+  margin-left: 15rpx;
+}
+
+.proms-list{
+  border-top: 2rpx solid #e5e5e5;
+	height: calc(100% - 92rpx);
+}
+.proms-list .cell_title view{
+	display: inline-block;
+}
+.proms-list .red_bg{
+	padding: 0 6rpx;
+  margin-top: 12rpx;
+}
+.gift-image {
+	display: inline-block;
+	width: 60rpx;
+	height: 60rpx;
+  margin-left: 10rpx;
+}
+.price {
+	color: #f42424 !important;
+}

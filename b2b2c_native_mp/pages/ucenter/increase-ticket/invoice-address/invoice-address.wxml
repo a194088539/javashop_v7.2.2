@@ -1,0 +1,35 @@
+<view class="valid">
+  <view class='cell-group'>
+    <view class='cell'>
+      <view class='title'>收票人</view>
+      <view class='value'>
+        <input type='text' placeholder='请输入收票人姓名' maxlength="10" value="{{addressForm.member_name}}" bindinput='syncMemberName'></input>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>手机号码</view>
+      <view class='value'>
+          <input type='text' placeholder='请输入手机号码' maxlength='11' value="{{addressForm.member_mobile}}" bindinput='syncMemberMobile'></input>
+      </view>
+    </view>
+    <bottomFrame id="bottomFrame" frameTitle="地区选择">
+      <RegionPicker bind:areaschanged="addressSelectorChanged" bind:closeRegionpicke="closeRegionpicke"></RegionPicker>
+    </bottomFrame>
+    <view class='cell' bindtap='openRegionpicke'>
+      <view class='title'>所在地区</view>
+      <view class='value'>
+        <input placeholder='请选择所在地区' disabled value="{{addressForm.address}}"></input>
+      </view>
+      <view class='right-icon face-icon'>
+        <image class='icon' src='../../../../static/images/go.png'></image>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>详细地址</view>
+      <view class='value'>
+          <input type='text' placeholder='请输入详细地址' maxlength='50' value="{{addressForm.detail_addr}}" bindinput='syncDetailAddr'></input>
+      </view>
+    </view>
+    <view class='big-btn' bindtap='handleSaveAddress'>保 存</view>
+  </view>
+</view>

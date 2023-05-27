@@ -1,0 +1,88 @@
+<wxs src="../../../utils/wxs.wxs" module="invoice"/>
+<view class="increase-container">
+ <!-- 通知信息 -->
+  <view class="notice-bar">
+    <view class="notice-bar_warp" style="left:{{marqueeDistance}}px;font-size:{{size}}px">
+      <view class="notice-content">
+        {{notice}}
+      </view>
+    </view>
+  </view>
+  <!-- 增票资质申请状态相关信息 -->
+  <view class="audit-status" wx:if="{{invoiceInfo && invoiceInfo.status}}">
+    <view class="wait-status">
+      <text>您的增票资质：</text>
+      <text style="color:#71b247">{{invoice.invoiceStatus(invoiceInfo.status)}}</text>
+      <text class="btn" wx:if="{{invoiceInfo.status === 'AUDIT_PASS'}}"  bindtap='handleDeleteInvoice'>删除</text>
+      <view wx:if="{{invoiceInfo.status === 'AUDIT_REFUSE'}}">
+        <text>原因：</text>
+        <text style="color:#f42424;">{{ invoiceInfo.audit_remark || '单位名称不符合规范'}}</text>
+      </view>
+    </view>
+  </view>
+  <!-- 增票资质申请表单 -->
+  <view class="valid">
+    <view class='cell-group'>
+      <view class='cell'>
+        <view class='title'>单位名称</view>
+        <view class='value'>
+          <input type='text' placeholder="请输入单位名称" maxlength="20" value='{{informationForm.company_name}}' bindinput="syncCompanyName"></input>
+        </view>
+      </view>
+      <view class='cell'>
+        <view class='title'>纳税人识别号</view>
+        <view class='value'>
+          <input type='text' placeholder='请输入纳税人识别号' maxlength='20' value="{{informationForm.taxpayer_code}}" bindinput="syncTaxpayerCode"></input>
+        </view>
+      </view>
+      <view class='cell'>
+        <view class='title'>注册地址</view>
+        <view class='value'>
+          <input type='text' placeholder="请输入注册地址" value='{{informationForm.register_address}}' bindinput="syncRegisterAddress"></input>
+        </view>
+      </view>
+      <view class='cell'>
+        <view class='title'>注册电话</view>
+        <view class='value'>
+          <input type='text' placeholder='请输入注册电话' maxlength='13' value="{{informationForm.register_tel}}" bindinput="syncRegisterTel"></input>
+        </view>
+      </view>
+      <view class='cell'>
+        <view class='title'>开户银行</view>
+        <view class='value'>
+          <input type='text' placeholder="请输入开户银行" value='{{informationForm.bank_name}}' bindinput="syncBankName"></input>
+        </view>
+      </view>
+      <view class='cell'>
+        <view class='title'>银行账号</view>
+        <view class='value'>
+          <input type='text' placeholder="请输入银行账号" maxlength="19" value='{{informationForm.bank_account}}' bindinput="syncBankAccount"></input>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- 同意 增票资质认证书 -->
+  <view class="certificate"  bindtap="handAgreed">
+    <icon class="iconfont {{ agreed ? 'icon-xuanze1' : 'icon-xuanze' }}"></icon>
+    <view class="certificate-book">我已经阅读并同意<text catchtap="showCertificateBook">《增票资质确认书》</text></view>
+  </view>
+  <!-- 增票资质认证书 -->
+  <bottomFrame id="bottomFrame" frameTitle="申请开具增值税专用发票确认书">
+    <view class="certificate-container">根据国家税法及发票管理相关规定，任何单位和个人不得要求他人为自己开具与实际经营业务情况不符的增值税专用发票【包括并不限于
+			（1）在没有货物采购或者没有接受应税劳务的情况下要求他人为自己开具增值税专用发票；
+			（2）虽有货物采购或者接受应税劳务但要求他人为自己开具数量或金额与实际情况不符的增值税专用发票】，否则属于“虚开增值税专用发票”。
+    </view>
+    <view class="certificate-container">
+      	我已充分了解上述各项相关国家税法和发票管理规定，并确认仅就我司实际购买商品或服务索取发票。
+			  如我司未按国家相关规定申请开具或使用增值税专用发票，由我司自行承担相应法律后果。
+    </view>
+  </bottomFrame>
+  <!-- 保存 -->
+  <view class='big-btn' wx:if="{{canOpera}}">
+    <button class="button_large"  bindtap='saveInvoiceInfo'><text>{{ invoiceInfo && invoiceInfo.status === 'AUDIT_REFUSE' ? '重新审核' : '保存'}}</text></button>
+  </view>
+</view>
+
+<view class="invoice-address">
+  <navigator hover-class="none" url="/pages/ucenter/increase-ticket/invoice-address/invoice-address" class="text">查看增票地址</navigator>
+</view>

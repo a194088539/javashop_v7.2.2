@@ -1,0 +1,107 @@
+<view class="apply-cancel">
+  <view class="apply-service">
+    <view class="apply-service-cont">
+      <text>未收货</text>
+      <icon class="iconfont {{rog === 'NO' ? 'icon-xuanze1' : 'icon-xuanze'}}" bindtap="handleApplyServiceCheck" data-index="0"></icon>
+    </view>
+    <view class="apply-service-cont" wx:if="{{applyService}}">
+      <text>已收货</text>
+      <icon class="iconfont {{rog === 'YES' ? 'icon-xuanze1' : 'icon-xuanze'}}" bindtap="handleApplyServiceCheck" data-index="1"></icon>
+    </view>
+  </view>
+  <view class="canel-main-page" wx:if="{{rog === 'NO'}}">
+    <view class="cancle_tip_bar">
+      <view>温馨提示：</view>
+      <view>1. 订单取消后无法恢复；</view>
+      <view>2. 订单取消后，使用的优惠券和积分等将不再返还；</view>
+      <view>3. 订单取消后，订单中的赠品要随商品一起返还给商家；</view>
+    </view>
+    <view class="cancle-container">
+      <view class="item-key">
+        <text>退款方式</text>
+        <view class="item-val">
+          <text wx:if="{{isRetrace}}">原路退回</text>
+          <text wx:elif="{{isRetraceBalance}}">预存款退款</text>
+          <text wx:else>账号退款</text>
+        </view>
+      </view>
+      <view class="item-key">
+        <text>退款金额</text>
+        <view class="item-val">
+          <text>{{refund_info.refund_price}}</text>
+        </view>
+      </view>
+      <view class="item-key">
+        <text style="color:#f42424;"> * </text>
+        <text>取消原因</text>
+        <view class="item-val" bindtap="handleShowReason">
+          <text>{{refund_info.reason}}</text>
+          <icon class="iconfont icon-arrow-down"></icon>
+        </view>
+      </view>
+      <view wx:if="{{!isRetrace && !isRetraceBalance}}">
+        <view class="item-key">
+          <text style="color:#f42424;"> * </text>
+          <text>账户类型</text>
+          <view class="item-val" bindtap="handleShowAccountType">
+            <text>{{accountTypeText}}</text>
+            <icon class="iconfont icon-arrow-down"></icon>
+          </view>
+        </view>
+        <view wx:if="{{refund_info.account_type === 'BANKTRANSFER'}}">
+          <view class="item-key">
+            <text style="color:#f42424;"> * </text>
+            <text>银行名称</text>
+            <view class="item-val"><input placeholder="请输入银行名称" value="{{refund_info.bank_name}}" bindinput="handleBankName"></input></view>
+          </view>
+          <view class="item-key">
+            <text style="color:#f42424;"> * </text>
+            <text>银行开户行</text>
+            <view class="item-val"><input placeholder="请输入银行开户行" value="{{refund_info.bank_deposit_name}}" bindinput="handleBankDepositAame"></input></view>
+          </view>
+          <view class="item-key">
+            <text style="color:#f42424;"> * </text>
+            <text>银行开户名</text>
+            <view class="item-val"><input placeholder="请输入银行开户名" value="{{refund_info.bank_account_name}}" bindinput="handleBankaccountName"></input></view>
+          </view>
+          <view class="item-key">
+            <text style="color:#f42424;"> * </text>
+            <text>银行账号</text>
+            <view class="item-val"><input placeholder="请输入银行账号" value="{{refund_info.bank_account_number}}" bindinput="handleBankAccountNumber"></input></view>
+          </view>
+        </view>
+        <view wx:if="{{refund_info.account_type !== 'BANKTRANSFER' && refund_info.account_type !== 'BALANCE' }}" class="item-key">
+          <text style="color:#f42424;"> * </text>
+          <text>退款账户</text>
+          <view class="item-val"><input placeholder="请输入退款账户" value="{{refund_info.return_account}}" bindinput="handleReturnAccount"></input></view>
+        </view>
+      </view>
+      <view class="item-key">
+        <text style="color:#f42424;"> * </text>
+        <text>联系方式</text>
+        <view class="item-val"><input placeholder="请输入手机号码" value="{{refund_info.mobile}}" bindinput="handleMobile" maxlength="11"></input></view>
+      </view>
+    </view>
+    <view class="submit-btn">
+      <button type="default" style="margin-right: 30px;width: 40%;" bindtap="handleCancelSubmit">取消</button>
+      <button type="primary" style="width: 40%;" bindtap="handleSubmitApply">提交</button>
+    </view>
+  </view>
+  <view class="service-main-page" wx:else>
+    <view class="cancle_tip_bar">
+      <view>温馨提示：</view>
+      <view>1. 当前订单还未确认收货，如果申请售后，则订单自动确认收货；</view>
+      <view>2. 如申请售后，使用的优惠券和积分等将不再返还；</view>
+      <view>3. 订单中的赠品要随申请售后的商品一起返还给商家；</view>
+    </view>
+    <view class="submit-btn">
+      <button type="primary" bindtap="handleApplyService" style="width: 40%;">申请售后</button>
+    </view>
+  </view>
+</view>
+<modal myVisible="{{reasonSelectShow}}" bindmyOnCancel="handleReasonSelectHide">
+  <view class="reason-name" wx:for="{{reasonSelectActions}}" wx:key="index" bindtap="handleReaseSelect" data-name="{{item.name}}">{{item.name}}</view>
+</modal>
+<modal myVisible="{{accountTypeSelectShow}}" bindmyOnCancel="handleAccountTypeSelectHide">
+  <view class="account-name" wx:for="{{accountTypeSelectActions}}" wx:key="index" bindtap="handleAccountTypeSelect" data-name="{{item.name}}" data-value="{{item.value}}">{{item.name}}</view>
+</modal>

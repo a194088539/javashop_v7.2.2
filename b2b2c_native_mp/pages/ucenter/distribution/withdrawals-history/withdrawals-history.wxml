@@ -1,0 +1,18 @@
+<scroll-view class="withdrawals-container" scroll-y="true" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}" bindscrolltolower="loadMore">
+  <en-empty wx:if="{{!withdrawalsList.length && finished }}">暂无提现记录</en-empty>
+  <block wx:else>
+    <view  class="content" wx:for="{{withdrawalsList}}" wx:key="index">
+      <view class="title" bindtap="isshowactiveNames" data-index="{{index}}">
+        <view class="text">提现时间：{{item.apply_time}}</view>
+        <icon class="iconfont {{item.showactiveNames ? 'icon-arrow-up': 'icon-arrow-down'}} "></icon>
+      </view>
+      <view class="colla-content" wx:if="{{item.showactiveNames}}">
+        <view class="left">
+          <view>提现状态：{{item.status}}</view>
+          <view>提现金额：<text style="color:#f42424;">￥{{item.apply_money}}</text></view>
+        </view>
+        <view class="right"  bindtap="lookDetails" data-item="{{item}}">查看详情</view> 
+      </view>
+    </view>
+  </block>
+</scroll-view>

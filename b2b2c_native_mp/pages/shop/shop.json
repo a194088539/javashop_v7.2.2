@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "店铺列表",
+  "usingComponents": {
+    "en-empty": "../../components/empty/empty",
+    "en-top": "../../components/top/top"
+  }
+}

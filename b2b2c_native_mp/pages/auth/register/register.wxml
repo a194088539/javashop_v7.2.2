@@ -1,0 +1,64 @@
+<import src="../../../lib/wxParse/wxParse.wxml" />
+<view class="register-content">
+  <view class='valid' wx:if="{{step === 1}}">
+    <view class='cell-group'>
+      <view class='cell'>
+        <text class='title' decode="true">手&ensp;&ensp;机&ensp;&ensp;号</text>
+        <view class='value'>
+          <input type='text' placeholder='请输入手机号' maxlength='11' value='{{registerForm.mobile}}' bindinput='syncMobile'></input>
+        </view>
+      </view>
+      <view class='cell'>
+        <view class='title'>图片验证码</view>
+        <view class='value'>
+          <view class='field'>
+            <input type='text' placeholder='请输入图片验证码' maxlength='4' value='{{registerForm.img_code}}' bindinput='syncMobilImgCode'></input></view>
+          <view class='field'>
+            <image id="clear-code" class='captcha-img' bindtap='getValidImgUrl'  src="{{valid_code_url}}"></image>  
+          </view>
+        </view>
+      </view>
+      <view class='cell'>
+        <view class='title'>短信验证码</view>
+        <view class='value'>
+          <input class="field" placeholder='请输入短信验证码' maxlength='6' value='{{registerForm.sms_code}}' bindinput='syncMobilSmsCode'></input>
+          <button class='field btn' disabled="{{disabled}}"  bindtap='sendValidMobileSms'>{{ message || initTip }}</button>
+        </view>
+      </view>
+    </view>
+    <view class='big-btn'>
+      <button class="button_large"  bindtap='handleNextStep'><text>下一步</text></button>
+    </view>
+  </view>
+  <view class='valid' wx:if="{{step === 2}}">
+    <view class='cell-group'>
+      <view class='cell'>
+        <view class='title'>设置密码</view>
+        <view class='value'>
+          <input type='password' placeholder='6-20位英文、数字或者特殊字符' value='{{registerForm.password}}' bindinput='syncPassword'></input>
+        </view>
+      </view>
+      <view class='cell'>
+        <view class='title'>重复密码</view>
+        <view class='value'>
+          <input type='password' placeholder='请牢记您的密码' value='{{registerForm.rep_password}}' bindinput='syncRepPassword'></input>
+        </view>
+      </view>
+    </view>
+    <view class='big-btn'>
+      <button class="button_large"  bindtap='handleConfirmRegister'><text>立即注册</text></button>
+    </view>
+  </view>
+</view>
+<view class="modal" wx:if="{{showAgreement}}" catchtouchmove="true">
+  <view class="agreement-dialog">
+    <view class='agreement-title'>注册协议</view>
+    <scroll-view scroll-y="true" class="agreement-content">
+      <template is="wxParse" data="{{wxParseData:agreement.nodes}}" />
+    </scroll-view>
+    <view class="agreement-btns">
+      <view class="btn" bindtap="handleAgreement" data-agreed="false">不同意</view>
+      <view class="btn" bindtap="handleAgreement" data-agreed="true">同意</view>
+    </view>
+  </view>
+</view>

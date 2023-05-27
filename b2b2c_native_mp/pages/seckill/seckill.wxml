@@ -1,0 +1,48 @@
+<view id="seckill" class="seckill-container">
+  <view class="tab-navs">
+    <view class='tab-nav'>
+      <view class="top-nav-container">
+        <view wx:for="{{ timeLines }}" wx:key='index' class="tab-item {{ timeLineIndex === index ? 'active': '' }}" data-timelineindex="{{index}}" bindtap='handleClickTimeLine'>
+          <view class="time-title-timeline">{{item.time_text + ':00'}}</view>
+          <view class="text-title-timeline">{{item.distance_time === 0 ? '正在抢购' : '即将开始'}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+	
+	<view wx:if="{{ timeLines }}" class="list-head">
+		<view class="buy-txt {{ timeLines[timeLineIndex].distance_time ? 'no-start' : '' }}">{{ timeLines[timeLineIndex].distance_time === 0 ? '抢购中' : '即将开始' }} 先下单先得哦</view>
+		<view class="time">
+			<text class="static-txt">{{ timeLines[timeLineIndex].distance_time === 0 ? (onlyOne ? '距结束' : '距下一轮') : '距开始' }}</text>
+			<view class="time-text">
+				<text class="seckill-time">{{ timesText[timeLineIndex].hours }}</text>
+				<text class="time-separator">:</text>
+				<text class="seckill-time">{{ timesText[timeLineIndex].minutes }}</text>
+				<text class="time-separator">:</text>
+				<text class="seckill-time">{{ timesText[timeLineIndex].seconds }}</text>
+			</view>
+		</view>
+	</view>
+
+	<view wx:if="{{ timeLines }}" class="goods-container">
+		<en-empty wx:if="{{ finished && !goodsList.length }}">暂无商品</en-empty>
+		<scroll-view wx:else class="group-buy-container" lower-threshold="10" style="height: {{ height }}px;"  scroll-y="true" bindscrolltolower="loadData">
+			<view wx:for="{{ goodsList }}" wx:for-item="goods"  wx:key="index" class="item-goods">
+          <navigator class="img" url="/pages/goods/goods?goods_id={{ goods.goods_id }}&&sku_id={{goods.sku_id}}" hover-class="none">
+            <image src="{{ goods.goods_image }}"></image>
+          </navigator>
+          <navigator class="goods-name" hover-class="none" url="/pages/goods/goods?goods_id={{ goods.goods_id }}&&sku_id={{goods.sku_id}}">{{ goods.goods_name }}</navigator>
+					<view class="goods-price">
+						<text class="i">￥</text>{{ goods.seckill_price }}<text></text>
+					</view>
+					<view class="seckill-price">
+						<view class="goods-price-odd">
+							<text class="del">￥{{ goods.original_price }}</text>
+						</view>
+					</view>
+          <view class="to-seckill-btn {{goods.precent_sec === '100' ? 'btn' : ''}}" wx:if="{{seckillIsStart}}" bindtap="toseckill" data-goodid="{{goods.goods_id}}" data-skuid="{{goods.sku_id}}" data-goods_precentsec="{{goods.precent_sec}}">{{goods.precent_sec === '100' ? '已售空' : '去抢购'}}</view>
+					<navigator class="wait-seckill-btn" wx:else url="/pages/goods/goods?goods_id={{ goods.goods_id }}&&sku_id={{goods.sku_id}}">即将开始</navigator>
+			</view>
+		</scroll-view>
+	</view>
+</view>

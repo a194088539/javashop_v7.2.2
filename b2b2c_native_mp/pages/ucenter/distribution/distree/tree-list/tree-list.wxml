@@ -1,0 +1,19 @@
+<view class="recoveryPage">
+  <view class="tree-main">
+    <view class="tree-wrap">
+      <tree-item
+        wx:for="{{treeDataSource}}"
+        wx:for-item="model"
+        wx:for-index="i"
+        root="0"
+        num="{{i}}"
+        nodes="{{treeDataSource.length}}"
+        bind:openExpand="openExpand"
+        bind:delAction="delAction"
+        model="{{model}}"
+        wx:key="{{i}}"
+      >
+      </tree-item>
+    </view>
+  </view>
+</view>

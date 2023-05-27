@@ -1,0 +1,42 @@
+<view class='my-collection'>
+  <view class="switch">
+    <view class="item {{ typeId == 0 ? 'active' : ''}}" bindtap="switchTab" data-index='0'>收藏的商品</view>
+    <view class="item {{ typeId == 1 ? 'active' : ''}}" bindtap="switchTab" data-index='1'>收藏的店铺</view>
+  </view>
+  <view class="collection-container">
+    <scroll-view scroll-y="true" wx:if="{{typeId === 0}}" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+      <en-empty wx:if="{{!goodsList.length && finished_goods}}">暂无收藏的商品</en-empty>
+      <view class='goods-item' wx:for="{{goodsList}}" wx:key="index">
+        <navigator hover-class="none" class='goods-image' url='/pages/goods/goods?goods_id={{item.goods_id}}'>
+          <image class='img' src="{{item.goods_img}}"></image>
+        </navigator>
+        <view class='goods-detail'>
+          <navigator hover-class="none" class='goods-detail-name' url='/pages/goods/goods?goods_id={{item.goods_id}}'>{{item.goods_name}}</navigator>
+          <view class='goods-detail-price'>
+            <text class='price'>￥{{item.goods_price}}</text>
+            <view class='goods-detail-info'></view>
+          </view>
+          <view class='goods-detail-buttons' bindtap="deleteGoodsColl" data-goods_id="{{item.goods_id}}">
+            <text class='btn-item delete'>取消收藏</text>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+    <scroll-view scroll-y="true" wx:if="{{typeId === 1}}" style="height:{{ scrollHeight }}px;" scroll-top="{{scrollTop}}"  bindscroll="scroll" bindscrolltolower="loadMore">
+      <en-empty wx:if="{{!shopsList.length && finished_shops}}">暂无收藏的店铺</en-empty>
+      <view class='shop-item' wx:for="{{shopsList}}" wx:key="index">
+        <view class='shop-logo'>
+          <image class='img' src="{{item.logo}}"></image>
+        </view>
+        <view class='shop-tools'>
+          <view class='shop-name'>{{item.shop_name}}</view>
+          <view class='shop-btns'>
+            <text class='btn' bindtap='deleteShopColl' data-shop_id="{{item.shop_id}}">取消收藏</text>
+            <navigator hover-class="none" url='../../shop/shop_id/shop_id?id={{item.shop_id}}'><text class='btn'>进入店铺</text></navigator>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+</view>

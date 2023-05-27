@@ -1,0 +1,103 @@
+
+.notice-bar{
+  display: flex;
+  padding: 18rpx 30rpx;
+  line-height: 1.5;
+  position: relative;
+  background-color: #fff7cc;
+}
+.notice-bar_warp{
+  position: relative;
+  height: 36rpx;
+  flex: 1;
+}
+.notice-content{
+  color: #f85;
+  white-space: nowrap;
+  position: absolute;
+  top: 0;
+}
+.audit-status{
+  background: #fffdee;
+  padding: 20rpx;
+  margin-top: 20rpx;
+}
+
+.valid .title{
+  max-width: 180rpx;
+}
+.valid .title::before{
+  content: "*";
+  position: absolute;
+  left: 14rpx;
+  font-size: 28rpx;
+  color: #f44;
+}
+
+.certificate{
+  width: 100%;
+  align-items: center;
+  display: flex;
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+  line-height: 48rpx;
+  background-color: #fff;
+  color: #333;
+  font-size: 28rpx;
+  overflow: hidden;
+  border-top: 2rpx solid #f1f1f1;
+  border-bottom: 2rpx solid #f1f1f1;
+  margin-top: 20rpx;
+}
+.certificate icon {
+  position: relative;
+  display: inline-block;
+  text-rendering: auto;
+  top: -6rpx;
+}
+.certificate .xuanze {
+  font-size: 32rpx;
+}
+.certificate .certificate-book{
+  display: inline-block;
+  margin-left: 20rpx;
+  color: #333;
+  font-size: 28rpx;
+}
+.certificate text{
+  color: #f42424;
+}
+.certificate-container{
+  text-align: left;
+  padding: 20rpx;
+  font-size: 24rpx;
+  color: #aaa;
+}
+.big-btn {
+    padding: 20rpx 20rpx 0 20rpx;
+}
+.big-btn .button_large {
+    background-color: #f42424;
+}
+.big-btn .button_large text{
+    color: #fff;
+}
+.btn{
+  padding: 8rpx 20rpx;
+  border-radius: 8rpx;
+  margin-left: 20rpx;
+  background-color: #f44;
+  color: #fff;
+}
+.invoice-address{
+  width: 100%;
+  line-height: 100rpx;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+.invoice-address .text{
+  background-color: #f44;
+  color: #fff;
+}

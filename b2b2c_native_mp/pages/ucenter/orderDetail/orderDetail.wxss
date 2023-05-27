@@ -1,0 +1,232 @@
+.order-container{
+   background-color: rgb(247, 247, 247);
+}
+.order-container .notice-bar{
+  color: #f85;
+  padding: 18rpx 30rpx;
+  font-size: 24rpx;
+  line-height: 1.5;
+  background-color: #fff7cc;
+}
+.order-container .trade-status {
+  padding: 30rpx;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.order-container .trade-status text{
+  font-size: 26rpx;
+}
+.order-container .trade-status .trade-status-title{
+  flex: 1;
+  align-items: center;
+}
+.order-container .order-items{
+    background-color:#fff;
+    padding: 0 20rpx;
+}
+.order-container .order-items .order-item {
+    padding: 10rpx 0;
+    font-size: 28rpx;
+}
+.order-container .hr{
+    display: block;
+    width: 100%;
+    height: 2rpx;
+    background-color: #e5e5e5;
+    clear: both;
+}
+.order-container .sku-box{
+    clear: both;
+    margin-top: 20rpx;
+    background-color: #fff;
+}
+.order-container .sku-box .shop-info{
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 28rpx;
+    border-bottom: 2rpx solid #e5e5e5;
+    padding: 0 20rpx;
+    margin: 0 auto;
+}
+.order-container .sku-box .shop-name .text{
+    color: #0366d6;
+}
+.order-container .shop-info .shop{
+    display: inline-block;
+}
+.order-container .sku-box .sku-num{
+    float: right;
+}
+.order-container .sku-list{
+    padding: 0 20rpx;
+}
+.order-container .sku-item{
+    display: flex;
+    align-items: center;
+    margin: 20rpx auto;
+    min-height: 150rpx;
+}
+.order-container .sku-item .goods-img{
+    margin-right: 20rpx;
+}
+.order-container .sku-item .goods-img image{
+    width: 120rpx;
+    height: 120rpx;
+}
+.order-container .sku-item .goods-title{
+    flex: 1;
+}
+.order-container .sku-item .goods-name {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden;
+}
+.after-btn {
+    color: #f42424;
+}
+.order-container .sku-item .goods-image {
+    margin-right: 20rpx;
+}
+.sku-spec {
+    color: #ff9800 !important;
+}
+.sku-act-tag{
+    display: inline-block;
+    padding:4rpx 10rpx;
+    line-height: 28rpx;
+    margin-right: 10rpx;
+    border: 2rpx solid #f42424;
+    color: #f42424;
+}
+.goods-info{
+    margin-left: 10rpx;
+    min-width: 200rpx;
+    text-align: right;
+}
+.order-container .order-btns{
+    line-height: 100rpx;
+    padding: 0 20rpx;
+    border-top: 2rpx solid #e5e5e5;
+    background-color: #fff;
+    text-align: right;
+}
+.order-container .order-btns .a {
+    display: inline-block;
+    margin-left: 10rpx;
+}
+.order-container .order-btns text {
+    padding: 16rpx;
+    border: 2rpx solid #e5e5e5;
+}
+.order-container .receipt-cell{
+    margin-top: 20rpx;
+    background-color: #fff;
+    border-width: 2rpx 0;
+}
+.van-cell {
+    width: 100%;
+    display: flex;
+    padding: 20rpx 30rpx;
+    box-sizing: border-box;
+    line-height: 48rpx;
+    position: relative;
+    background-color: #fff;
+    color: #333;
+    font-size: 28rpx;
+    overflow: hidden;
+}
+.van-cell_title, .van-cell_value {
+    flex: 1;
+}
+.van-cell_value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+    position: relative;
+    vertical-align: middle;
+}
+.information{
+    width: 100%;
+    background: #fff;
+    margin-top: 20rpx;
+}
+.information .address {
+    margin: 0 auto;
+    padding: 20rpx;
+    font-size: 28rpx;
+    border-bottom: 2rpx solid #ccc;
+}
+.order-container .order-items{
+    background-color: #fff;
+    padding: 0 20rpx;
+}
+.information .address .name{
+    margin-right: 80rpx;
+    display: inline-block;
+    line-height: 50rpx;
+}
+.information .address .region {
+    color: #999;
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+    line-clamp: 2;
+    font-size: 24rpx;
+}
+.order-container .order-items .order-item{
+    padding: 10rpx 0;
+    font-size: 28rpx;
+}
+.left,.right{
+    bottom: 0;
+    font-size: 28rpx;
+    position: absolute;
+}
+.left{
+    left: 30rpx;
+}
+.right{
+  right:30rpx;
+}
+.title{
+  margin: 0 auto;
+  max-width: 25%;
+  font-size: 24rpx;
+}
+.valid{
+  border-top: 4rpx solid #f5f5f5;
+}
+.valid .value {
+  text-align: right;
+}
+.valid .cell:last-child{
+  border-bottom: 1rpx solid #f5f5f5;
+}
+.receipt-right{
+  font-size:24rpx;
+  margin-left:12rpx;
+  color:#999;
+}
+.icon{
+  font-size: 26rpx;
+  margin-right: 10rpx;
+}
+.assembly{
+  padding: 20rpx;
+  text-align: right;
+}
+.assembly{
+  height: 100rpx;
+  line-height: 70rpx;
+  text-align: right;
+}
+.assembly text{
+  padding: 10rpx;
+  border: 2rpx solid #f5f5f5;
+  background-color: #fff;
+}

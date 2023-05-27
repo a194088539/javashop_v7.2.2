@@ -1,0 +1,14 @@
+<view class='area-nav'>
+  <view class='choosed-area'>
+    <view wx:for="{{choosedAreas}}" wx:key="index" wx:if="{{choosedAreas.length}}" class="nav-li {{item && item.region_grade === areas[0].region_grade ? 'selected':''}}" bindtap="onchangeChoosedItem" data-item="{{item}}">{{item.local_name || '请选择'}}</view>
+    <view wx:if="{{!choosedAreas.length || !finished}}">请选择</view>
+  </view>
+</view>
+<view class='main'>
+  <scroll-view scroll-y="true" class='main-ul'>
+    <view class="main-li {{item.selected ? 'selected':''}}" wx:for="{{areas}}" wx:key="index" bindtap='onchangeItem' data-item="{{item}}">
+      <text class='item'>{{item.local_name}}</text>
+      <text wx:if="{{item.selected}}" class='iconfont icon-duigou icon'></text>
+    </view>
+  </scroll-view>
+</view>

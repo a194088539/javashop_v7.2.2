@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.statistics.ShopProfileStatisticsMapper">
+
+    <!-- 根据订单状态，支付状态，订单时间，商家id查询订单总金额，买家总数，订单总数，下单商品总数-->
+    <select id="selectDataList" resultType="java.util.Map" useCache="false">
+        SELECT
+            SUM(o.order_price) AS order_money ,
+            COUNT(DISTINCT o.buyer_id) AS order_member,
+            COUNT(o.sn) AS order_num,
+            SUM(o.goods_num) AS order_good
+        FROM es_sss_order_data o
+        WHERE order_status = #{orderStatus}
+        AND pay_status = #{payStatus}
+        AND o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        AND o.seller_id = #{sellerId}
+    </select>
+
+    <!-- 根据商家id，上架状态查询商品总数，收藏总数-->
+    <select id="selectGoodsDataList" resultType="java.util.Map" useCache="false">
+        SELECT
+            COUNT(DISTINCT g.goods_id) AS total_goods,
+            SUM(g.favorite_num) AS goods_collect
+        FROM es_sss_goods_data g
+        WHERE g.seller_id = #{sellerId}
+        AND g.market_enable = 1
+    </select>
+
+    <!-- 根据商家id查询商家被收藏数量-->
+    <select id="selectShopDataList" resultType="java.util.Map" useCache="false">
+        SELECT
+            IFNULL(favorite_num,'0') AS shop_collect
+        FROM es_sss_shop_data
+        WHERE seller_id = #{sellerId}
+    </select>
+
+ </mapper>

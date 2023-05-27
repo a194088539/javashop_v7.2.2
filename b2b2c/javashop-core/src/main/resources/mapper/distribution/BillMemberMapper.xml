@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.enation.app.javashop.mapper.distribution.BillMemberMapper">
+
+    <!--获取结算单-->
+    <select id="getBillByTotalSn" resultType="com.enation.app.javashop.model.distribution.dos.BillMemberDO" useCache="false">
+        select * from es_bill_member where total_id = (
+        select total_id from es_bill_total where sn = #{totalSn}
+        ) and member_id = #{memberId}
+    </select>
+
+    <!--获取所有下线的分销业绩-->
+    <select id="queryAllDown" resultType="com.enation.app.javashop.model.distribution.dos.BillMemberDO" useCache="false">
+        select * from es_bill_member where member_id in (
+        select member_id from es_distribution where member_id_lv1 = #{memberId} or member_id_lv2 = #{memberId} ) and total_id = (
+        select total_id from es_bill_member where id = #{billId} )
+    </select>
+
+    <!--结算单会员分页查询-->
+    <select id="billMemberPage" resultType="com.enation.app.javashop.model.distribution.vo.BillMemberVO" useCache="false">
+        select * from es_bill_member where member_id = #{memberId}
+    </select>
+
+
+</mapper>

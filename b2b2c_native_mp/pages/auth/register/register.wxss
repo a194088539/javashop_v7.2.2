@@ -1,0 +1,48 @@
+.valid .title {
+    max-width: 180rpx;
+}
+.big-btn {
+    padding: 20rpx 20rpx 0 20rpx;
+}
+.big-btn .button_large {
+    background-color: #f42424;
+}
+.big-btn .button_large text{
+    color: #fff;
+}
+.agreement-dialog{
+    width: 100%;
+    height: 70%;
+    background-color: #fff;
+    position: fixed;
+    z-index: 999;
+    top: auto;
+    bottom: 0;
+    right: auto;
+    left: 50%;
+    transform: translate3d(-50%,0,0);
+    transition: .2s ease-out;
+}
+.agreement-title {
+  height: 92rpx;
+  line-height: 92rpx;
+  text-align: center;
+  border-bottom: 2rpx solid #f5f5f5;
+}
+.agreement-content {
+  padding: 10rpx 30rpx;
+  height: calc(100% - 186rpx);
+  box-sizing: border-box;
+}
+.agreement-btns{
+  line-height: 96rpx;
+}
+.agreement-btns .btn{
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+}
+.agreement-btns .btn:last-child{
+  color: #fff;
+  background-color: #f42424;
+}

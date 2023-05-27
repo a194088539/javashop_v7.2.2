@@ -1,0 +1,50 @@
+<view class="goods-assemble-order" wx:if="{{assembleOrder.length}}">
+  <view class='comment-cells'>
+    <view class="van-cell">
+      <view class='cell_title'>
+        <view><text class='rate'>{{assembleOrderAll.length}}人在拼团，可直接参与</text></view>
+      </view>
+      <view class='cell_value'  bindtap='switchCommentsPop'>
+        <text>查看更多</text>
+      </view>
+      <image class="i" src="/static/images/address_right.png" background-size="cover"></image>
+    </view>
+    <view class="some-comments">
+      <swiper autoplay="3000" vertical circular="true" class="assemble-swipe">
+        <swiper-item wx:for="{{assembleOrder}}" wx:for-item="orderList" wx:key="index">
+          <view wx:for="{{orderList}}" wx:for-item="order" wx:key="index">
+            <view class="assemble-slide">
+              <view class="assemble-person">
+                <image wx:if="{{order.face}}" src="{{order.face}}"></image>
+                <image wx:else src="../../../../static/images/icon-noface.jpg"></image>
+                <text>{{order.name}}</text>
+              </view>
+              <view class="assemble-info">
+                <view>还差{{ order.required_num - order.offered_num }}人成团</view>
+                <view class="btn" bindtap="toBuyNow" data-order="{{order}}">去拼团</view>
+              </view>
+            </view>
+          </view>
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
+  <!-- 查看更多 -->
+  <bottomFrame id="bottomFrame" frameTitle="待成团列表" >
+    <scroll-view scroll-y="true" class="comments-list">
+      <block wx:for="{{assembleOrderAll}}" wx:for-item="order" wx:key="index">
+        <view class="assemble-slide">
+          <view class="assemble-person">
+            <image wx:if="{{order.face}}" src="{{order.face}}"></image>
+            <image wx:else src="../../../../static/images/icon-noface.jpg"></image>
+            <text>{{order.name}}</text>
+          </view>
+          <view class="assemble-info">
+            <view>还差{{ order.required_num - order.offered_num }}人成团</view>
+            <view class="btn" bindtap="toBuyNow" data-order="{{order}}">去拼团</view>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+  </bottomFrame>
+</view>

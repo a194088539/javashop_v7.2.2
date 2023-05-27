@@ -1,0 +1,127 @@
+page{
+  width: 100%;
+  height: 100%;
+  background-color: #f4f4f4;
+}
+.goods-info-box {
+  padding-top: 12rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  border-bottom-left-radius: 26rpx;
+  border-bottom-right-radius: 26rpx;
+}
+.seller-tip {
+  justify-content: center;
+  align-items: center;
+  padding: 8rpx 26rpx;
+  margin-bottom: 44rpx;
+  background-color: rgb(246, 246, 246);
+  border-style: solid;
+  border-width: 2rpx;
+  border-color: rgb(246, 246, 246);
+  border-radius: 110rpx;
+}
+.seller-tip text {
+  display: inline-block;
+}
+.seller-tip text.tip01 {
+  color: rgb(132, 132, 132);
+  font-size: 24rpx;
+  line-height: 28rpx;
+}
+.seller-tip text.tip02 {
+  color: rgb(255, 0, 0);
+  line-height: 38rpx;
+}
+.goods-info-item {
+  width: 100%;
+  display: flex;
+}
+.goods-info-item .goods-img {
+  width: 30%;
+}
+.goods-info-item .goods-img image{
+  height: 132rpx;
+  width: 132rpx;
+  margin: 0 44rpx;
+  border-radius: 8rpx;
+}
+.goods-info-item .goods-name {
+  height: 144rpx;
+  width: 70%;
+}
+.goods-info-item .goods-name text {
+  display: -webkit-box;
+  color: rgb(132, 132, 132);
+  font-size: 22rpx;
+  line-height: 36rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 72rpx;
+  white-space: normal;
+  margin-right: 10rpx;
+}
+.goods-info-item .goods-name .price-num {
+  margin-top: 28rpx;
+}
+.goods-info-item .goods-name .price-show {
+  display: inline-block;
+  margin: 0 22rpx 0 0;
+  font-size: 24rpx;
+  font-family: JDZhengHT-Regular;
+  line-height: 28rpx;
+}
+.service-type-box {
+  flex: 1 1 0%;
+  padding: 32rpx 22rpx 66rpx;
+}
+.box-info {
+  background-color: rgb(255, 255, 255);
+  border-radius: 26rpx;
+}
+.info-return {
+  height: 164rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 32rpx;
+  padding-right: 44rpx;
+}
+.icon-con {
+  display: flex;
+}
+.icon-con image {
+  width: 54rpx;
+  height: 54rpx;
+  margin-right: 22rpx;
+}
+.icon-con text {
+  display: inline-block;
+  font-size: 32rpx;
+  font-weight: bold;
+  line-height: 64rpx;
+}
+.title-tips {
+  text-align: right;
+  flex: 1;
+  padding-left: 22rpx;
+}
+.title-tips text {
+  display: inline-block;
+  margin: 0 22rpx 0 0;
+  text-align: right;
+  color: rgb(132, 132, 132);
+  font-size: 22rpx;
+}
+.divider-line {
+  margin-left: 32rpx;
+  margin-right: 32rpx;
+  border-style: solid;
+  border-width: 0 0 2rpx;
+  border-color: black black rgb(238, 238, 238);
+}

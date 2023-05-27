@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.enation.app.javashop.mapper.distribution.DistributionOrderMapper">
+
+    <!--获取分销退款单-->
+    <select id="queryIdForPage" resultType="com.enation.app.javashop.model.distribution.dos.DistributionOrderDO" useCache="false">
+        select * from es_distribution_order fo on fo.buy_member_id  where total_id = #{totalId} and member_id = #{memberId}
+    </select>
+
+    <!--结算单订单查询-->
+    <select id="selectPageDo" resultType="com.enation.app.javashop.model.distribution.dos.DistributionOrderDO" useCache="false">
+        select * from es_distribution_order o
+        where (member_id_lv1 = #{memberId} or member_id_lv2 = #{memberId} ) and bill_id = (select total_id from es_bill_member where id = #{billId} )
+    </select>
+
+    <!--分销商退货订单分页-->
+    <select id="selectPageDoo" resultType="com.enation.app.javashop.model.distribution.dos.DistributionOrderDO" useCache="false">
+        select * from es_distribution_order o
+        where (member_id_lv1 = #{memberId} or member_id_lv2 = #{memberId} )and bill_id = (
+        select total_id from es_bill_member where id = #{billId}
+        ) and is_return = 1
+    </select>
+
+    <!--根据会员id获取营业额-->
+    <select id="queryForMap" resultType="java.util.Map" useCache="false">
+        SELECT sum(order_price) actual_price FROM es_distribution_order
+        WHERE (member_id_lv1 = #{memberId} OR member_id_lv2 = #{memberId} OR member_id_lv3 = #{memberId} )
+    </select>
+
+    <!--营业额-->
+    <select id="querySumOrderPrice" resultType="java.util.Map" useCache="false" >
+        select SUM(order_price) order_price,FROM_UNIXTIME(create_time,#{circleWhere}) `date`
+        from es_distribution_order where create_time > #{timesTrampZ} and create_time &lt; #{timesTrampO}
+        AND (member_id_lv1 = #{memberId} or member_id_lv2 = #{memberId} )
+    </select>
+
+    <!--营业额-->
+    <select id="querySumGrade1Rebate" resultType="java.util.Map" useCache="false">
+        select SUM(grade1_rebate) grade_rebate,FROM_UNIXTIME(create_time, #{circleWhere}) `date`
+        from es_distribution_order where create_time > #{timesTrampZ} and create_time &lt; #{timesTrampO} AND (member_id_lv1 = #{memberId})
+    </select>
+
+    <!--营业额-->
+    <select id="querySumGrade2Rebate" resultType="java.util.Map" useCache="false">
+        select SUM(grade1_rebate) grade_rebate,FROM_UNIXTIME(create_time, #{circleWhere}) `date`
+        from es_distribution_order where create_time > #{timesTrampZ} and create_time &lt; #{timesTrampO} AND (member_id_lv1 = #{memberId})
+    </select>
+
+    <!--营业额-->
+    <select id="queryCount" resultType="java.util.Map" useCache="false">
+        select count(0) count,FROM_UNIXTIME(create_time, #{circleWhere} ) `date`
+        from es_distribution_order where create_time > #{timesTrampZ} and create_time &lt; #{timesTrampO}
+        AND (member_id_lv1 = #{memberId} or member_id_lv2 = #{memberId} )
+    </select>
+
+    <!--店铺统计-->
+    <select id="queryGradeRebateForPage" resultType="com.enation.app.javashop.model.distribution.vo.SellerPushVO">
+        select sum(grade1_rebate)+sum(grade2_rebate) push_money,seller_name,seller_id
+        from es_distribution_order where create_time > #{timesTrampZ} and create_time &lt; #{timesTrampO} group by seller_id
+    </select>
+
+</mapper>

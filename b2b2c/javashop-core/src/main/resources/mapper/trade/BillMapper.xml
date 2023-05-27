@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.enation.app.javashop.mapper.trade.BillMapper">
+
+    <!--查询账单列表-->
+    <select id="queryBillDetail" resultType="com.enation.app.javashop.model.orderbill.vo.BillDetail" useCache="false">
+        select * from es_bill
+        <where>
+            <if test="param.billSn != null and param.billSn != ''">
+                bill_sn = #{param.billSn}
+            </if>
+            <if test="param.sellerId != null and param.sellerId != 0">
+                seller_id = #{param.sellerId}
+            </if>
+            <if test="param.sn != null and param.sn != ''">
+                sn = #{param.sn}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <!--查看每个周期的结果统计-->
+    <select id="queryAllBill" resultType="com.enation.app.javashop.model.orderbill.dos.Bill" useCache="false">
+        select sn,start_time,end_time,sum(price) price,sum(commi_price)commi_price,
+                sum(discount_price)discount_price,sum(bill_price)bill_price,sum(refund_price)refund_price,
+                sum(refund_commi_price)refund_commi_price
+                from es_bill
+        <where>
+            <if test="sn != null and sn != ''">
+                sn = #{sn}
+            </if>
+        </where>
+        group by sn,start_time,end_time order by start_time desc
+    </select>
+
+    <!--获取结算单详细-->
+    <select id="queryDetail" resultType="com.enation.app.javashop.model.orderbill.vo.BillDetail" useCache="false">
+        select * from es_bill where bill_id = #{billId}
+    </select>
+
+</mapper>
+

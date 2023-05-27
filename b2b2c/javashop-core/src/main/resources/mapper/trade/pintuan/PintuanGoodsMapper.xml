@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.trade.pintuan.PintuanGoodsMapper">
+
+    <!--获取拼团商品集合-->
+    <select id="getDetail" resultType="com.enation.app.javashop.model.promotion.pintuan.PinTuanGoodsVO" useCache="false">
+        select g.*,pt.required_num,pt.limit_num,pt.end_time from es_pintuan_goods g ,es_pintuan pt
+        where g.pintuan_id= pt.promotion_id and g.sku_id= #{sku_id} and pt.start_time &lt; #{now_time} and pt.end_time> #{time}
+    </select>
+
+    <!--查询时间轴以外的商品-->
+    <select id="queryPromotionGoods" resultType="com.enation.app.javashop.model.promotion.pintuan.PintuanGoodsDTO" useCache="false">
+        select * from es_pintuan_goods pg left join es_pintuan p on pg.pintuan_id=p.promotion_id
+        <where> sku_id in
+        <foreach collection="param.skuids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and ( (start_time &lt; #{param.start_time} and end_time > #{param.start_time}) or (start_time &lt; #{param.end_time} and end_time > #{param.end_time}) or(start_time &lt; #{param.end_time} and end_time > #{param.start_time}) or(start_time &lt; #{param.start_time} and end_time > #{param.end_time}))
+        and pg.pintuan_id != #{param.promotion_id}
+        </where>
+    </select>
+
+    <!--删除拼团商品-->
+    <update id="deletePinTuanGoods" >
+        delete from es_pintuan_goods where id in (select t.id from (select pg.id from es_pintuan_goods pg left join es_pintuan p on pg.pintuan_id = p.promotion_id where pg.sku_id
+        in
+        <foreach collection="sku_ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        and p.end_time >= #{date_time}) as t)
+    </update>
+
+
+    <!--查询拼团商品-->
+    <select id="selectPintuanGoods" resultType="com.enation.app.javashop.model.promotion.pintuan.PintuanGoodsDO" useCache="false">
+        select * from es_pintuan_goods pg inner join es_pintuan p on p.promotion_id = pg.pintuan_id where sku_id=#{sku_id} and start_time &lt; #{start_time} and end_time > #{end_time}
+    </select>
+
+    <!--根据商品id查询数据库中的拼团商品-->
+    <select id="selectPintuanGoodsByGoodsId" resultType="com.enation.app.javashop.model.promotion.pintuan.PinTuanGoodsVO" useCache="false">
+        select g.* from es_pintuan_goods g,es_pintuan pt where g.pintuan_id = pt.promotion_id and  g.goods_id=#{goods_id} and   pt.start_time &lt; #{start_time} and pt.end_time>#{end_time}
+    </select>
+
+    <!--根据商品id查询数据库中的拼团商品-->
+    <select id="selectPinTuanGoodsVOList" resultType="com.enation.app.javashop.model.promotion.pintuan.PinTuanGoodsVO" useCache="false">
+        select * from es_pintuan_goods where pintuan_id=#{pintuan_id}
+    </select>
+
+</mapper>

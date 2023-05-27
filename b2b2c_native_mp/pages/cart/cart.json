@@ -1,0 +1,7 @@
+{
+  "backgroundColor": "#f4f4f4",
+  "navigationBarTitleText": "购物车",
+  "usingComponents": {
+    "en-top": "../../components/top/top"
+  }
+}

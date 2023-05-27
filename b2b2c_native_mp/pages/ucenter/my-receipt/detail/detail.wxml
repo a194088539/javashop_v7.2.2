@@ -1,0 +1,12 @@
+<view class="receipt-info-container">
+  <view class="order-items">
+    <view class="order-item" wx:for="{{receiptInfo}}" wx:for-item="receipt" wx:key="index">
+      <view>{{receipt.label}}：</view>
+      <view wx:if="{{receipt.label !== '查看发票'}}" style="color:{{receipt.label === '开票状态' ? '#f42424' : '#666'}}">
+        {{receipt.value}}
+        <navigator hover-class="none" wx:if="{{receipt.label === '快递单号'}}" style="color:#f42424" url="/pages/ucenter/express/express?logi_id={{receiptInfoOrigin.logi_id}}&ship_no={{receiptInfoOrigin.logi_code}}">点击查看</navigator>
+      </view>
+      <view wx:else bindtap="previewImage" data-src="{{receipt.value}}">点击查看电子发票</view>
+    </view>
+  </view>
+</view>

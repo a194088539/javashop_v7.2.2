@@ -1,0 +1,35 @@
+<!-- 优惠活动 -->
+<view class='goods-coupons' wx:if="{{coupons && coupons.length}}" bindtap="popup">
+  <view class='van-cell-group'>
+    <view class='van-cell'>
+      <view class='coupons'>
+        <view class='coupon'>领劵</view>
+        <view class='coupons-cell'>
+          <block wx:for="{{coupons}}" wx:key="index">
+              <text wx:if="{{index<2}}" class='cell-coupon'>满{{item.coupon_threshold_price}}减{{item.coupon_price}}</text>
+          </block>
+        </view>
+      </view>
+      <view class='cell_value'><text>共{{coupons.length}}张</text></view>
+      <image class="i" src="/static/images/address_right.png" background-size="cover"></image>
+    </view>
+  </view>
+</view>
+<!-- 优惠活动列表 -->
+<bottomFrame id="bottomFrame" frameTitle="店铺优惠券">
+  <scroll-view scroll-y="true" class="coupons-list {{coupons.length>3 ? 'list-scroll' : ''}}">
+    <view class='coupon-item' wx:for="{{coupons}}" wx:key="index">
+      <view class='coupon-main'>
+        <view class='coupon-view'>
+          <view class='coupon-price'>￥ <text>{{item.coupon_price}}</text></view>
+          <view class='coupon-des'>满{{item.coupon_threshold_price}}元可用</view>
+        </view>
+        <view class='coupon-info'>
+          <view class='coupon-title'>{{item.title}}</view>
+          <text class='coupon-info-btn' data-coupon="{{ item }}" bindtap='handleReceiveCoupon'>领取</text>
+          <view class='coupon-info-date'><text>{{item.start_time}} 至\n {{item.end_time}}</text></view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</bottomFrame>

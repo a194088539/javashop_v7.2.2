@@ -1,0 +1,5 @@
+<movable-area class="movable-area">
+  <movable-view class="movable-view" direction="all" x="{{width - 60}}" y="{{height - 150}}">
+    <text class='icon iconfont icon-up'></text>
+  </movable-view>
+</movable-area>

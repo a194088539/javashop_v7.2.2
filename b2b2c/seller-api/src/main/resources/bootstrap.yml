@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: seller-api
+  cloud:
+    config:
+      uri: http://192.168.2.103:8888
+      profile: test
+server:
+  port: 7003
+logging:
+  file: logs/seller-api.out

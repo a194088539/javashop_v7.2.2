@@ -1,0 +1,48 @@
+<view class="addressAdd valid">
+  <view class='cell-group'>
+    <view class='cell'>
+      <view class='title'>收货人</view>
+      <view class='value'>
+        <input type='text' placeholder='请填写收货人' value="{{addressForm.name}}" bindinput='changeName' maxlength="20"></input>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>手机号码</view>
+      <view class='value'>
+          <input type='text' placeholder='请填写手机号码' maxlength='11' value="{{addressForm.mobile}}" bindinput='changeMobile'></input>
+      </view>
+    </view>
+    
+    <bottomFrame id="bottomFrame" frameTitle="地区选择">
+      <RegionPicker bind:areaschanged="addressSelectorChanged" bind:closeRegionpicke="closeRegionpicke"></RegionPicker>
+    </bottomFrame>
+    <view class='cell' bindtap='popup'>
+      <view class='title'>所在地区</view>
+      <view class='value'>
+        <input placeholder='请选择所在地区' disabled value="{{addressForm.addrs}}"></input>
+      </view>
+      <view class='right-icon face-icon'>
+        <image class='icon' src='../../../static/images/go.png'></image>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>详细地址</view>
+      <view class='value'>
+          <input type='text' placeholder='请填写详细地址' maxlength='50' value="{{addressForm.addr}}" bindinput='changeAddr'></input>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>地址别名</view>
+      <view class='value'>
+        <input placeholder='请填写地址别名，如：公司'  value="{{addressForm.ship_address_name}}" bindinput='changeShipAddressName' maxlength="4"></input>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>默认地址</view>
+      <view class='value v_switch'>
+        <switch checked="{{addressForm.def_addr}}" bindchange="changeDefAddr"/>
+      </view>
+    </view>
+    <view class='big-btn' bindtap='submitAddressForm'>保 存</view>
+  </view>
+</view>

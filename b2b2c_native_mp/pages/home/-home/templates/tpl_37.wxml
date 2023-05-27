@@ -1,0 +1,17 @@
+<template name="tpl_37">
+  <view class="floor-layout tpl-37">
+    <view class="layout-main">
+      <view class="layout-item" wx:for="{{item.blockList}}" wx:key="index" wx:for-item="block">
+        <view bindtap="blockHref" data-block="{{block}}">
+          <view class="goods-item" wx:if="{{block.block_value}}">
+            <view class="image-goods">
+              <image src="{{block.block_value.goods_image}}"></image>
+            </view>
+            <view class="name-goods">{{block.block_value.goods_name}}</view>
+            <view class="price-goods">￥{{block.block_value.goods_price}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

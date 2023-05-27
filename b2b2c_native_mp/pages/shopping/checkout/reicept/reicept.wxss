@@ -1,0 +1,256 @@
+page {
+	background-color: #f1f1f1;
+  padding-bottom: 96rpx;
+}
+/* 发票类型列表 */
+.receipt-container .item {
+	position: relative;
+	margin-bottom: 20rpx;
+	background-color: #fff;
+	padding: 20rpx;
+}
+
+.receipt-container .title-receipt-type {
+	padding-bottom: 20rpx;
+	overflow: hidden;
+}
+.receipt-container .title-receipt-type text{
+  display: inline-block;
+  font-size: 28rpx;
+  color: #232326;
+}
+.receipt-container .title-receipt-type text:first-child{
+  float: left;
+  font-weight: 700;
+}
+.receipt-container .title-receipt-type text:last-child{
+  float: right;
+}
+.receipt-container .type-receipt-type {
+	padding-bottom: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.receipt-container .type-receipt-type .receipt_type_list{
+  padding: 20rpx;
+  font-size: 28rpx;
+  width: 100%;
+  border-bottom: 2rpx solid #f1f1f1;
+}
+.receipt-container .type-receipt-type .receipt_type_list .type{
+  display: flex;
+  align-items: center;
+}
+.receipt-container .type-receipt-type .receipt_type_list text{
+  display: inline-block;
+  margin-left: 12rpx;
+}
+.receipt_type_list_info{
+  color: #999;
+  font-size: 24rpx;
+  padding-left: 36rpx;
+}
+/*发票抬头*/
+.item{
+  position: relative;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  background-color: #fff;
+}
+.item .title-receipt{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10rpx;
+}
+.item .title-receipt text:first-child{
+  min-width: 130rpx;
+  font-weight: 700;
+  font-size: 28rpx;
+  color: #777;
+}
+.item .head-receipt-item:not(:last-child){
+  padding: 20rpx 0;
+  border-top: 1px solid #f1f1f1;
+}
+.item .head-receipt-item{
+  display: flex;
+  align-items: center;
+  font-size: 28rpx;
+}
+.item .head-receipt-item text{
+  display: inline-block;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  font-size: 28rpx;
+}
+.item .head-receipt-item .head-receipt-item-no{
+  margin-left: 56rpx;
+}
+.item .receipt-word{
+  width: 80%;
+  position: relative;
+}
+.item .receipt-word input{
+  width: 80%;
+  height: 52rpx;
+  background: #f0f2f5;
+  border: none;
+  outline: none;
+  padding: 2rpx 5%;
+  margin: 16rpx 0 0 0;
+  -webkit-appearance: none;
+}
+.item .receipt-word-no{
+  width: 80%;
+  position: relative;
+}
+.item .receipt-word-no input{
+  width: 80%;
+  height: 52rpx;
+  background: #f0f2f5;
+  border: none;
+  outline: none;
+  padding: 4rpx 5%;
+  margin: 16rpx 0 0 0;
+  -webkit-appearance: none;
+}
+/* 收票人信息 */
+.receiver-info{
+  padding: 20rpx 0 !important;
+}
+.receiver-info .title-receipt{
+  padding: 20rpx;
+}
+.valid .cell {
+  width: 100%;
+  display: flex;
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+  line-height: 48rpx;
+  position: relative;
+  background-color: #fff;
+  color: #333;
+  font-size: 28rpx;
+  overflow: hidden;
+}
+.valid .cell:first-child{
+  border-top: 2rpx solid #f1f1f1;
+}
+.valid .title,.valid .value {
+  flex: 1;
+}
+.valid .value {
+  overflow: hidden; 
+  text-align: left;
+  position: relative;
+  vertical-align: middle;
+}
+.valid .title {
+  max-width: 180rpx;
+}
+.valid .title.must::before{
+  content: "*";
+  position: absolute;
+  left: 14rpx;
+  font-size: 28rpx;
+  color: #f44;
+}
+.right-icon {
+  color: #999;
+  font-size: 24rpx;
+  line-height: 24rpx;
+  margin-top: 15rpx;
+  margin-left: 10rpx;
+  position: relative;
+  display: inline-block;
+  text-rendering: auto;
+}
+.right-icon .icon{
+  width: 15rpx;
+  height: 22rpx;
+  vertical-align: middle;
+}
+/*发票内容*/
+.receipt-tip{
+  display: flex;
+  color: #f85;
+  padding: 18rpx 40rpx 18rpx 30rpx;
+  font-size: 24rpx;
+  line-height: 1.5;
+  position: relative;
+  background-color: #fff7cc;
+}
+.receipt-tip .receipt-tip-close{
+  position: absolute;
+  right: 10rpx;
+  top:32rpx;
+  font-size: 32rpx;
+}
+.content-receipt .content-receipt-list{
+  width: 100%;
+	padding: 20rpx 0;
+}
+.content-receipt .content-receipt-list .content{
+  display: flex;
+  align-items: center;
+}
+.content-receipt .content-receipt-list text{
+  display: inline-block;
+  margin-left: 20rpx;
+  font-size: 28rpx;
+}
+.content-receipt .content-receipt-list .info{
+  color: #777;
+  font-size: 24rpx;
+  padding-left: 48rpx;
+}
+.receipts {
+  position: absolute;
+  top: 80rpx;
+  width: 90%;
+  background-color: #fff;
+  box-shadow: 0 10rpx 32rpx 0 #ccc;
+  z-index: 999;
+}
+.receipts .rep-item {
+  padding: 10rpx;
+}
+/* 明细 */
+.detailed{
+  padding: 20rpx;
+}
+.detailed .title-receipt{
+  padding: 10rpx 0;
+}
+.detailed .detailed-list{
+  border-top: 2rpx solid #f1f1f1;
+}
+.detailed .detailed-list .detailed-list-item{
+  padding: 10rpx;
+}
+/* 保存 */
+.big-btn {
+	position: fixed;
+	bottom: 0;
+  z-index: 99;
+	width: 100%;
+}
+.big-btn button {
+	width: 100%;
+  line-height: 96rpx;
+	padding: 0;
+	background-color: #f42424;
+	color: #fff;
+	font-size: 28rpx;
+	text-align: center;
+	border: none;
+	border-radius: 0;
+}
+icon{
+  margin-top: -12rpx;
+}
+.icon-CheckFilled{
+  color: #f42424;
+}

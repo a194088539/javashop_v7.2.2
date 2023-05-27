@@ -1,0 +1,66 @@
+.group-buy-container {
+	padding-top: 75rpx;
+}
+.item-goods {
+	display: flex;
+	border-bottom: solid 2rpx #dedede;
+	padding: 20rpx;
+	background: #fff;
+}
+
+.item-goods view.dt {
+	width: 200rpx;
+	height: 200rpx;
+	overflow: hidden;
+	text-align: center;
+}
+
+.item-goods view.dt image {
+	width: 200rpx;
+	height: 200rpx;
+}
+
+.item-goods view.dd {
+	flex: 2;
+	position: relative;
+	padding-left: 16rpx;
+}
+
+.item-goods .name-goods {
+	font-size: 28rpx;
+	margin-bottom: 0;
+	line-height: 40rpx;
+	height: 76rpx;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	color: #252525;
+}
+
+.item-goods .descrip-goods {
+	padding-top: 30rpx;
+}
+
+.item-goods .price-goods {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20rpx;
+}
+
+.item-goods .price-goods text {
+	color: #f42424;
+}
+
+.item-goods .grab-btn {
+	display: inline-block;
+	padding: 8rpx 24rpx;
+	color: #fff;
+	background: #f42424;
+	border-radius: 8rpx;
+	position: absolute;
+	right: 0;
+	bottom: 64rpx;
+	font-size: 28rpx;
+}

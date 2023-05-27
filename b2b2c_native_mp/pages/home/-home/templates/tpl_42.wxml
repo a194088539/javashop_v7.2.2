@@ -1,0 +1,11 @@
+<template name="tpl_42">
+  <view class="floor-layout tpl-42">
+    <view class="layout-main">
+      <view class="layout-item" wx:for="{{item.blockList}}" wx:key="index" wx:for-item="block">
+        <view bindtap="blockHref" data-block="{{block}}">
+          {{block.block_value}}
+        </view>
+      </view>
+    </view>
+  </view>
+</template>

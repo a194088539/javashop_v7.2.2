@@ -1,0 +1,13 @@
+<view class='goods-exchange' wx:if="{{prom}}" style="background:url('../../static/images/background-promotion-bar.png') no-repeat, -webkit-linear-gradient(top, #fc5997, #ef4747)">
+  <view class='prom-bar-container'>
+    <view class='prom-price'>￥ <text>{{prom.exchange_money}}</text> + {{prom.exchange_point}}积分</view>
+    <view class='msg'>
+      <view class='text'>
+        <text class='old-price'>￥{{prom.goods_price}}</text>
+      </view>
+      <view class='text'>
+        <text class='icon exchange'>积分兑换</text>
+      </view>
+    </view>
+  </view>
+</view>

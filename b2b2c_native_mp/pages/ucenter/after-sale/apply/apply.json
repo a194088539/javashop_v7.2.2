@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "申请售后",
+  "usingComponents": {
+    "modal":"../../../../components/modal/modal",
+    "bottomFrame":"../../../../components/bottomFrame/bottomFrame",
+    "RegionPicker": "../../../../components/regionpicke/regionpicke"
+  }
+}

@@ -1,0 +1,16 @@
+.order-items{
+    background-color: #fff;
+    padding: 0 20rpx;
+}
+.order-items .order-item{
+    padding: 10rpx 0;
+    font-size:28rpx;
+    color: #666;
+}
+
+.order-items .order-item view:first-child {
+    margin-right: 20rpx;
+}
+.order-items .order-item view,.order-items .order-item navigator{
+  display: inline-block;
+}

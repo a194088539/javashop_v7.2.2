@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.member.HistoryMapper">
+    <!-- 根据天的日期分组，分页查询出日期 -->
+    <select id="selectUpdateTimePage" resultType="java.util.Map" useCache="false">
+        select update_time from es_history ${ew.customSqlSegment}
+    </select>
+
+    <!-- 获取会员足迹ID集合 -->
+    <select id="selectHistoryId" resultType="java.lang.Long" useCache="false">
+        select id from es_history ${ew.customSqlSegment}
+    </select>
+</mapper>

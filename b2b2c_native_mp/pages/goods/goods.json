@@ -1,0 +1,20 @@
+{
+  "navigationBarTitleText": "商品详情",
+  "usingComponents": {
+    "en-top": "../../components/top/top",
+    "goods-coupons": "./-goods/coupons/coupons",
+    "goods-specs": "./-goods/specs/specs",
+    "goods-gallery":"./-goods/gallery/gallery",
+    "goods-exchange":"./-goods/exchange/exchange",
+    "goods-promotions":"./-goods/promotions/promotions",
+    "goods-ship":"./-goods/ship/ship",
+    "shop-card":"./-goods/shop-card/shop-card",
+    "goods-params":"./-goods/params/params",
+    "goods-groupbuy-seckill":"./-goods/groupbuy-seckill/groupbuy-seckill",
+    "goods-assemble":"./-goods/assemble/assemble",
+    "goods-comments":"./-goods/comments/comments",
+    "goods-ask":"./-goods/ask/ask",
+    "goods-assemble-order":"./-goods/assemble-order/assemble-order",
+    "goods-distribution":"./-goods/distribution/distribution"
+  }
+}

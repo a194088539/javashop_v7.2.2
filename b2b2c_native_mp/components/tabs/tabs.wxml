@@ -1,0 +1,9 @@
+<view class="tab-navs">
+	<scroll-view scroll-x="{{true}}" class='tab-nav' scroll-left="{{ scrollLeft }}">
+		<view class="top-nav-container">
+			<view wx:for="{{ topNavs }}" wx:key='index' class="tab-item {{ currentActiveNavIndex === index ? 'active': '' }}" data-current-index="{{index}}" bindtap='topNavChange'>
+				{{ item[title] }}
+			</view>
+		</view>
+	</scroll-view>
+</view>

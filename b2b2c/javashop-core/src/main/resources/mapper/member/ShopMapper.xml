@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.member.ShopMapper">
+    <!-- 根据店铺ID查询店铺信息 -->
+    <select id="selectByShopId" resultType="com.enation.app.javashop.model.shop.vo.ShopVO" useCache="false">
+        select s.member_id,s.member_name,s.shop_name,s.shop_disable,s.shop_createtime,s.shop_endtime,d.*
+        from es_shop s
+        left join es_shop_detail d
+        on s.shop_id = d.shop_id
+        where s.shop_id = #{shop_id}
+    </select>
+
+    <!-- 根据会员ID查询店铺信息 -->
+    <select id="selectByMemberId" resultType="com.enation.app.javashop.model.shop.vo.ShopVO" useCache="false">
+        select s.member_id,s.member_name,s.shop_name,s.shop_disable,s.shop_createtime,s.shop_endtime,d.*
+        from es_shop s
+        left join es_shop_detail d
+        on s.shop_id = d.shop_id
+        where s.member_id = #{member_id}
+    </select>
+
+    <!-- 根据查询条件查询店铺信息分页数据集合 -->
+    <select id="selectShopPage" resultType="java.util.Map" useCache="false">
+        select  s.member_id,s.member_name,s.shop_name,s.shop_disable,s.shop_createtime,s.shop_endtime,sd.*
+        from es_shop s
+        left join es_shop_detail sd
+        on s.shop_id = sd.shop_id
+        <where>
+            <!-- 如果参数中传入的店铺状态是全部，则默认查询所有店铺状态不等于申请中的店铺信息；否则按传入的状态进行查询 -->
+            <choose>
+                <when test="params.shopDisable == 'ALL'">
+                    shop_disable != 'APPLYING'
+                </when>
+                <otherwise>
+                    shop_disable = #{params.shopDisable}
+                </otherwise>
+            </choose>
+
+            <!-- 如果查询关键字不为空，则按照店铺名称或者会员名称来进行模糊查询 -->
+            <if test="params.keyword != null and params.keyword != ''">
+                and (s.shop_name like concat('%', #{params.keyword}, '%') or s.member_name like concat('%', #{params.keyword}, '%'))
+            </if>
+
+            <!-- 如果店铺名称不为空，则按照店铺名称来进行模糊查询 -->
+            <if test="params.shopName != null and params.shopName != ''">
+                and s.shop_name like concat('%', #{params.shopName}, '%')
+            </if>
+
+            <!-- 如果会员名称不为空，则按照会员名称来进行模糊查询 -->
+            <if test="params.memberName != null and params.memberName != ''">
+                and s.member_name like concat('%', #{params.memberName}, '%')
+            </if>
+
+            <!-- 如果店铺创建时间-起始时间不为空，按店铺创建时间大于当前这个起始时间查询 -->
+            <if test="params.startTime != null and params.startTime != ''">
+                and s.shop_createtime &gt; #{params.startTime}
+            </if>
+
+            <!-- 如果店铺创建时间-结束时间不为空，按店铺创建时间小于当前这个结束时间查询 -->
+            <if test="params.endTime != null and params.endTime != ''">
+                and s.shop_createtime &lt; #{params.endTime}
+            </if>
+
+            <!-- 按店铺创建时间倒序排序 -->
+            order by s.shop_createtime desc
+        </where>
+    </select>
+
+    <!-- 根据店铺状态查询店铺信息集合 -->
+    <select id="selectShopList" resultType="com.enation.app.javashop.model.shop.vo.ShopVO" useCache="false">
+        select s.member_id,s.member_name,s.shop_name,s.shop_disable,s.shop_createtime,s.shop_endtime,sd.*
+        from es_shop s
+        left join es_shop_detail sd
+        on s.shop_id = sd.shop_id
+        where s.shop_disable = #{status}
+        order by s.shop_createtime desc
+    </select>
+
+    <!-- 根据店铺状态获取相关店铺的银行以及佣金比例等相关信息集合 -->
+    <select id="selectShopBank" resultType="com.enation.app.javashop.model.shop.dto.ShopBankDTO" useCache="false">
+        select s.shop_id,s.shop_name,d.shop_commission,d.bank_account_name,d.bank_number,d.bank_name,d.bank_province_id,d.bank_city_id,d.bank_county_id,d.bank_town_id,d.bank_province,d.bank_city,d.bank_county,d.bank_town
+        from es_shop s
+        left join es_shop_detail d
+        on s.shop_id = d.shop_id
+        where s.shop_disable in
+
+        <!-- 遍历店铺状态集合进行查询 -->
+        <foreach collection="statusList" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+    <!-- 根据店铺ID获取店铺基础信息 -->
+    <select id="selectShopBasic" resultType="com.enation.app.javashop.model.shop.dto.ShopBasicInfoDTO" useCache="false">
+        select s.member_id,s.member_name,s.shop_name,s.shop_disable,s.shop_createtime,s.shop_endtime,d.*
+        from es_shop s
+        left join es_shop_detail d
+        on s.shop_id = d.shop_id
+        where s.shop_id = #{shop_id}
+    </select>
+
+    <!-- 根据店铺ID获取店铺基础信息 -->
+    <select id="selectShopListPage" resultType="com.enation.app.javashop.model.shop.vo.ShopListVO" useCache="false">
+        select s.member_id,s.member_name,s.shop_name,s.shop_disable,s.shop_createtime,s.shop_endtime,sd.*
+        from es_shop s
+        left join es_shop_detail sd
+        on s.shop_id = sd.shop_id
+        <where>
+            <!-- 按店铺禁用状态查询 -->
+            s.shop_disable = #{params.shopDisable}
+
+            <!-- 如果店铺名称不为空，则按店铺名称进行模糊查询 -->
+            <if test="params.shopName != null and params.shopName != ''">
+                and s.shop_name like concat('%', #{params.shopName}, '%')
+            </if>
+
+            <!-- 如果排序值不为空，则按店铺信用倒序查询 -->
+            <if test="params.order != null and params.order != ''">
+                order by shop_credit desc
+            </if>
+        </where>
+    </select>
+
+</mapper>

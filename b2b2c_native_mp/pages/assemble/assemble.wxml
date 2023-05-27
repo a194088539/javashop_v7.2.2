@@ -1,0 +1,36 @@
+<view id="group-buy">
+	<en-tabs topNavs="{{ categories }}" bind:changed="handleClickCate" title="name"></en-tabs>
+	<en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+	<en-empty wx:if="{{ finished && !assemble.length }}" style="line-height:420px">暂无商品</en-empty>
+	<scroll-view class="group-buy-container" wx:else scroll-y="true" scroll-top="{{scrollTop}}" style="height:{{scrollHeight}}px;" bindscrolltolower='loadMore' bindscroll="scroll">
+		<view wx:for="{{ assemble }}" wx:for-item="goods" wx:key="index" class="item-goods">
+			<view class="dt">
+				<navigator wx:if="{{ !goods.is_enable_sale }}" hover-class="none">
+					<image src="{{ goods.thumbnail }}"></image>
+				</navigator>
+				<navigator wx:else url="/pages/goods/goods?goods_id={{ goods.goods_id }}&sku_id={{ goods.sku_id }}&pintuan_id={{ goods.pin_tuan_id }}&from_nav=assemble" hover-class="none">
+					<image src="{{ goods.thumbnail }}"></image>
+				</navigator>
+			</view>
+			<view class="dd">
+				<navigator wx:if="{{ !goods.is_enable_sale }}" hover-class="none">
+					<view class="name-goods">{{ goods.goods_name }}</view>
+				</navigator>
+				<navigator wx:else url="/pages/goods/goods?goods_id={{ goods.goods_id }}&sku_id={{ goods.sku_id }}&pintuan_id={{ goods.pin_tuan_id }}&from_nav=assemble" hover-class="none">
+					<view class="name-goods">{{ goods.goods_name }}</view>
+				</navigator>
+				<view class="assembld">
+					已团{{ goods.buy_count }}件
+				</view>
+				<view class="descrip-goods">
+					<view class="price">
+						<text>￥{{ goods.sales_price }}</text>
+						<text class="original_price">￥{{ goods.origin_price }}</text>
+					</view>
+					<navigator wx:if="{{ !goods.is_enable_sale }}" class="grab-btn" hover-class="none">已售空</navigator>
+					<navigator url="/pages/goods/goods?goods_id={{ goods.goods_id }}&sku_id={{ goods.sku_id }}&pintuan_id={{ goods.pin_tuan_id }}&from_nav=assemble" wx:else class="grab-btn" hover-class="none">去开团</navigator>
+				</view>
+			</view>
+		</view>
+	</scroll-view>
+</view>

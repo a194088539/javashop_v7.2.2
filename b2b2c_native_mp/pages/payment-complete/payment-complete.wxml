@@ -1,0 +1,7 @@
+<view class="payment-complete">
+  <view class="title">支付完成</view>
+  <view class="btns-delivery">
+    <button class="btn" plain size="mini" bindtap="handleLookOrder">查看订单</button>
+    <button class="btn" plain size="mini" bindtap="handleToHome">返回首页</button>
+	</view>
+</view>

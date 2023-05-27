@@ -1,0 +1,23 @@
+<view class="withdrawals-container valid">
+  <view class='cell-group'>
+    <view class='cell'>
+      <view class='title'>可提现金额：</view>
+      <view class='value'>
+        <input style="padding:0 10rpx;" value="{{applyWithdrawalsForm.can_rebate}}" disabled='disabled'></input>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>提  现  金  额：</view>
+      <view class='value'>
+        <input class="control" value="{{applyWithdrawalsForm.apply_money}}" bindinput='changeApplyMoney'></input>
+      </view>
+    </view>
+    <view class='cell'>
+      <view class='title'>备  注  信  息：</view>
+      <view class='value'>
+        <textarea class="control" value="{{applyWithdrawalsForm.remark}}" bindinput="changeRemark"></textarea>
+      </view>
+    </view>
+    <view class='big-btn' bindtap='handleApplyWithdrawals'>提 现 申 请</view>
+  </view>
+</view>

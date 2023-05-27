@@ -1,0 +1,80 @@
+<import src="../-themes/-theme1/-theme1.wxml" /> 
+<import src="../-themes/-theme2/-theme2.wxml" /> 
+<import src="../-themes/-theme3/-theme3.wxml" />
+<wxs src="../../../utils/wxs.wxs" module="liveStatus"/>
+<view class="shop-container">
+  <en-top wx:if="{{showGoTop}}" bindtap="goTop"></en-top>
+  <!-- <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" style="height:{{scrollHeight}};" bindscroll="scroll"> -->
+    <view class="shop-theme">
+      <!-- 店铺轮播图 -->
+      <swiper class="shopimgs" indicator-dots="true" autoplay="true" interval="3000" duration="1000">
+        <swiper-item wx:for="{{shopsildes}}" wx:key="*this">
+          <image src="{{item.img}}" mode="widthFix"></image>
+        </swiper-item>
+      </swiper>
+      <!-- 店铺导航 -->
+      <view class='shop-nav'>
+        <view class='shop-nav-ul'>
+          <view class='shop-nav-li'>
+            <text class='num'>{{shop.shop_credit}}</text>
+            <view class='info'>信用</view>
+            <text class='f'></text>
+          </view>
+          <view class='shop-nav-li'>
+            <navigator url='../goods_list/goods_list?shop_id={{shop_id}}' hover-class="none">
+              <text class='num'>{{shop.goods_num}}</text>
+              <view class='info'>全部宝贝</view>
+              <text class='f'></text>
+            </navigator>
+          </view>
+          <view class='shop-nav-li' bindtap='collectionShop'>
+            <text class='num'>{{collection_num}}</text>
+            <view class='info'>{{is_collection ? '已收藏' : '收藏'}}</view>
+          </view>
+        </view>
+      </view>
+      <!-- 店铺直播 -->
+      <view class="live-list" wx:if="{{ liveVideoData }}">
+        <view class="live-item" bindtap="handleLiveVideo" data-roomid="{{ liveVideoData.we_chat_room_id }}">
+          <view class="live-item-left">
+            <view class="live-cover-img">
+              <image class="cover-img" src="{{ liveVideoData.background_image_url }}"></image>
+            </view>
+            <view class="live-status-box">
+              <text class="live-status">{{ liveStatus.liveStatusFilter(liveVideoData.status) }}</text>
+              <!-- <text class="live-num">{{ liveVideoData.live_num }}观看</text> -->
+            </view>
+            <view class="live-btn-shop">
+              <text class="icon iconfont icon-zhibo1"></text>
+              <text class="icon iconfont icon-shoucang3"></text>
+            </view>
+          </view>
+          <view class="live-item-right">
+            <view class="live-title">{{ liveVideoData.room_name }}</view>
+            <view class="live-watch"><text class="txt">立即观看</text></view>
+            <view class="live-goods" wx:if="{{ liveVideoData.goods_info }}">
+              <view class="goods-info {{ index > 1 ? 'more-item' : ''}}" wx:for="{{ liveVideoData.goods_info }}" wx:for-item="goods" wx:key="index">
+                <image class="goods-img" src="{{ goods.img_show_url }}"></image>
+                <view class="goods-more" wx:if="{{ index === 1 }}"></view>
+                <view class="goods-num" wx:if="{{ index === 1 }}">+{{ liveVideoData.goods_info.length }}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!-- 店铺推荐 -->
+      <template wx:if="{{shop.wap_theme_path === 'wap_1'}}" is="theme1" data="{{coupons,newGoods,hotGoods,recGoods,shop_id}}"/>
+      <template wx:if="{{shop.wap_theme_path === 'wap_2'}}" is="theme2" data="{{coupons,newGoods,hotGoods,recGoods,shop_id}}"/>
+      <template wx:if="{{shop.wap_theme_path === 'wap_3'}}" is="theme3" data="{{coupons,newGoods,hotGoods,recGoods,shop_id}}"/>
+      <!-- 关于店铺 -->
+      <view class='shop-detail'>
+        <view class='shop-detail-title'>关于店铺</view>
+        <view class='shop-detail-content' wx:if="{{shop.shop_desc}}">
+          <import src="../../../lib/wxParse/wxParse.wxml" />
+          <template is="wxParse" data="{{wxParseData:shopDetail.nodes}}" />
+        </view>
+        <view class='shop-detail-content'  wx:else>暂无简介</view>
+      </view>
+    </view> 
+  <!-- </scroll-view> -->
+</view>

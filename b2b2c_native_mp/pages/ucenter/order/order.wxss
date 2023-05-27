@@ -1,0 +1,218 @@
+page{
+  height: 100%;
+  width: 100%;
+  background: #f4f4f4;
+}
+.header{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  background: #fff;
+}
+.search {
+  height: 88rpx;
+  width: 100%;
+  padding: 0 30rpx;
+  background: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.search .input {
+  width: 100%;
+  height: 65rpx;
+  background: #ededed;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+}
+
+.search .icon {
+  width: 30rpx;
+  height: 30rpx;
+  margin: 0 20rpx;
+}
+
+.search input {
+  width: 81.5%;
+  font-size: 28rpx;
+}
+.search .del{
+  width: 53rpx;
+  height: 53rpx;
+}
+.orders-switch{
+  height: 84rpx;
+  border-bottom: 2rpx solid rgba(0,0,0,.15);
+}
+.orders{
+  padding-top: 172rpx;
+}
+.orders-switch .item{
+  display: inline-block;
+  line-height: 80rpx;
+  width: 20%;
+  text-align: center;
+  font-size: 30rpx;
+}
+
+.orders-switch .item.active{
+  color: #f42424;
+  border-bottom: 4rpx solid #f42424;
+}
+
+.order-item{
+  margin-top: 20rpx;
+  background-color: #fff;
+  padding: 0 20rpx 20rpx 20rpx;
+}
+.order-item .sn-order-item {
+  position: relative;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 28rpx;
+  color: #333;
+  border-bottom: 2rpx solid #e5e5e5;
+}
+.order-item .sn-order-item .pintuan {
+  float: right;
+  color: #f42424;
+}
+.order-item .info-order-item {
+  display: block;
+  padding: 20rpx 0;
+  position: relative;
+  border-bottom: 2rpx solid #e5e5e5;
+}
+.order-item .info-order-item .order-status {
+  line-height: 40rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+.order-item .info-order-item .order-status text{
+  color: #666;
+}
+.order-item .info-order-item .order-status text.status{
+  color: rgb(57, 133, 255);
+}
+.price {
+  color: #f42424 !important;
+}
+.order-item .order-btns{
+  position: absolute;
+  top: 34rpx;
+  right: 0;
+}
+.order-item .order-btns .btn{
+  display: inline-block;
+  width: 130rpx;
+  height: 60rpx;
+  margin-left: 10rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 25rpx;
+  line-height: 60rpx;
+  z-index: 1;
+  border-radius: 4rpx;
+  background: #e4393c;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  outline: 0;
+  border: none;
+}
+.order-item .shop-order-item {
+  display: block;
+  position: relative;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  color: #0366d6;
+}
+.order-item .shop-order-item .txt{
+  color: #0366d6;
+  display: block;
+  position: relative;
+  padding-right: 40rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-style: normal;
+}
+.order-item .shop-order-item .txt::after {
+  position: absolute;
+  content: "";
+  display: block;
+  width: 16rpx;
+  height: 16rpx;
+  border-top: 2rpx solid #666;
+  border-left: 2rpx solid #666;
+  transform-origin: 50%;
+  transform: rotate(135deg);
+  right: 10rpx;
+  top: 28rpx;
+}
+
+.order-item .sku-order-item {
+  position: relative;
+  margin-top: 20rpx;
+}
+.order-item .sku-order-item .sku-content{
+  display: block;
+  overflow: hidden;
+  /* position: relative; */
+}
+.order-item .sku-order-item .sku-content .img-info {
+  position: relative;
+  display: block;
+  width: 160rpx;
+  height: 160rpx;
+  float: left;
+  margin-right: 20rpx;
+}
+.order-item .sku-order-item .sku-content .pintuan{
+  display: inline-block;
+  position: absolute;
+  bottom: 4rpx;
+  left: 64rpx;
+  z-index: 9;
+  background-color: #f42424;
+  color: #fff;
+}
+.order-item .sku-name{
+  /* width: calc(100% - 180rpx); */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  min-height: 50rpx;
+  font-size: 28rpx;
+}
+.order-item .sku-spec {
+  margin-right: 10rpx;
+  color: #ff9800 !important;
+}
+.order-item .sku-assemble{
+  display: inline-block;
+  margin-left: 10rpx;
+  float: right;
+}
+.after-btn{
+  /* padding-left: 170rpx; */
+  color: #f42424;
+}
+.dialog_content{
+  height: 120rpx;
+}
+.navigat-right{
+  /* position: absolute; */
+  float:right;
+  /* left: 180rpx; */
+  width:74%;
+  height:100%;
+}
+.navigat-left{
+  float:left;
+  width:25%;
+  position: relative;
+}

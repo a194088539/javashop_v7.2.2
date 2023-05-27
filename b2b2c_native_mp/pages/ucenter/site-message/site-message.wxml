@@ -1,0 +1,34 @@
+<view class="message-container">
+  <view class="mg-types">
+    <navigator hover-class="none" url="/pages/ucenter/site-message/website-message/website-message?read=0">
+      <view class="msg-box">
+        <text class="mg-timg system-icon"></text>
+        <view class="mg-tcont">
+           <view class="mg-title">
+            <text>系统消息</text>
+           </view>
+           <view class="mg-illus">
+            <text style="color: #676d70;" wx:if="{{no_read.system_num === 0}}">暂无未读消息</text>
+            <text style="color: #b50005;" wx:else>有{{no_read.system_num}}条未读消息</text>
+           </view>
+        </view>
+      </view>
+    </navigator>
+  </view>
+  <view class="mg-types">
+    <navigator hover-class="none" url="/pages/ucenter/site-message/ask-message/ask-message?read=NO">
+      <view class="msg-box">
+        <text class="mg-timg actimg ask-icon"></text>
+        <view class="mg-tcont">
+           <view class="mg-title">
+            <text>问答消息</text>
+           </view>
+           <view class="mg-illus">
+            <text style="color: #676d70;" wx:if="{{no_read.ask_num === 0}}">暂无未读消息</text>
+            <text style="color: #b50005;" wx:else>有{{no_read.ask_num}}条问答消息</text>
+           </view>
+        </view>
+      </view>
+    </navigator>
+  </view>
+</view>

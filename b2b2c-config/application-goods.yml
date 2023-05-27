@@ -1,0 +1,50 @@
+spring:
+  #分库分表配置
+  shardingsphere:
+    sharding:
+      tables:
+        #商品表(用goodsid分库，用goods_id移两位来分表，以保证数据分布均匀) 
+        es_goods:
+          actual-data-nodes: ds$->{0..1}.es_goods$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: goods_id
+              algorithm-expression: ds$->{goods_id% 2}
+          table-strategy:
+            inline:
+              sharding-column: goods_id
+              algorithm-expression: es_goods$->{(goods_id>>2)% 2}
+        #sku表(用goodsid分库，用seller_id分表)               
+        es_goods_sku:
+          actual-data-nodes: ds$->{0..1}.es_goods_sku$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: goods_id
+              algorithm-expression: ds$->{goods_id % 2}
+          table-strategy:
+            inline:
+              sharding-column: sku_id
+              algorithm-expression: es_goods_sku$->{sku_id% 2}
+        #tag goods表用goodsid分库，用id（主键）分表
+        es_tag_goods:
+          actual-data-nodes: ds$->{0..1}.es_tag_goods$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: goods_id
+              algorithm-expression: ds$->{goods_id % 2}
+          table-strategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: es_tag_goods$->{id % 2}
+        #标签表用seller_id分库，用主键tag_id分表              
+        es_tags:
+          actual-data-nodes: ds$->{0..1}.es_tags$->{0..1}
+          database-strategy:
+            inline:
+              sharding-column: seller_id
+              algorithm-expression: ds$->{seller_id % 2}
+          table-strategy:
+            inline:
+              sharding-column: tag_id
+              algorithm-expression: es_tags$->{tag_id % 2}
+

@@ -1,0 +1,9 @@
+<template name="tpl_23">
+  <view class="floor-layout tpl-23">
+    <view class="layout-main">
+      <view class="layout-item" bindtap="blockHref" data-block="{{item.blockList[0]}}">
+          <image lazy-load wx:if="{{item.blockList[0].block_type === 'IMAGE'}}" src="{{item.blockList[0].block_value}}" mode="widthFix"></image>
+      </view>
+    </view>
+  </view>
+</template>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.statistics.ReportsStatisticsMapper">
+
+    <!-- 根据订单状态，支付状态，商家id查询每月或每天的下单金额 -->
+    <select id="selectSalesMoneyList" resultType="java.util.Map" useCache="false">
+        SELECT
+            SUM(order_price) AS t_money,
+            FROM_UNIXTIME( create_time, #{circle} ) AS time
+        FROM ${tableName_es_sss_order_data} o
+        WHERE order_status = #{orderStatus}
+        AND pay_status = #{payStatus}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        GROUP BY time
+    </select>
+
+    <!-- 根据订单状态，支付状态，商家id查询每月或每天的订单数量-->
+    <select id="selectSalesNumList" resultType="java.util.Map" useCache="false">
+        SELECT
+            count(0) AS t_num,
+            FROM_UNIXTIME(create_time, #{circle} ) AS time
+        FROM ${tableName_es_sss_order_data} o
+        WHERE order_status = #{orderStatus}
+        AND pay_status = #{payStatus}
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        GROUP BY time
+    </select>
+
+    <!-- 根据订单状态，支付状态，订单时间，商家id查询订单数据-->
+    <select id="selectSalesPage" resultType="java.util.Map" useCache="false">
+        SELECT
+            sn,
+            buyer_name,
+            create_time,
+            order_price,
+            order_status
+        FROM ${tableName_es_sss_order_data} o
+        WHERE order_status = #{orderStatus}
+        AND pay_status = #{payStatus}
+        AND o.create_time &gt; #{startTime}
+        AND o.create_time &lt; #{endTime}
+        AND o.seller_id = #{sellerId}
+        ORDER BY create_time DESC
+    </select>
+
+    <!-- 根据订单状态，支付状态，订单时间，商家id查询订单数量和订单金额-->
+    <select id="selectSalesSummaryMap" resultType="java.util.Map" useCache="false">
+        SELECT
+            COUNT(o.sn) AS order_num,
+            SUM(o.order_price) AS order_price
+        FROM ${tableName_es_sss_order_data} o
+        WHERE order_status = #{orderStatus}
+        AND pay_status = #{payStatus}
+        AND o.create_time &gt; #{startTime}
+        AND o.create_time &lt; #{endTime}
+        AND o.seller_id = #{sellerId}
+    </select>
+
+    <!-- 根据订单状态，支付状态，订单时间，商家id查询每个省份的1.下单会员数 2.下单金额 3.下单量-->
+    <select id="selectRegionsMemberNumList" resultType="java.util.Map" useCache="false">
+        SELECT
+            ${sqlDifference},
+            ship_province_id
+        FROM ${tableName_es_sss_order_data} o
+        WHERE order_status = #{orderStatus}
+        AND pay_status = #{payStatus}
+        AND o.create_time &gt; #{startTime}
+        AND o.create_time &lt; #{endTime}
+        AND o.seller_id = #{sellerId}
+        GROUP BY ship_province_id
+    </select>
+
+    <!-- 根据订单状态，支付状态，订单时间，商家id查询订单信息-->
+    <select id="selectOrderDistributionList" resultType="java.util.Map" useCache="false">
+        SELECT
+            o.sn AS num,
+            o.order_price AS distribution
+        FROM ${tableName_es_sss_order_data} o
+        WHERE order_status = #{orderStatus}
+        AND pay_status = #{payStatus}
+        AND o.create_time &gt; #{startTime}
+        AND o.create_time &lt; #{endTime}
+        AND o.seller_id = #{sellerId}
+    </select>
+
+    <!-- 根据订单状态，支付状态，订单时间，商家id查询每小时的订单数量-->
+    <select id="selectPurchasePeriodList" resultType="java.util.Map" useCache="false">
+        SELECT
+            count(o.sn) AS num,
+            DATE_FORMAT(CONVERT_TZ(FROM_UNIXTIME(o.create_time), @@session.time_zone,'+8:00'), '%k') AS hour_num
+        FROM ${tableName_es_sss_order_data} o
+        WHERE order_status = #{orderStatus}
+        AND pay_status = #{payStatus}
+        AND o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        AND o.seller_id = #{sellerId}
+        GROUP BY hour_num
+        ORDER BY hour_num
+    </select>
+</mapper>

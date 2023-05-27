@@ -1,0 +1,36 @@
+.content .title{
+  width: 100%;
+  display: flex;
+  padding: 20rpx 30rpx;
+  box-sizing: border-box;
+  line-height: 48rpx;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 2rpx solid #f5f5f5;
+}
+.content .title .text{
+  flex: 1;
+}
+.content icon{
+  color: #999;
+  margin: -10rpx 0 0 10rpx;
+}
+.content .colla-content{
+  display: flex;
+  padding: 30rpx;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 2rpx solid #f5f5f5;
+}
+.colla-content .left{
+  flex: 1;
+}
+.colla-content .left view{
+  color: #666;
+  font-size: 24rpx;
+}
+.colla-content .right{
+  line-height: 60rpx;
+  color:#ff853f;
+}

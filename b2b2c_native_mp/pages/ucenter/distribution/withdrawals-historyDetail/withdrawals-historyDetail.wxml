@@ -1,0 +1,7 @@
+<view class="pop-details">
+  <view><text>提现金额：</text><text style="color:#f42424;">￥{{currentRow.apply_money}}</text></view>
+  <view><text>当前状态：</text><text>{{currentRow.status}}</text></view>
+  <view><text>备注信息：</text><text>{{currentRow.apply_remark}}</text></view>
+  <view><text>提现日志：</text><text>{{currentRow.transfer_remark || ''}}</text></view>
+  <view><text>审核备注：</text><text>{{currentRow.inspect_remark || ''}}</text></view>
+</view>

@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "bottomFrame": "../../../../components/bottomFrame/bottomFrame",
+    "RegionPicker": "../../../../components/regionpicke/regionpicke"
+  }
+}

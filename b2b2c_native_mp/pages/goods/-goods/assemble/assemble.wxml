@@ -1,0 +1,24 @@
+<view class='prom-bar-container' wx:if="{{assemble}}"  style="background:url('../../static/images/background-promotion-bar.png') no-repeat, -webkit-linear-gradient(top, #fc5997, #ef4747)">
+  <view class='msg'>
+    <view class='text'>
+      <text class='goods-price'>￥{{assemble.sales_price}}</text>
+      <text >拼团省￥{{assemble.reduce_moeny || '0'}}</text>
+    </view>
+    <view class='text'>
+      <text>
+        <text class='icon assembld'>{{assemble.required_num }}人拼团</text>
+        <text class='old-price'>￥{{assemble.origin_price }}</text>
+      </text>
+      <text>已团{{ assemble.sold_quantity }}件</text>
+    </view>
+  </view>
+  <view class='count-down'>
+    <view class='count-down-text'>距离结束还剩</view>
+    <view class='count-down-times'>
+      <text class="day" wx:if="{{day>0}}">{{day}}天</text>
+      <text class='time'>{{hours}}</text>:
+      <text class='time'>{{minutes}}</text>:
+      <text class='time'>{{seconds}}</text>
+    </view>
+  </view>
+</view>

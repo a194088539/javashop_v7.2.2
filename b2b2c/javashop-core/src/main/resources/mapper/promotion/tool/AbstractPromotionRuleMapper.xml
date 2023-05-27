@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.promotion.tool.AbstractPromotionRuleMapper">
+
+    <!-- 查询某个时间段是否存在第二件半价活动 -->
+    <select id="selectHalfPriceCount" resultType="java.lang.Integer" useCache="false">
+        SELECT COUNT(0) FROM es_half_price
+        WHERE (
+            (start_time &lt;= #{startTime} and #{startTime} &lt;= end_time ) OR
+            (start_time &lt;= #{endTime} and #{endTime} &lt;= end_time )
+        )
+        AND seller_id = #{sellerId}
+        <if test="activityId != null and activityId != ''">
+            AND hp_id != #{activityId}
+        </if>
+    </select>
+
+    <!-- 查询某个时间段是否存在单品立减活动 -->
+    <select id="selectMinusCount" resultType="java.lang.Integer" useCache="false">
+        SELECT COUNT(0) FROM es_minus
+        WHERE (
+        (start_time &lt;= #{startTime} and #{startTime} &lt;= end_time ) OR
+        (start_time &lt;= #{endTime} and #{endTime} &lt;= end_time )
+        )
+        AND seller_id = #{sellerId}
+        <if test="activityId != null and activityId != ''">
+            AND minus_id != #{activityId}
+        </if>
+    </select>
+
+    <!-- 查询某个时间段是否存在满优惠活动 -->
+    <select id="selectFullDiscountCount" resultType="java.lang.Integer" useCache="false">
+        SELECT COUNT(0) FROM es_full_discount
+        WHERE (
+        (start_time &lt;= #{startTime} and #{startTime} &lt;= end_time ) OR
+        (start_time &lt;= #{endTime} and #{endTime} &lt;= end_time )
+        )
+        AND seller_id = #{sellerId}
+        <if test="activityId != null and activityId != ''">
+            AND fd_id != #{activityId}
+        </if>
+    </select>
+
+    <!-- 查询某个时间段是否存在团购活动 -->
+    <select id="selectGroupbuyActiveCount" resultType="java.lang.Integer" useCache="false">
+        SELECT COUNT(0) FROM es_groupbuy_active
+        WHERE delete_status = #{deleteStatus}
+        AND (
+            (start_time &lt;= #{startTime} and #{startTime} &lt;= end_time ) OR
+            (start_time &lt;= #{endTime} and #{endTime} &lt;= end_time )
+        )
+        <if test="activityId != null and activityId != ''">
+            AND act_id != #{activityId}
+        </if>
+    </select>
+
+    <!-- 查询某个时间段是否存在限时抢购活动 -->
+    <select id="selectSeckillCount" resultType="java.lang.Integer" useCache="false">
+        SELECT COUNT(0) FROM es_seckill
+        WHERE start_day &lt;= #{startTime}
+        AND #{startTime} &lt;= start_day
+        <if test="activityId != null and activityId != ''">
+            AND seckill_id != #{activityId}
+        </if>
+    </select>
+</mapper>

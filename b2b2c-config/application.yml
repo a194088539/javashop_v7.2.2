@@ -1,0 +1,11 @@
+#公用配置
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+seata:
+  enabled: false

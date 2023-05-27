@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.statistics.GoodsStatisticsMapper">
+
+    <!-- 根据订单时间，分类id，商家id查询订单金额 -->
+    <select id="selectPriceSalesList" resultType="java.util.Map" useCache="false">
+        SELECT
+            o.order_price AS price_interval
+        FROM ${tableName_es_sss_order_goods_data} oi
+        LEFT JOIN ${tableName_es_sss_order_data} o ON oi.order_sn = o.sn
+        WHERE o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        <if test="categoryId != null and categoryId != 0">
+            AND oi.category_path LIKE CONCAT('%|',#{categoryId},'|%')
+        </if>
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+    </select>
+
+    <!-- 根据订单时间，分类id，商家id查询每个商品的下单总金额 -->
+    <select id="selectHotSalesMoneyPage" resultType="java.util.Map" useCache="false">
+        SELECT
+            SUM(oi.price*oi.goods_num) AS price,
+            oi.`goods_name`
+        FROM ${tableName_es_sss_order_goods_data} oi, ${tableName_es_sss_order_data} o
+        WHERE oi.`order_sn` = o.`sn`
+        AND o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        <if test="categoryId != null and categoryId != 0">
+            AND oi.category_path LIKE CONCAT('%|',#{categoryId},'|%')
+        </if>
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        GROUP BY oi.goods_id, price, oi.goods_name
+        ORDER BY price DESC, goods_name ASC
+    </select>
+
+    <!-- 根据订单时间，分类id，商家id查询每个商品的下单总数-->
+    <select id="selectHotSalesNumPage" resultType="java.util.Map" useCache="false">
+        SELECT
+            COUNT(oi.order_sn) AS order_num,
+            oi.`goods_name`
+        FROM ${tableName_es_sss_order_goods_data} oi, ${tableName_es_sss_order_data} o
+        WHERE oi.`order_sn` = o.`sn`
+        AND o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        <if test="categoryId != null and categoryId != 0">
+            AND oi.category_path LIKE CONCAT('%|',#{categoryId},'|%')
+        </if>
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        GROUP BY oi.`goods_name`
+        ORDER by order_num DESC, goods_name ASC
+    </select>
+
+    <!-- 根据订单时间，分类id，商家id查询每个商品的下单总数,下单商品总数，总价格-->
+    <select id="selectSaleDetailsPage" resultType="java.util.Map" useCache="false">
+        SELECT
+            oi.`goods_name`,
+            COUNT(oi.`order_sn`) AS order_num,
+            SUM(oi.goods_num) AS num,
+            SUM(oi.`price`) AS price
+        FROM ${tableName_es_sss_order_goods_data} oi
+        LEFT JOIN ${tableName_es_sss_order_data} o ON oi.order_sn = o.sn
+        WHERE o.create_time &gt;= #{startTime}
+        AND o.create_time &lt;= #{endTime}
+        <if test="goodsName != null and goodsName != ''">
+            AND oi.`goods_name` LIKE concat('%' ,#{goodsName}, '%')
+        </if>
+       <if test="categoryId != null and categoryId != 0">
+            AND oi.category_path LIKE CONCAT('%|',#{categoryId},'|%')
+        </if>
+        <if test="sellerId != null and sellerId != 0">
+            AND o.seller_id = #{sellerId}
+        </if>
+        GROUP BY oi.goods_id, oi.goods_name, oi.price
+        ORDER BY order_num, oi.goods_name
+    </select>
+
+    <!-- 根据分类id，商家id查询商品名称，价格，收藏数量，商家名称 -->
+    <select id="selectGoodsCollectPage" resultType="java.util.Map" useCache="false">
+        SELECT
+            goods_name,
+            price,
+            g.favorite_num,
+            seller_name
+        FROM ${tableName_es_sss_goods_data} g
+        INNER JOIN ${tableName_es_sss_shop_data} s ON s.seller_id = g.seller_id
+        <where>
+            <if test="categoryId != null and categoryId != 0">
+                AND g.category_id = #{categoryId}
+            </if>
+            <if test="sellerId != null and sellerId != 0">
+                AND s.seller_id = #{sellerId}
+            </if>
+        </where>
+        ORDER BY favorite_num DESC
+    </select>
+</mapper>

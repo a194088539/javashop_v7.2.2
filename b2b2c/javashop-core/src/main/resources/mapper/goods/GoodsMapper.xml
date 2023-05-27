@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.goods.GoodsMapper">
+
+    <!--查询草稿商品关联的参数及参数值 -->
+    <select id="newGoods" resultType="com.enation.app.javashop.model.goods.vo.BackendGoodsVO" useCache="false">
+        select * from es_goods where market_enable = 1 and disabled = 1 order by create_time desc limit 0, #{length}
+    </select>
+
+    <!--更新商品的实际库存和可用库存 -->
+    <update id="updateQuantity">
+        update es_goods set enable_quantity=#{param.enable_quantity}, quantity=#{param.quantity} where goods_id=#{param.goods_id}
+    </update>
+
+    <!--根据条件查询多个商品信息-->
+    <select id="queryGoodsLines" resultType="com.enation.app.javashop.model.goods.vo.GoodsSelectLine" useCache="false">
+        select * from es_goods
+        <where>
+         ${ew.sqlSegment}
+        </where>
+    </select>
+
+    <!--根据条件查询多个商品信息-->
+    <select id="queryBuyCount" resultType="com.enation.app.javashop.model.goods.vo.BuyCountVO" useCache="false">
+        select buy_count,goods_id from es_goods
+        <where>
+            <if test="params != null">
+                goods_id in
+                <foreach collection="params" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+
+        </where>
+    </select>
+
+    <!--根据条件查询多个商品信息-->
+    <select id="querySkus" resultType="com.enation.app.javashop.model.goods.vo.GoodsSelectLine" useCache="false">
+        select s.*,g.big from es_goods g inner join es_goods_sku s on g.goods_id=s.goods_id
+        <where>
+            <if test="params != null">
+                s.sku_id in
+                <foreach collection="params" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+
+        </where>
+    </select>
+
+    <!--查询sku分页-->
+    <select id="querySkusPage" resultType="com.enation.app.javashop.model.goods.vo.GoodsSelectorSkuVO" useCache="false">
+        select s.* from es_goods_sku s inner join es_goods g on g.goods_id = s.goods_id
+            <where>
+                ${ew.sqlSegment}
+            </where>
+    </select>
+
+
+
+</mapper>

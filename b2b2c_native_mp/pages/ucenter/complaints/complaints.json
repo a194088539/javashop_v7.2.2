@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "交易投诉",
+  "usingComponents": {
+    "en-empty": "../../../components/empty/empty",
+    "en-top": "../../../components/top/top"
+  }
+}

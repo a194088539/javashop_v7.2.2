@@ -1,0 +1,40 @@
+<view class='shop-part'>
+  <navigator url="/pages/shop/shop_id/shop_id?id={{shopId}}" class='shop-href' hover-class="none">
+    <view class='shop-show'>
+      <view class='shop-icon'>
+        <image src="{{shop.shop_logo}}"></image>
+      </view>
+      <view class='shop-name'>{{shop.shop_name}}</view>
+    </view>
+    <view class='shop-tab'>
+      <view class='tab'>
+        <view class='num'>{{shop.shop_collect}}</view>
+        <view class='text'>关注人数</view>
+        <view class='vertical-line'></view>
+      </view>
+      <view class='tab'>
+        <view class='num'>{{ shop.goods_num }}</view>
+        <view class='text'>全部商品</view>
+        <view class='vertical-line'></view>
+      </view>
+      <view class='tab'>
+        <view class='num'>{{shop.shop_credit}}</view>
+        <view class='text'>店铺评分</view>
+      </view>
+    </view>
+  </navigator>
+  <view class='shop-footer'>
+    <view class='shop-goods'>
+      <navigator class='shop-btn' url='/pages/shop/goods_list/goods_list?shop_id={{shopId}}' hover-class="none">
+        <view class='icon-shop all-goods'></view>
+        <view class='icon-text'>全部商品</view>
+      </navigator>
+    </view>
+    <view class='shop-go'>
+      <navigator url="/pages/shop/shop_id/shop_id?id={{shopId}}" class='shop-btn' hover-class="none">
+        <view class='icon-shop go-shop'></view>
+        <view class='icon-text'>进入店铺</view>
+      </navigator>
+    </view>
+  </view>
+</view>

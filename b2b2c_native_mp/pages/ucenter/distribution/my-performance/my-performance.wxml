@@ -1,0 +1,30 @@
+<view class="my-performance">
+  <view class="performance-switch">
+    <view class="item {{ active === 0 ? 'active' : ''}}" bindtap="tabChange" data-index='0'>与我相关的订单</view>
+    <view class="item {{ active === 1 ? 'active' : ''}}" bindtap="tabChange" data-index='1'>与我相关的退货单</view>
+    <view class="item {{ active === 2 ? 'active' : ''}}" bindtap="tabChange" data-index='2'>我的历史业绩</view>
+  </view>
+  <view class="settlement-total-container">
+    <text>本期佣金：<text class="color-red">￥{{settlementTotal.final_money}}</text></text>
+    <text>订单佣金：<text class="color-red">￥{{settlementTotal.push_money}}</text></text>
+    <text>退单佣金返还：<text class="color-red">￥{{settlementTotal.return_push_money}}</text></text>
+  </view>
+  <block wx:if="{{performanceList && performanceList.length}}">
+    <view  class="content" wx:for="{{performanceList}}" wx:key="index">
+      <view class="item" bindtap="isshowactiveNames" data-index="{{index}}">
+        <view class="text">{{sn_text}}：{{item.sn}}</view>
+        <icon class="iconfont {{item.showactiveNames ? 'icon-arrow-up': 'icon-arrow-down'}} "></icon>
+      </view>
+      <view class="item-detail" wx:if="{{item.showactiveNames}}">
+        <view>订单金额： <text style="color:#f42424;">￥{{item.order_price || '0.00'}}</text></view>
+        <view wx:if="{{ item.member_name }}">会员名称： <text>{{item.member_name}}</text></view>
+        <view wx:if="{{ item.create_time }}">下单时间： <text>{{item.create_time}}</text></view>
+        <view wx:if="{{ item.price }}">返利金额： <text style="color:#f42424;">￥{{item.price}}</text></view>
+        <view wx:if="{{ item.end_time }}">结算时间： <text>{{item.end_time}}</text></view>
+        <view wx:if="{{ item.final_money }}">结算金额： <text style="color:#f42424;">￥{{item.final_money}}</text></view>
+        <view  wx:if="{{active===2}}" class="btn-custom" bindtap="handleDetails" data-item="{{item}}"><text>详情</text></view> 
+      </view>
+    </view>
+  </block>
+  <en-empty wx:else>暂无数据</en-empty>
+</view>

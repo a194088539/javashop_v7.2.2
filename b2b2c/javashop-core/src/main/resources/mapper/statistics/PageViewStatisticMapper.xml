@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.statistics.PageViewStatisticMapper">
+
+    <!-- 根据商家id，年份或月份查询每年或每月的店铺访问总量 -->
+    <select id="selectVsNum" resultType="java.util.Map" useCache="false">
+        SELECT
+            SUM(vs_num) AS num,
+            <choose>
+                <when test="type == 'YEAR'">vs_month</when>
+                <otherwise>vs_day</otherwise>
+            </choose>
+        FROM ${tableName_es_sss_shop_pv}
+        WHERE 1=1
+        <if test="type == 'YEAR'">
+            AND vs_year = #{year}
+        </if>
+        <if test="type == 'MONTH'">
+            AND vs_year = #{year}
+            AND vs_month = #{month}
+        </if>
+        <if test="sellerId != null and sellerId != 0">
+            AND seller_id = #{sellerId}
+        </if>
+        GROUP BY
+        <choose>
+            <when test="type == 'YEAR'">vs_month</when>
+            <otherwise>vs_day</otherwise>
+        </choose>
+    </select>
+
+    <!-- 根据商家id，年份或月份查询每个商品每年或每月的访问总量 -->
+    <select id="countGoods" resultType="java.util.Map" useCache="false">
+        SELECT
+            SUM(vs_num) AS num,
+            goods_name
+        FROM ${tableName_es_sss_goods_pv}
+        WHERE 1=1
+        <if test="type == 'YEAR'">
+            AND vs_year = #{year}
+        </if>
+        <if test="type == 'MONTH'">
+            AND vs_month = #{month}
+        </if>
+        <if test="sellerId != null and sellerId != 0">
+            AND seller_id = #{sellerId}
+        </if>
+        GROUP BY goods_id,goods_name
+        ORDER BY num DESC LIMIT 30
+    </select>
+</mapper>

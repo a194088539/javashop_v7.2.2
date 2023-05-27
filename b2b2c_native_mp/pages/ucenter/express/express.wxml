@@ -1,0 +1,23 @@
+<view class="express-container">
+  <view class="logistics">
+    <view class="logi-logo">
+      <icon class="iconfont icon-yunshu"></icon>
+    </view>
+    <view class="text">
+      <view>物流公司：<text>{{express.name || '获取中...'}}</text></view>
+      <view>物流单号：<text>{{express.courier_num || '获取中...'}}</text></view>
+    </view>
+  </view>
+  <view class="logistics-info">
+    <view wx:if="{{!express.data}}" class="no-ship">暂无物流信息...</view>
+    <view wx:else>
+      <view class="ship-item" wx:for="{{express.data}}" wx:for-item="ship" wx:key="index">
+        <text class="shop-dot"></text>
+        <view class="ship-msg">
+          <view class="ship-msg-text">{{ship.context}}</view>
+          <view class="ship-msg-time">{{ship.time}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

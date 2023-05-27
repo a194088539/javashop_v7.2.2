@@ -1,0 +1,9 @@
+<view class='params_table'wx:for="{{param_list}}" wx:key="group_id">
+  <view class='params_tr'>
+    <view class='params_th'>{{item.group_name}}</view>
+  </view>
+  <view class='params_tr'wx:for="{{item.params}}" wx:for-item="iitem" wx:for-index="iindex" wx:key="param_id">
+    <view class='params_td'>{{iitem.param_name}}</view>
+    <view class='params_td'>{{iitem.param_value}}</view>
+  </view>
+</view>

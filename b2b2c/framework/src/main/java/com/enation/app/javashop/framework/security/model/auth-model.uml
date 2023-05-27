@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="318.0">com.enation.app.javashop.framework.security.model.Buyer</node>
+    <node x="154.25" y="113.0">com.enation.app.javashop.framework.security.model.User</node>
+    <node x="144.47222222222223" y="582.0">com.enation.app.javashop.framework.security.model.Clerk</node>
+    <node x="84.72222222222223" y="417.0">com.enation.app.javashop.framework.security.model.Seller</node>
+    <node x="153.25" y="22.0">com.enation.app.javashop.framework.auth.AuthUser</node>
+    <node x="121.0" y="304.0">com.enation.app.javashop.framework.security.model.Admin</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.enation.app.javashop.framework.security.model.Clerk" target="com.enation.app.javashop.framework.security.model.User">
+      <point x="38.0" y="-57.5" />
+      <point x="258.47222222222223" y="557.0" />
+      <point x="306.0" y="557.0" />
+      <point x="306.0" y="279.0" />
+      <point x="291.625" y="279.0" />
+      <point x="58.875" y="70.5" />
+    </edge>
+    <edge source="com.enation.app.javashop.framework.security.model.User" target="com.enation.app.javashop.framework.auth.AuthUser">
+      <point x="0.0" y="-70.5" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.enation.app.javashop.framework.security.model.Buyer" target="com.enation.app.javashop.framework.security.model.User">
+      <point x="0.0" y="-17.5" />
+      <point x="50.5" y="279.0" />
+      <point x="173.875" y="279.0" />
+      <point x="-58.875" y="70.5" />
+    </edge>
+    <edge source="com.enation.app.javashop.framework.security.model.Clerk" target="com.enation.app.javashop.framework.security.model.Seller">
+      <point x="-38.0" y="-57.5" />
+      <point x="182.47222222222223" y="557.0" />
+      <point x="171.72222222222223" y="557.0" />
+      <point x="0.0" y="57.5" />
+    </edge>
+    <edge source="com.enation.app.javashop.framework.security.model.Seller" target="com.enation.app.javashop.framework.security.model.User">
+      <point x="43.5" y="-57.5" />
+      <point x="215.22222222222223" y="392.0" />
+      <point x="273.5" y="392.0" />
+      <point x="273.5" y="279.0" />
+      <point x="252.375" y="279.0" />
+      <point x="19.625" y="70.5" />
+    </edge>
+    <edge source="com.enation.app.javashop.framework.security.model.Seller" target="com.enation.app.javashop.framework.security.model.Buyer">
+      <point x="-43.5" y="-57.5" />
+      <point x="128.22222222222223" y="392.0" />
+      <point x="50.5" y="392.0" />
+      <point x="0.0" y="17.5" />
+    </edge>
+    <edge source="com.enation.app.javashop.framework.security.model.Admin" target="com.enation.app.javashop.framework.security.model.User">
+      <point x="0.0" y="-31.5" />
+      <point x="192.0" y="279.0" />
+      <point x="213.125" y="279.0" />
+      <point x="-19.625" y="70.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="457.5" y="340.0" />
+  <SelectedNodes>
+    <node>com.enation.app.javashop.framework.auth.AuthUser</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

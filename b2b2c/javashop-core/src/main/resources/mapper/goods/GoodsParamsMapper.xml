@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.enation.app.javashop.mapper.goods.GoodsParamsMapper">
+
+    <!--查询商品关联的参数及参数值 -->
+    <select id="queryGoodsParamsValue" resultType="com.enation.app.javashop.model.goods.vo.GoodsParamsVO" useCache="false">
+        select p.*,gp.param_value,p.group_id from es_parameters p left join es_goods_params gp
+        on p.param_id=gp.param_id and gp.goods_id = #{goods_id}  where p.category_id = #{category_id}  order by sort
+    </select>
+
+    <!--查询商品关联的可检索的参数值-->
+    <select id="getIndexGoodsList" resultType="java.util.Map" useCache="false">
+        select gp.* from es_goods_params gp inner join es_parameters p on gp.param_id=p.param_id
+
+        <where>
+            <if test="params != null">
+                goods_id in
+                <foreach collection="params" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            and is_index = 1
+
+        </where>
+    </select>
+
+
+
+</mapper>
